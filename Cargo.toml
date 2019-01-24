@@ -1,0 +1,9 @@
+[package]
+name = "pzip-cli"
+version = "0.1.0"
+authors = ["ucyo <cayoglu@me.com>"]
+edition = "2018"
+
+[dependencies]
+pzip = { path = "../pzip/"}
+clap = {version = "~2.27.0", features = ["yaml"]}

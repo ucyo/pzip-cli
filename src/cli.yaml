@@ -1,0 +1,66 @@
+name: pzip-cli
+version: "0.1.0"
+author: Ugur Cayoglu <cayoglu@me.com>
+about: Command line tool for pzip compression algorithm
+args:
+    - mode:
+        help: (De-)compression modes
+        index: 1
+        possible_values: [compress, decompress]
+        required: true
+        default_value: compress
+    - input:
+        help: Sets the input file to use
+        short: i
+        long: input
+        takes_value: true
+        required: true
+    - output:
+        help: Sets the output file to use
+        short: o
+        long: output
+        takes_value: true
+        required: true
+    - shape:
+        help: Shape of the input file [z y x]
+        short: s
+        long: shape
+        multiple: true
+        takes_value: true
+        required: true
+    - type:
+        help: Floating-point type
+        short: t
+        long: type
+        required: true
+        takes_value: true
+        possible_values: [f32, f64]
+    - predictor:
+        help: Predictor to be used
+        short: p
+        long: predictor
+        possible_values: [lv, lorenz]
+        takes_value: true
+        default_value: lv
+    - intermapping:
+        help: "Mapping algorithm: f32|f64 to u32|u64"
+        long: inter
+        possible_values: [raw, ordered]
+        takes_value: true
+        default_value: raw
+    - intramapping:
+        help: "Mapping algorithm: u32|u64 to u32|u64"
+        long: intra
+        possible_values: [untouched, gray]
+        takes_value: true
+        default_value: untouched
+    - bytemapping:
+        help: "Mapping algorithm: u8 to u8"
+        long: byte
+        possible_values: [untouched, monoton_gray]
+        takes_value: true
+        default_value: untouched
+    - compact-algorithm:
+        help: "Packing of bits by removal of leading zeros"
+        short: c
+        long: compact
