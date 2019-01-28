@@ -12,9 +12,13 @@ fn main() {
     let yaml = load_yaml!("cli.yaml");
     let matches = App::from_yaml(yaml).get_matches();
 
-    // compress(&matches);
-    compress_with_information(&matches);
-    // graycode(&matches);
+    if matches.is_present("compress") {
+        compress_with_information(&matches.subcommand_matches("compress").unwrap());
+    } else if matches.is_present("analysis") {
+        graycode(&matches.subcommand_matches("analysis").unwrap());
+    } else {
+        unreachable!();
+    }
 }
 
 fn lzcanalysis(matches: &clap::ArgMatches) -> u32 {
