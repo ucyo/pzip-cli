@@ -49,27 +49,29 @@ subcommands:
                 takes_value: true
                 default_value: lv
             - intermapping:
-                help: "Mapping algorithm: f32|f64 to u32|u64"
+                help: "Mapping algorithm: f32(f64) to u32(u64)"
                 long: inter
-                possible_values: [raw, ordered]
+                possible_values: [untouched, u, ordered, o]
                 takes_value: true
-                default_value: raw
+                default_value: untouched
             - intramapping:
-                help: "Mapping algorithm: u32|u64 to u32|u64"
+                help: "Mapping algorithm: u32(u64) to u32(u64)"
                 long: intra
-                possible_values: [untouched, gray]
+                possible_values: [untouched, u, gray, g]
                 takes_value: true
                 default_value: untouched
             - bytemapping:
                 help: "Mapping algorithm: u8 to u8"
                 long: byte
-                possible_values: [untouched, monoton_gray]
+                possible_values: [untouched, u, monogray, mg]
                 takes_value: true
                 default_value: untouched
-            - compact-algorithm:
+            - compact:
                 help: "Packing of bits by removal of leading zeros"
-                short: c
                 long: compact
+                possible_values: [untouched, u, nolzc]
+                takes_value: true
+                default_value: untouched
     - analysis:
         name: Analysis
         version: "0.1.0"

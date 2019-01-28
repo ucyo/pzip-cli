@@ -58,19 +58,24 @@ fn graycode(matches: &clap::ArgMatches) {
     }
 }
 
-
+use pzip::transform::{Inter, Intra, Byte, Compact};
 fn compress(matches: &clap::ArgMatches) {
     let input = String::from(matches.value_of("input").unwrap());
     let output = String::from(matches.value_of("output").unwrap());
     let shape = parse_shape(&matches);
     let predictor = parse_predictor(&matches);
 
+    let alg_inter = parse_inter_algorithm(&matches);
+    let alg_intra = parse_intra_algorithm(&matches);
+    let alg_byte = parse_byte_algorithm(&matches);
+    let alg_compact = parse_compact_algorithm(&matches);
+
     if matches.value_of("type").unwrap() == "f32" {
         let setup = pzip::Setup::<f32>::new(&input, shape, predictor);
-        setup.write::<pzip::mapping::Raw, pzip::mapping::ClassicGray, pzip::mapping::Untouched, pzip::mapping::Untouched>(&output);
+        setup.write(alg_inter, alg_intra, alg_byte, alg_compact, &output);
     } else if matches.value_of("type").unwrap() == "f64" {
         let setup = pzip::Setup::<f64>::new(&input, shape, predictor);
-        setup.write::<pzip::mapping::Raw, pzip::mapping::ClassicGray, pzip::mapping::Untouched>(&output);
+        setup.write(alg_inter, alg_intra, alg_byte, &output);
     }
 }
 
@@ -87,5 +92,44 @@ fn parse_predictor(matches: &clap::ArgMatches) -> Vec<pzip::Weight> {
         "lv" => return pzip::traversal::predictors::get_lastvalue(),
         "lorenz" => return pzip::traversal::predictors::get_lorenz(),
         _ => panic!("Unknown predictor")
+   }
+}
+
+fn parse_inter_algorithm(matches: &clap::ArgMatches) -> Inter {
+   match matches.value_of("intermapping").unwrap() {
+        "untouched" => Inter::Untouched,
+        "u" => Inter::Untouched,
+        "ordered" => Inter::Ordered,
+        "o" => Inter::Ordered,
+        _ => panic!("Unknown inter mapping algorithm")
+   }
+}
+
+fn parse_intra_algorithm(matches: &clap::ArgMatches) -> Intra {
+   match matches.value_of("intramapping").unwrap() {
+        "untouched" => Intra::Untouched,
+        "u" => Intra::Untouched,
+        "gray" => Intra::Gray,
+        "g" => Intra::Gray,
+        _ => panic!("Unknown intra mapping algorithm")
+   }
+}
+
+fn parse_byte_algorithm(matches: &clap::ArgMatches) -> Byte {
+   match matches.value_of("bytemapping").unwrap() {
+        "untouched" => Byte::Untouched,
+        "u" => Byte::Untouched,
+        "monogray" => Byte::MonoGray,
+        "mg" => Byte::MonoGray,
+        _ => panic!("Unknown byte mapping algorithm")
+   }
+}
+
+fn parse_compact_algorithm(matches: &clap::ArgMatches) -> Compact {
+   match matches.value_of("compact").unwrap() {
+        "untouched" => Compact::Untouched,
+        "u" => Compact::Untouched,
+        "nolzc" => Compact::NoLZC,
+        _ => panic!("Unknown compact algorithm")
    }
 }
