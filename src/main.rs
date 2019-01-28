@@ -17,7 +17,7 @@ fn main() {
     } else if matches.is_present("analysis") {
         graycode(&matches.subcommand_matches("analysis").unwrap());
     } else {
-        unreachable!();
+        App::from_yaml(yaml).print_help().unwrap();
     }
 }
 
