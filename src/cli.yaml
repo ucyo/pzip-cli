@@ -7,7 +7,7 @@ subcommands:
         name: Compression
         version: "0.1.0"
         author: Ugur Cayoglu <cayoglu@me.com>
-        about: Compression of files using pzip
+        about: Compression of files using pzip (currently it not compressing the data, but save the residual as is)
         args:
             - mode:
                 help: (De-)compression modes

@@ -159,7 +159,7 @@ fn parse_residual_algorithm(matches: &clap::ArgMatches) -> ResidualCalculation {
 use pzip::correction::Correction;
 fn parse_correction_algorithm(matches: &clap::ArgMatches) -> Correction {
     match matches.value_of("correction").unwrap() {
-        "preverr" => Correction::PreviousError,
+        "preverror" => Correction::PreviousError,
         "perr" => Correction::PreviousError,
         "delta2power2" => Correction::DeltaToPowerOf2,
         "d2p2" => Correction::DeltaToPowerOf2,
