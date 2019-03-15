@@ -59,6 +59,7 @@ fn graycode(matches: &clap::ArgMatches) {
 }
 
 use pzip::transform::{Inter, Intra, Byte, Compact};
+use pzip::predictors::Ignorant;
 fn compress(matches: &clap::ArgMatches) {
     let input = String::from(matches.value_of("input").unwrap());
     let output = String::from(matches.value_of("output").unwrap());
@@ -76,7 +77,7 @@ fn compress(matches: &clap::ArgMatches) {
     let alg_residual = parse_residual_algorithm(&matches);
 
     if matches.value_of("type").unwrap() == "f32" {
-        let setup = pzip::Setup::<f32>::new(&input, shape, predictor);
+        let mut setup = pzip::Setup::<f32>::new(&input, shape, predictor);
         setup.write(alg_inter, alg_intra, alg_byte, alg_compact, alg_residual, alg_correct, ring, cut, parts, &output);
     } else {
         panic!("Support for f64 deactivated!")
@@ -88,18 +89,18 @@ fn compress(matches: &clap::ArgMatches) {
     // }
 }
 
-fn parse_shape(matches: &clap::ArgMatches) -> pzip::Shape {
-    let shape: Vec<usize> = matches.values_of("shape")
+fn parse_shape(matches: &clap::ArgMatches) -> pzip::position::Position {
+    let shape: Vec<i32> = matches.values_of("shape")
            .unwrap()
-           .map(|x| String::from(x).parse::<usize>().unwrap_or_else(|e| panic!("Shape: {}", e)))
+           .map(|x| String::from(x).parse::<i32>().unwrap_or_else(|e| panic!("Shape: {}", e)))
            .collect();
-    pzip::Shape{z:shape[0],y:shape[1],x:shape[2]}
+    pzip::position::Position{z:shape[0],y:shape[1],x:shape[2]}
 }
 
-fn parse_predictor(matches: &clap::ArgMatches) -> Vec<pzip::Weight> {
+fn parse_predictor(matches: &clap::ArgMatches) -> Ignorant<f32> {
    match matches.value_of("predictor").unwrap() {
-        "lv" => return pzip::traversal::predictors::get_lastvalue(),
-        "lorenz" => return pzip::traversal::predictors::get_lorenz(),
+        "lv" => return pzip::predictors::predictors::get_last_value_f32(),
+        "lorenz" => return pzip::predictors::predictors::get_lorenz_f32(),
         _ => panic!("Unknown predictor")
    }
 }

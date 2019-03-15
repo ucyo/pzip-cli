@@ -105,6 +105,7 @@ subcommands:
                     - [correction, d2p2]
                     - [correction, delta2power2]
                     - [correction, perr]
+                default_value: "1"
 
     - analysis:
         name: Analysis
