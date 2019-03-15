@@ -78,10 +78,14 @@ fn compress(matches: &clap::ArgMatches) {
     if matches.value_of("type").unwrap() == "f32" {
         let setup = pzip::Setup::<f32>::new(&input, shape, predictor);
         setup.write(alg_inter, alg_intra, alg_byte, alg_compact, alg_residual, alg_correct, ring, cut, parts, &output);
-    } else if matches.value_of("type").unwrap() == "f64" {
-        let setup = pzip::Setup::<f64>::new(&input, shape, predictor);
-        setup.write(alg_inter, alg_intra, alg_byte, &output);
+    } else {
+        panic!("Support for f64 deactivated!")
     }
+    // TODO: Support for f64 deactivated!
+    // } else if matches.value_of("type").unwrap() == "f64" {
+    //     let setup = pzip::Setup::<f64>::new(&input, shape, predictor);
+    //     setup.write(alg_inter, alg_intra, alg_byte, &output);
+    // }
 }
 
 fn parse_shape(matches: &clap::ArgMatches) -> pzip::Shape {

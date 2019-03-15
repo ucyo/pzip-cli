@@ -40,7 +40,8 @@ subcommands:
                 long: type
                 required: true
                 takes_value: true
-                possible_values: [f32, f64]
+                # possible_values: [f32, f64]  TODO: Support for f64 deactivated
+                possible_values: [f32]
             - predictor:
                 help: Predictor to be used
                 short: p
