@@ -64,15 +64,20 @@ fn compress(matches: &clap::ArgMatches) {
     let output = String::from(matches.value_of("output").unwrap());
     let shape = parse_shape(&matches);
     let predictor = parse_predictor(&matches);
+    let ring = parse_ring(&matches);
+    let cut = parse_cut(&matches);
+    let parts = parse_parts(&matches);
 
     let alg_inter = parse_inter_algorithm(&matches);
     let alg_intra = parse_intra_algorithm(&matches);
     let alg_byte = parse_byte_algorithm(&matches);
     let alg_compact = parse_compact_algorithm(&matches);
+    let alg_correct = parse_correction_algorithm(&matches);
+    let alg_residual = parse_residual_algorithm(&matches);
 
     if matches.value_of("type").unwrap() == "f32" {
         let setup = pzip::Setup::<f32>::new(&input, shape, predictor);
-        setup.write(alg_inter, alg_intra, alg_byte, alg_compact, &output);
+        setup.write(alg_inter, alg_intra, alg_byte, alg_compact, alg_residual, alg_correct, ring, cut, parts, &output);
     } else if matches.value_of("type").unwrap() == "f64" {
         let setup = pzip::Setup::<f64>::new(&input, shape, predictor);
         setup.write(alg_inter, alg_intra, alg_byte, &output);
@@ -132,4 +137,43 @@ fn parse_compact_algorithm(matches: &clap::ArgMatches) -> Compact {
         "nolzc" => Compact::NoLZC,
         _ => panic!("Unknown compact algorithm")
    }
+}
+
+use pzip::residual::ResidualCalculation;
+fn parse_residual_algorithm(matches: &clap::ArgMatches) -> ResidualCalculation {
+    match matches.value_of("residual").unwrap() {
+        "xor" => ResidualCalculation::ExclusiveOR,
+        "shifted" => ResidualCalculation::Shifted,
+        "s" => ResidualCalculation::Shifted,
+        "shiftedlzc" => ResidualCalculation::ShiftedLZC,
+        "slzc" => ResidualCalculation::ShiftedLZC,
+        _ => panic!("Unknown residual algorithm.")
+    }
+}
+
+use pzip::correction::Correction;
+fn parse_correction_algorithm(matches: &clap::ArgMatches) -> Correction {
+    match matches.value_of("correction").unwrap() {
+        "preverr" => Correction::PreviousError,
+        "perr" => Correction::PreviousError,
+        "delta2power2" => Correction::DeltaToPowerOf2,
+        "d2p2" => Correction::DeltaToPowerOf2,
+        "untouched" => Correction::Untouched,
+        "u" => Correction::Untouched,
+        _ => panic!("Unknown correction algorithm")
+    }
+}
+
+fn parse_ring(matches: &clap::ArgMatches) -> bool {
+    matches.is_present("ring")
+}
+
+fn parse_cut(matches: &clap::ArgMatches) -> u32 {
+    let result: u32 = matches.value_of("cut").unwrap().parse().unwrap();
+    result
+}
+
+fn parse_parts(matches: &clap::ArgMatches) -> u32 {
+    let result: u32 = matches.value_of("parts").unwrap().parse().unwrap();
+    result
 }
