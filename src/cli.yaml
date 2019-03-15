@@ -72,6 +72,39 @@ subcommands:
                 possible_values: [untouched, u, nolzc]
                 takes_value: true
                 default_value: untouched
+            - residual:
+                help: "Residual algorithm to be used"
+                long: residual
+                possible_values: [xor, shifted, s, shiftedlzc, slzc]
+                takes_value: true
+                default_value: xor
+            - correction:
+                help: "Correction of the prediction"
+                long: correction
+                possible_values: [preverror, perr, delta2power2, d2p2, untouched, u]
+                takes_value: true
+                default_value: untouched
+            - ring:
+                help: "Should the data be connected along the first axis?"
+                long: ring
+            - cut:
+                help: "Cut setting for 'shifted' residual method"
+                long: cut
+                takes_value: true
+                required_if:
+                    - [residual, shifted]
+                    - [residual, s]
+                default_value: "20"
+            - parts:
+                help: "Divisor part for correction algorithm"
+                long: parts
+                takes_value: true
+                required_if:
+                    - [correction, preverror]
+                    - [correction, d2p2]
+                    - [correction, delta2power2]
+                    - [correction, perr]
+
     - analysis:
         name: Analysis
         version: "0.1.0"
