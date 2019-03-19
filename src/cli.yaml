@@ -106,7 +106,30 @@ subcommands:
                     - [correction, delta2power2]
                     - [correction, perr]
                 default_value: "1"
-
+    - mqanalysis:
+        name: Data creation for MQ analysis
+        version: "0.1.0"
+        author: Ugur Cayoglu <cayoglu@me.com>
+        about: Output differently formated data for distribution analysis
+        args:
+            - input:
+                help: Sets the input file to use
+                short: i
+                long: input
+                takes_value: true
+                required: true
+            - bitplanes:
+                help: Sets the output file for bitplanes
+                short: b
+                long: bitplanes
+                takes_value: true
+                required: true
+            - nolzc:
+                help: Sets the output file for normal residuals
+                short: n
+                long: nolzc
+                takes_value: true
+                required: true
     - analysis:
         name: Analysis
         version: "0.1.0"

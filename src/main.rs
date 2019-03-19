@@ -7,6 +7,7 @@ use std::time::Instant;
 use std::fs::metadata;
 
 mod graycodeanalysis;
+mod mqanalysis;
 
 fn main() {
     let yaml = load_yaml!("cli.yaml");
@@ -16,6 +17,8 @@ fn main() {
         compress_with_information(&matches.subcommand_matches("compress").unwrap());
     } else if matches.is_present("analysis") {
         graycode(&matches.subcommand_matches("analysis").unwrap());
+    } else if matches.is_present("mqanalysis"){
+        mqanalysis::mqanalysis(&matches.subcommand_matches("mqanalysis").unwrap());
     } else {
         App::from_yaml(yaml).print_help().unwrap();
     }
