@@ -5,11 +5,13 @@ use pzip;
 use clap::{App, load_yaml};
 use std::time::Instant;
 use std::fs::metadata;
+use env_logger;
 
 mod graycodeanalysis;
 mod mqanalysis;
 
 fn main() {
+    env_logger::init();
     let yaml = load_yaml!("cli.yaml");
     let matches = App::from_yaml(yaml).get_matches();
 
@@ -42,7 +44,7 @@ fn compress_with_information(matches: &clap::ArgMatches) {
     if matches.value_of("type").unwrap() == "f32" {
         let lzc = lzcanalysis(&matches);
         let of = fsize * 8;
-        print!("LZC: {} ({:.3}%) ", lzc, (lzc as f64 / of as f64) * 100.0)
+        print!("LZC: {} ({:.15}%) ", lzc, (lzc as f64 / of as f64) * 100.0)
 
     }
     let throughput = mbytes as f64 / duration;

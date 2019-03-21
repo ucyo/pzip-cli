@@ -1,6 +1,6 @@
 [package]
 name = "pzip-cli"
-version = "0.1.0"
+version = "0.1.2"
 authors = ["ucyo <cayoglu@me.com>"]
 edition = "2018"
 
@@ -8,3 +8,4 @@ edition = "2018"
 pzip = { path = "../pzip/"}
 clap = {version = "~2.27.0", features = ["yaml"]}
 byteorder = "1.2.7"
+env_logger = "0.6.0"
