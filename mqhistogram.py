@@ -17,13 +17,23 @@ def main():
     files = sys.argv[1:]
     data = dict()
 
-    for x in files:
+    for i,x in enumerate(files):
+        print("{} of {} - Byte - File: {}".format(i, len(files), x))
         tmp = np.fromfile(x, dtype='uint8').astype('float32')
-        counts, _ = np.histogram(tmp, bins=np.arange(256))
+        counts, _ = np.histogram(tmp, bins=np.arange(1 << 8))
         data[x] = counts
     df = pd.DataFrame(data)
     df.index.name = 'ix'
-    df.to_csv("/tmp/histogram.csv")
+    df.to_csv("/tmp/histogram.byte.csv")
+
+    for x in files:
+        print("{} of {} - 2Byte - File: {}".format(i, len(files), x))
+        tmp = np.fromfile(x, dtype='uint16').astype('float32')
+        counts, _ = np.histogram(tmp, bins=np.arange(1 << 16))
+        data[x] = counts
+    df = pd.DataFrame(data)
+    df.index.name = 'ix'
+    df.to_csv("/tmp/histogram.2Byte.csv")
 
     # for x in files:
     #     tmp = np.fromfile(x, dtype='uint8').astype('float32')
