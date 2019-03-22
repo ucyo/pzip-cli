@@ -20,8 +20,8 @@
 # parallel --dry-run "./low-hanging-fruits.sh {} 47 351 901 raid6/" ::: ../pzip/data/icon.pl.*
 folder=${5%/*}
 r=$folder/$(basename $1).residual
-cargo run --release -- compress -i $1  -o $r -s $2 $3 $4 -t f32 -p lorenz &&
-cargo run --release -- mqanalysis -i $r -b $r.bplanes -n $r.nlzc &&
+pzip-cli compress -i $1  -o $r -s $2 $3 $4 -t f32 -p lorenz &&
+pzip-cli mqanalysis -i $r -b $r.bplanes -n $r.nlzc &&
 /home/ucyo/Developments/mqcoder/mqcoder.out -c < $r > $r.mq &&
 /home/ucyo/Developments/mqcoder/mqcoder.out -c < $r.bplanes > $r.bplanes.mq &&
 /home/ucyo/Developments/mqcoder/mqcoder.out -c < $r.nlzc > $r.nlzc.mq &&
