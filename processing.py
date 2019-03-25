@@ -27,6 +27,7 @@ def main(data, stream_plot=False, threshold=.90):
                 correlations = [abs(np.corrcoef(c, result_ones))[0,1] for c in candidates]
                 if all([cc<threshold for cc in correlations]):
                     candidates.append(result_ones/block)
+                    pd.DataFrame(candidates).T.to_csv('/tmp/tmp.corrs.csv')
             elif i*8+j == block:
                 candidates.append(result_ones/block)
             if stream_plot:
