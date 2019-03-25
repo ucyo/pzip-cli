@@ -1,6 +1,9 @@
 #!/usr/bin/env python
 # coding: utf-8
-"""Plotting a stream of data"""
+"""
+Plotting a stream of data
+Usage: python script.py filename
+"""
 
 from glob import glob
 import matplotlib.pyplot as plt
