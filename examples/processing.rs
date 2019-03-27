@@ -58,7 +58,7 @@ fn main() {
         }
         'out: for j in 0..8 {
             remove_and_push(val, j, &mut current);
-            let mut iter = candidates.iter().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
+            let mut iter = candidates.iter().rev().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
             if iter.next() == None {
                 debug!("Adding: {}, because", i*8+j as usize);
                 candidates.push(to_relative(&current));
