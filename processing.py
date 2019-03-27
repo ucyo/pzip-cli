@@ -30,7 +30,7 @@ def main(data, stream_plot=False, threshold=.90, block=128):
                 correlations = [abs(np.corrcoef(c, result_ones))[0,1] for c in candidates]
                 if all([cc <= threshold for cc in correlations]):
                     candidates.append(result_ones/block)
-                    # pd.DataFrame(candidates).T.to_csv('/tmp/tmp.corrs.csv')
+                    pd.DataFrame(candidates).T.to_csv('/tmp/py.corrs.csv')
             elif i*8+j == block - 1:
                 candidates.append(result_ones/block)
             if stream_plot:
@@ -99,8 +99,7 @@ def example_for_comparison_with_rust_output():
              232,45,185,227,199,42,202,92,3,48,212,179,148,19,151,209,79,236,
              52,105,80,49,139,103,221,16,35,193,212,245,159,198,17,184,133,225,
              2,212,96,162,57,97,123,161,124,148]
-    c = main(vdata, stream_plot=False, threshold=.97, block=64)
-    print(c, len(c))
+    _ = main(vdata, stream_plot=False, threshold=.97, block=64)
 
 if __name__ == "__main__":
     if "--example" in sys.argv[1:]:

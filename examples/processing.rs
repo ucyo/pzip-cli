@@ -122,5 +122,12 @@ fn main() {
         }
     }
 
-    println!("{:?} {}", candidates, candidates.len());
+    println!(",0,1,2");
+    for i in 0..BLOCKSIZE {
+        let mut line = i.to_string();
+        for k in 0..candidates.len() {
+            line = format!("{},{}", line, candidates[k][i])
+        }
+        println!("{}", line)
+    }
 }
