@@ -26,15 +26,13 @@ def main(data, stream_plot=False, threshold=.90, block=128):
             result_ones = np.roll(result_ones, -1)
             result_ones = result_ones - minus
             result_ones[-1] = result_ones[-2] + float(num)
-            if i*8+j > block:
+            if i*8+j > block - 1:
                 correlations = [abs(np.corrcoef(c, result_ones))[0,1] for c in candidates]
-                if all([cc<threshold for cc in correlations]):
+                if all([cc <= threshold for cc in correlations]):
                     candidates.append(result_ones/block)
-                    pd.DataFrame(candidates).T.to_csv('/tmp/tmp.corrs.csv')
-            elif i*8+j == block:
+                    # pd.DataFrame(candidates).T.to_csv('/tmp/tmp.corrs.csv')
+            elif i*8+j == block - 1:
                 candidates.append(result_ones/block)
-                print(candidates[0])
-                exit(0)
             if stream_plot:
                 print(result_ones/block)
                 plt.clf()
