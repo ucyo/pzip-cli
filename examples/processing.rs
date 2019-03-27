@@ -6,17 +6,21 @@ use log::{debug};
 const BLOCKSIZE: usize = 64;
 const THRESHOLD:   f64 = 0.97;
 
+fn remove_and_push(val: &u8, pos: u8, vec: &mut Vec<f64>) {
+    let num = *val & (1 << pos) > 0;
+    let minus = vec.remove(0);
+    for element in vec.iter_mut() {
+        *element -= minus;
+    }
+    vec.push(vec.last().unwrap() + num as i32 as f64);
+}
+
+
 fn first_block(bytes: &Vec<u8>) -> Vec<f64> {
     let mut result = vec![0f64;BLOCKSIZE];
     for val in bytes.into_iter().take(BLOCKSIZE/8) {
-        // TODO: Export function
         for j in 0..8 {
-            let num = val & (1 << j) > 0;
-            let minus = result.remove(0);
-            for element in result.iter_mut() {
-                *element -= minus;
-            }
-            result.push(result.last().unwrap() + num as i32 as f64);
+            remove_and_push(val, j, &mut result);
         }
     }
     result
@@ -26,6 +30,9 @@ fn calculate_correlation(one: &Vec<f64>, other: &Vec<f64>) -> f64 {
     correlation(one.as_slice(), 1, other.as_slice(), 1, one.len())
 }
 
+fn to_relative(vec: &Vec<f64>) -> Vec<f64> {
+    vec.iter().map(|&a| a / BLOCKSIZE as f64).collect()
+}
 
 fn main() {
     env_logger::init();
@@ -92,23 +99,18 @@ fn main() {
              2,212,96,162,57,97,123,161,124,148];
 
     let mut current = first_block(&bytes);
-    let first_candidate: Vec<f64> = current.iter().map(|&a| a as f64 / BLOCKSIZE as f64).collect();
+    let first_candidate = to_relative(&current);
 
     let mut candidates : Vec<Vec<f64>> = Vec::new();
     candidates.push(first_candidate);
 
     for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8) {
         'out: for j in 0..8 {
-            let num = (val & (1 << j)) > 0;
-            let minus = current.remove(0);
-            for element in current.iter_mut() {
-                *element -= minus;
-            }
-            current.push(current.last().unwrap() + num as i32 as f64);
+            remove_and_push(val, j, &mut current);
             let mut iter = candidates.iter().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
             if iter.next() == None {
-                debug!("Adding: {}, because", i*8+j);
-                candidates.push(current.iter().map(|&a| a as f64 / BLOCKSIZE as f64).collect())
+                debug!("Adding: {}, because", i*8+j as usize);
+                candidates.push(to_relative(&current));
             }
         }
     }
