@@ -14,11 +14,11 @@ import sys
 
 def main(data, stream_plot=False, threshold=.90, block=128):
     till = None
-    # block = 128
     result_ones = np.array([0]*block).astype(float)
     candidates = []
 
-    plt.ion()
+    if stream_plot:
+        plt.ion()
     for i,val in enumerate(data[slice(None,till,None)]):
         for j in range(8):
             num = (val & (1 << j)) > 0
@@ -34,7 +34,6 @@ def main(data, stream_plot=False, threshold=.90, block=128):
             elif i*8+j == block - 1:
                 candidates.append(result_ones/block)
             if stream_plot:
-                print(result_ones/block)
                 plt.clf()
                 plt.plot(range(i*8+j-block,i*8+j),result_ones/block)
                 plt.ylim(0,1)
@@ -101,8 +100,7 @@ def example_for_comparison_with_rust_output():
              52,105,80,49,139,103,221,16,35,193,212,245,159,198,17,184,133,225,
              2,212,96,162,57,97,123,161,124,148]
     c = main(vdata, stream_plot=False, threshold=.97, block=64)
-    # print(vdata)
-    print(c[0], len(c[0]))
+    print(c, len(c))
 
 if __name__ == "__main__":
     if "--example" in sys.argv[1:]:
