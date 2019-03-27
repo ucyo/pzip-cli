@@ -52,7 +52,7 @@ fn main() {
     let mut candidates : Vec<Vec<f64>> = Vec::new();
     candidates.push(first_candidate);
 
-    for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8).take(1_000_000) {
+    for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8) {
         if i % 100_000 == 0 {
             info!("{} of {}", i, bytes.len());
         }
