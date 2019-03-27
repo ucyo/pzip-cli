@@ -108,17 +108,11 @@ fn main() {
                 *element -= minus;
             }
             current.push(current.last().unwrap() + num as i32 as f32);
-            // TODO: Break at first correlation > THRESHOLD
-            let corr : Vec<f32> = candidates.iter()
-                  .map(|candidate| calculate_correlation(candidate, &current))
-                  .collect();
-            for result in corr.iter() {
-                if *result > THRESHOLD {
-                    continue 'out
-                }
+            let mut iter = candidates.iter().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
+            if iter.next() == None {
+                debug!("Adding: {}, because", i*8+j);
+                candidates.push(current.iter().map(|&a| a as f32 / BLOCKSIZE as f32).collect())
             }
-            debug!("Adding: {}, because {:?}", i*8+j, corr);
-            candidates.push(current.iter().map(|&a| a as f32 / BLOCKSIZE as f32).collect())
         }
     }
 
