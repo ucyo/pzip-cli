@@ -1,7 +1,7 @@
-// use std::fs;
-// use std::io::Read;
+use std::io::Read;
 use rgsl::statistics::correlation;
 use log::{debug};
+use std::{env, fs};
 
 const BLOCKSIZE: usize = 64;
 const THRESHOLD:   f64 = 0.97;
@@ -34,14 +34,52 @@ fn to_relative(vec: &Vec<f64>) -> Vec<f64> {
     vec.iter().map(|&a| a / BLOCKSIZE as f64).collect()
 }
 
+fn read_binary(filename: &String) -> Vec<u8> {
+    let mut file = fs::File::open(filename).unwrap();
+    let mut bytes: Vec<u8> = Vec::new();
+    let _ = file.read_to_end(&mut bytes).unwrap();
+    bytes
+}
+
 fn main() {
     env_logger::init();
-    // TODO: Add file I/O support
-    // let filename = "";
-    // let mut file = fs::File::open(filename).unwrap();
-    // let mut bytes: Vec<u8> = Vec::new();
-    // let _ = file.read_to_end(&mut bytes).unwrap();
-    let bytes : Vec<u8> = vec![201,124,53,204,149,106,17,228,241,130,205,118,242,181,14,205,74,17,
+    let args : Vec<String> = env::args().collect();
+    let bytes = read_binary(&args[1]);
+
+    let mut current = first_block(&bytes);
+    let first_candidate = to_relative(&current);
+
+    let mut candidates : Vec<Vec<f64>> = Vec::new();
+    candidates.push(first_candidate);
+
+    for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8) {
+        'out: for j in 0..8 {
+            remove_and_push(val, j, &mut current);
+            let mut iter = candidates.iter().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
+            if iter.next() == None {
+                debug!("Adding: {}, because", i*8+j as usize);
+                candidates.push(to_relative(&current));
+            }
+        }
+    }
+
+    println!(",0,1,2");
+    for i in 0..BLOCKSIZE {
+        let mut line = i.to_string();
+        for k in 0..candidates.len() {
+            line = format!("{},{}", line, candidates[k][i])
+        }
+        println!("{}", line)
+    }
+}
+
+#[allow(unused_imports)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_comparison_with_python() {
+         let bytes : Vec<u8> = vec![201,124,53,204,149,106,17,228,241,130,205,118,242,181,14,205,74,17,
              96,135,188,213,219,7,94,203,61,245,43,205,243,50,149,246,126,154,
              99,71,137,26,96,143,206,203,66,254,3,147,231,114,23,210,20,196,
              66,64,123,239,71,29,126,228,14,86,29,164,40,27,54,110,114,64,
@@ -97,30 +135,6 @@ fn main() {
              232,45,185,227,199,42,202,92,3,48,212,179,148,19,151,209,79,236,
              52,105,80,49,139,103,221,16,35,193,212,245,159,198,17,184,133,225,
              2,212,96,162,57,97,123,161,124,148];
-
-    let mut current = first_block(&bytes);
-    let first_candidate = to_relative(&current);
-
-    let mut candidates : Vec<Vec<f64>> = Vec::new();
-    candidates.push(first_candidate);
-
-    for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8) {
-        'out: for j in 0..8 {
-            remove_and_push(val, j, &mut current);
-            let mut iter = candidates.iter().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
-            if iter.next() == None {
-                debug!("Adding: {}, because", i*8+j as usize);
-                candidates.push(to_relative(&current));
-            }
-        }
-    }
-
-    println!(",0,1,2");
-    for i in 0..BLOCKSIZE {
-        let mut line = i.to_string();
-        for k in 0..candidates.len() {
-            line = format!("{},{}", line, candidates[k][i])
-        }
-        println!("{}", line)
+        assert!(false);
     }
 }
