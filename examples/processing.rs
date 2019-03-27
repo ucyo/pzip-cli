@@ -4,29 +4,26 @@ use rgsl::statistics::correlation;
 use log::{debug};
 
 const BLOCKSIZE: usize = 64;
-const THRESHOLD:   f32 = 0.97;
+const THRESHOLD:   f64 = 0.97;
 
-fn first_block(bytes: &Vec<u8>) -> Vec<f32> {
-    let mut result = vec![0f32;BLOCKSIZE];
+fn first_block(bytes: &Vec<u8>) -> Vec<f64> {
+    let mut result = vec![0f64;BLOCKSIZE];
     for val in bytes.into_iter().take(BLOCKSIZE/8) {
+        // TODO: Export function
         for j in 0..8 {
             let num = val & (1 << j) > 0;
             let minus = result.remove(0);
             for element in result.iter_mut() {
                 *element -= minus;
             }
-            result.push(result.last().unwrap() + num as i32 as f32);
+            result.push(result.last().unwrap() + num as i32 as f64);
         }
     }
     result
 }
 
-fn calculate_correlation(one: &Vec<f32>, other: &Vec<f32>) -> f32{
-    //TODO: Change this to use Vec<64>
-    let one: Vec<f64> = one.iter().map(|&e| e as f64).collect();
-    let other: Vec<f64> = other.iter().map(|&e| e as f64).collect();
-    let result = correlation(one.as_slice(), 1, other.as_slice(), 1, one.len());
-    result as f32
+fn calculate_correlation(one: &Vec<f64>, other: &Vec<f64>) -> f64 {
+    correlation(one.as_slice(), 1, other.as_slice(), 1, one.len())
 }
 
 
@@ -95,9 +92,9 @@ fn main() {
              2,212,96,162,57,97,123,161,124,148];
 
     let mut current = first_block(&bytes);
-    let first_candidate: Vec<f32> = current.iter().map(|&a| a as f32 / BLOCKSIZE as f32).collect();
+    let first_candidate: Vec<f64> = current.iter().map(|&a| a as f64 / BLOCKSIZE as f64).collect();
 
-    let mut candidates : Vec<Vec<f32>> = Vec::new();
+    let mut candidates : Vec<Vec<f64>> = Vec::new();
     candidates.push(first_candidate);
 
     for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8) {
@@ -107,11 +104,11 @@ fn main() {
             for element in current.iter_mut() {
                 *element -= minus;
             }
-            current.push(current.last().unwrap() + num as i32 as f32);
+            current.push(current.last().unwrap() + num as i32 as f64);
             let mut iter = candidates.iter().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
             if iter.next() == None {
                 debug!("Adding: {}, because", i*8+j);
-                candidates.push(current.iter().map(|&a| a as f32 / BLOCKSIZE as f32).collect())
+                candidates.push(current.iter().map(|&a| a as f64 / BLOCKSIZE as f64).collect())
             }
         }
     }
