@@ -1,10 +1,10 @@
 use std::io::Read;
 use rgsl::statistics::correlation;
-use log::{debug};
+use log::{info,debug};
 use std::{env, fs};
 
-const BLOCKSIZE: usize = 64;
-const THRESHOLD:   f64 = 0.97;
+const BLOCKSIZE: usize = 128;
+const THRESHOLD:   f64 = 0.9;
 
 fn remove_and_push(val: &u8, pos: u8, vec: &mut Vec<f64>) {
     let num = *val & (1 << pos) > 0;
@@ -52,7 +52,10 @@ fn main() {
     let mut candidates : Vec<Vec<f64>> = Vec::new();
     candidates.push(first_candidate);
 
-    for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8) {
+    for (i,val) in bytes.iter().enumerate().skip(BLOCKSIZE/8).take(1_000_000) {
+        if i % 100_000 == 0 {
+            info!("{} of {}", i, bytes.len());
+        }
         'out: for j in 0..8 {
             remove_and_push(val, j, &mut current);
             let mut iter = candidates.iter().skip_while(|x| calculate_correlation(x, &current) < THRESHOLD);
@@ -63,7 +66,6 @@ fn main() {
         }
     }
 
-    println!(",0,1,2");
     for i in 0..BLOCKSIZE {
         let mut line = i.to_string();
         for k in 0..candidates.len() {
