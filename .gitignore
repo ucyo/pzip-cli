@@ -3,3 +3,4 @@ low-hanging-fruits/
 .ipynb_checkpoints/
 raid6/
 **/*.rs.bk
+settings.json
