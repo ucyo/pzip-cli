@@ -1,0 +1,859 @@
+[2019-03-28T13:47:21Z DEBUG cargo::core::workspace] find_root - trying /home/ucyo/rust/Cargo.toml
+[2019-03-28T13:47:21Z DEBUG cargo::core::workspace] find_root - trying /home/ucyo/Cargo.toml
+[2019-03-28T13:47:21Z DEBUG cargo::core::workspace] find_root - trying /home/Cargo.toml
+[2019-03-28T13:47:21Z DEBUG cargo::core::workspace] find_root - trying /Cargo.toml
+[2019-03-28T13:47:21Z DEBUG cargo::core::workspace] find_members - only me as a member
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_core v0.3.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer env_logger v0.6.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_core v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer lazy_static v1.3.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer bitflags v0.9.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer GSL v1.1.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer regex-syntax v0.6.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_isaac v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer yaml-rust v0.3.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer pzip-cli v0.1.2 (/home/ucyo/rust/pzip-cli)
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer utf8-ranges v1.0.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer regex v1.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi-i686-pc-windows-gnu v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer thread_local v0.3.6
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer clap v2.27.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer bitflags v1.0.4
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer c_vec v1.0.12
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi-x86_64-pc-windows-gnu v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi-util v0.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer cfg-if v0.1.7
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer textwrap v0.9.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_pcg v0.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer atty v0.2.11
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer aho-corasick v0.6.10
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer cloudabi v0.0.3
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer ansi_term v0.9.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_jitter v0.1.3
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer humantime v1.2.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer vec_map v0.8.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_chacha v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer autocfg v0.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer fuchsia-cprng v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rdrand v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer wincolor v1.0.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer memchr v2.2.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer unicode-width v0.1.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer pkg-config v0.3.14
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer pzip v0.2.0 (/home/ucyo/rust/pzip)
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer termcolor v1.0.4
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi v0.3.6
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer byteorder v1.3.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer redox_syscall v0.1.51
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer ucd-util v0.1.3
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand v0.6.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer redox_termios v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer libc v0.2.48
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_xorshift v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_hc v0.1.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer strsim v0.6.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer log v0.4.6
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer quick-error v1.2.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer termion v1.5.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_os v0.1.3
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/missing  /home/ucyo/rust/pzip-cli
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] loading source /home/ucyo/rust/pzip-cli
+[2019-03-28T13:47:21Z DEBUG cargo::sources::config] loading: /home/ucyo/rust/pzip-cli
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver] initial activation: pzip-cli v0.1.2 (/home/ucyo/rust/pzip-cli)
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/missing  registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] loading source registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::config] loading: registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] skipping update due to locked registry
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/missing  /home/ucyo/rust/pzip
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] loading source /home/ucyo/rust/pzip
+[2019-03-28T13:47:21Z DEBUG cargo::sources::config] loading: /home/ucyo/rust/pzip
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if atty v0.2.11 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if log v0.4.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if byteorder v1.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if env_logger v0.6.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if log v0.4.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if unicode-width v0.1.5 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if cfg-if v0.1.7 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if memchr v2.2.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if autocfg v0.1.2 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if autocfg v0.1.2 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-i686-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-x86_64-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if redox_syscall v0.1.51 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-i686-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-x86_64-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-i686-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-x86_64-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer textwrap v0.9.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_isaac v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_jitter v0.1.3
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer utf8-ranges v1.0.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi-util v0.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand v0.6.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer regex v1.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_hc v0.1.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer env_logger v0.6.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer redox_syscall v0.1.51
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer ucd-util v0.1.3
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer vec_map v0.8.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer bitflags v0.9.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer pkg-config v0.3.14
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer fuchsia-cprng v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer wincolor v1.0.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer libc v0.2.48
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer thread_local v0.3.6
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer aho-corasick v0.6.10
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer atty v0.2.11
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer pzip-cli v0.1.2 (/home/ucyo/rust/pzip-cli)
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer yaml-rust v0.3.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer memchr v2.2.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer quick-error v1.2.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer clap v2.27.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer lazy_static v1.3.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer pzip v0.2.0 (/home/ucyo/rust/pzip)
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer byteorder v1.3.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_core v0.3.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_xorshift v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer humantime v1.2.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_pcg v0.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer bitflags v1.0.4
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer cfg-if v0.1.7
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer strsim v0.6.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer ansi_term v0.9.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi-i686-pc-windows-gnu v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer c_vec v1.0.12
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rdrand v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi-x86_64-pc-windows-gnu v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer termion v1.5.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer GSL v1.1.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer autocfg v0.1.2
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_chacha v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer regex-syntax v0.6.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer redox_termios v0.1.1
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer winapi v0.3.6
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_core v0.4.0
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer termcolor v1.0.4
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer unicode-width v0.1.5
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer rand_os v0.1.3
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer cloudabi v0.0.3
+[2019-03-28T13:47:21Z DEBUG cargo::ops::resolve] attempting to prefer log v0.4.6
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/locked   /home/ucyo/rust/pzip-cli
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver] initial activation: pzip-cli v0.1.2 (/home/ucyo/rust/pzip-cli)
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/precise  /home/ucyo/rust/pzip
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if atty v0.2.11 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if log v0.4.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if byteorder v1.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if env_logger v0.6.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if log v0.4.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if unicode-width v0.1.5 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if cfg-if v0.1.7 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if memchr v2.2.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if autocfg v0.1.2 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::registry] load/match    registry `https://github.com/rust-lang/crates.io-index`
+[2019-03-28T13:47:21Z DEBUG cargo::sources::registry] attempting query without update
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if libc v0.2.48 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if autocfg v0.1.2 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-i686-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-x86_64-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if redox_syscall v0.1.51 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-i686-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-x86_64-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi v0.3.6 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if rand_core v0.3.1 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-i686-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::resolver::context] checking if winapi-x86_64-pc-windows-gnu v0.4.0 is already activated
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] pzip-cli v0.1.2 (/home/ucyo/rust/pzip-cli) doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::util::rustc] adding rustup info to rustc fingerprint
+[2019-03-28T13:47:21Z INFO  cargo::util::rustc] reusing existing rustc info cache
+[2019-03-28T13:47:21Z INFO  cargo::util::rustc] rustc info cache hit
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::build_context] probe_target_info
+[2019-03-28T13:47:21Z INFO  cargo::util::rustc] rustc info cache hit
+[2019-03-28T13:47:21Z INFO  cargo::util::rustc] rustc info cache hit
+[2019-03-28T13:47:21Z INFO  jobserver::imp] created a jobserver: Client { read: File { fd: 3, path: "pipe:[5208503]", read: true, write: false }, write: File { fd: 20, path: "pipe:[5208503]", read: false, write: true } }
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] byteorder v1.3.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] env_logger v0.6.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] log v0.4.6 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] pzip v0.2.0 (/home/ucyo/rust/pzip) doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] clap v2.27.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] GSL v1.1.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] atty v0.2.11 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] termcolor v1.0.4 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] regex v1.1.2 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] humantime v1.2.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] cfg-if v0.1.7 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] libc v0.2.48 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] regex-syntax v0.6.5 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] utf8-ranges v1.0.2 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] memchr v2.2.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] thread_local v0.3.6 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] aho-corasick v0.6.10 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] ucd-util v0.1.3 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] lazy_static v1.3.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] quick-error v1.2.2 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand v0.6.5 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_pcg v0.1.2 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_chacha v0.1.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_core v0.4.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_isaac v0.1.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_os v0.1.3 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_xorshift v0.1.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_hc v0.1.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_jitter v0.1.3 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] autocfg v0.1.2 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] rand_core v0.3.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] textwrap v0.9.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] unicode-width v0.1.5 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] bitflags v0.9.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] ansi_term v0.9.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] yaml-rust v0.3.5 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] vec_map v0.8.1 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] strsim v0.6.0 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] c_vec v1.0.12 doesn't need a download
+[2019-03-28T13:47:21Z DEBUG cargo::core::package] pkg-config v0.3.14 doesn't need a download
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librgsl-2ee408cc85644b23.so", hardlink: None, export_path: None, flavor: Linkable }, OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librgsl-2ee408cc85644b23.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/GSL-906432e9691be515/build_script_build-906432e9691be515", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/GSL-906432e9691be515/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libaho_corasick-67aa220747dcafb6.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libansi_term-787ac66a445b74a1.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libatty-afd1ffdd49d8f253.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libautocfg-479073814deb6bb3.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libbitflags-c57d273b6b9de827.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libbyteorder-b5ce5675d4a32a56.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/byteorder-ecae1be54f33fbb5/build_script_build-ecae1be54f33fbb5", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/byteorder-ecae1be54f33fbb5/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libc_vec-ae3ef0ff1314466d.so", hardlink: None, export_path: None, flavor: Linkable }, OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libc_vec-ae3ef0ff1314466d.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libcfg_if-335af8d3891f6bd0.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libclap-98cb85c31cecbbff.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libenv_logger-db78d0f3a26136f0.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libhumantime-59640ed74ae75cb1.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/liblazy_static-f2a7f67efbb4113c.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/liblibc-a920e1a52fa3a6a4.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/libc-555fbe03319d6faa/build_script_build-555fbe03319d6faa", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/libc-555fbe03319d6faa/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/liblog-bab625c25337a5da.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libmemchr-e096ab04a3d54be7.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/memchr-bb455f9dd9fc59e5/build_script_build-bb455f9dd9fc59e5", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/memchr-bb455f9dd9fc59e5/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libpkg_config-738d360f67380476.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libpzip-d78e6ca3432a978e.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/examples/processing-a05dcbad7a84dfb3", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/examples/processing"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libquick_error-995ff019f482233d.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand-c0050749ff89525d.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/rand-78cc1ec12e44ce36/build_script_build-78cc1ec12e44ce36", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/rand-78cc1ec12e44ce36/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_chacha-58dc16d682219962.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/rand_chacha-1377e310fcf331a9/build_script_build-1377e310fcf331a9", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/rand_chacha-1377e310fcf331a9/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_core-c57102fc3d8e5af2.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_core-4499d52838fdca08.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_hc-d6743ffcc20b964e.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_isaac-3b56a32cc5e3aace.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_jitter-0eae7a116affe3bf.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_os-d0089d7e26b5937a.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_pcg-b20c5b2b552964d2.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/rand_pcg-a98631bb6055212a/build_script_build-a98631bb6055212a", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/rand_pcg-a98631bb6055212a/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/librand_xorshift-f84cef5c5125f270.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libregex-77ba3636c0e9dd1f.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/build/regex-20be0c61b6a6be80/build_script_build-20be0c61b6a6be80", hardlink: Some("/home/ucyo/rust/pzip-cli/target/debug/build/regex-20be0c61b6a6be80/build-script-build"), export_path: None, flavor: Normal }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libregex_syntax-215f5422acad721a.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libstrsim-7a1a74a0e1713bdf.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libtermcolor-12dae90fdc9649c3.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libtextwrap-bc49d7ba7ba4020d.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libthread_local-145899ff250393dc.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libucd_util-4af3f0b39edc23d5.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libunicode_width-87657b6aa6bd19ff.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libutf8_ranges-3204c30fb6ef6e45.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libvec_map-9bb6019a35d046b1.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::context::compilation_files] Target filenames: [OutputFile { path: "/home/ucyo/rust/pzip-cli/target/debug/deps/libyaml_rust-623f880b146aadf6.rlib", hardlink: None, export_path: None, flavor: Linkable }]
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/pzip-cli-a05dcbad7a84dfb3/example-processing-a05dcbad7a84dfb3
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/GSL-2ee408cc85644b23/lib-rgsl-2ee408cc85644b23
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/GSL-0bfcae2e2b242c5e/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] old local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/GSL-906432e9691be515/build-script-build_script_build-906432e9691be515
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/pkg-config-738d360f67380476/lib-pkg_config-738d360f67380476
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/c_vec-ae3ef0ff1314466d/lib-c_vec-ae3ef0ff1314466d
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/libc-a920e1a52fa3a6a4/lib-libc-a920e1a52fa3a6a4
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/libc-cb81912b71df7a57/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] old local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/libc-555fbe03319d6faa/build-script-build_script_build-555fbe03319d6faa
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/byteorder-b5ce5675d4a32a56/lib-byteorder-b5ce5675d4a32a56
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/byteorder-c0f598857c7d05b7/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] old local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/byteorder-ecae1be54f33fbb5/build-script-build_script_build-ecae1be54f33fbb5
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/clap-98cb85c31cecbbff/lib-clap-98cb85c31cecbbff
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/ansi_term-787ac66a445b74a1/lib-ansi_term-787ac66a445b74a1
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/atty-afd1ffdd49d8f253/lib-atty-afd1ffdd49d8f253
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/bitflags-c57d273b6b9de827/lib-bitflags-c57d273b6b9de827
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/strsim-7a1a74a0e1713bdf/lib-strsim-7a1a74a0e1713bdf
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/textwrap-bc49d7ba7ba4020d/lib-textwrap-bc49d7ba7ba4020d
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/unicode-width-87657b6aa6bd19ff/lib-unicode_width-87657b6aa6bd19ff
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/vec_map-9bb6019a35d046b1/lib-vec_map-9bb6019a35d046b1
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/yaml-rust-623f880b146aadf6/lib-yaml_rust-623f880b146aadf6
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/env_logger-db78d0f3a26136f0/lib-env_logger-db78d0f3a26136f0
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/humantime-59640ed74ae75cb1/lib-humantime-59640ed74ae75cb1
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/quick-error-995ff019f482233d/lib-quick_error-995ff019f482233d
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/log-bab625c25337a5da/lib-log-bab625c25337a5da
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/cfg-if-335af8d3891f6bd0/lib-cfg_if-335af8d3891f6bd0
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/regex-77ba3636c0e9dd1f/lib-regex-77ba3636c0e9dd1f
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/aho-corasick-67aa220747dcafb6/lib-aho_corasick-67aa220747dcafb6
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/memchr-e096ab04a3d54be7/lib-memchr-e096ab04a3d54be7
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/memchr-86ee5fd1b82cf0a8/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] old local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/memchr-bb455f9dd9fc59e5/build-script-build_script_build-bb455f9dd9fc59e5
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/regex-fa8d1d050bbe92f6/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] old local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/regex-20be0c61b6a6be80/build-script-build_script_build-20be0c61b6a6be80
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/regex-syntax-215f5422acad721a/lib-regex_syntax-215f5422acad721a
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/ucd-util-4af3f0b39edc23d5/lib-ucd_util-4af3f0b39edc23d5
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/thread_local-145899ff250393dc/lib-thread_local-145899ff250393dc
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/lazy_static-f2a7f67efbb4113c/lib-lazy_static-f2a7f67efbb4113c
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/utf8-ranges-3204c30fb6ef6e45/lib-utf8_ranges-3204c30fb6ef6e45
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/termcolor-12dae90fdc9649c3/lib-termcolor-12dae90fdc9649c3
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/pzip-d78e6ca3432a978e/lib-pzip-d78e6ca3432a978e
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand-c0050749ff89525d/lib-rand-c0050749ff89525d
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand-04830bece6465225/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] new local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand-78cc1ec12e44ce36/build-script-build_script_build-78cc1ec12e44ce36
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/autocfg-479073814deb6bb3/lib-autocfg-479073814deb6bb3
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_chacha-58dc16d682219962/lib-rand_chacha-58dc16d682219962
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_chacha-e276d36133f9ee5e/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] new local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_chacha-1377e310fcf331a9/build-script-build_script_build-1377e310fcf331a9
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_core-c57102fc3d8e5af2/lib-rand_core-c57102fc3d8e5af2
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_core-4499d52838fdca08/lib-rand_core-4499d52838fdca08
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_hc-d6743ffcc20b964e/lib-rand_hc-d6743ffcc20b964e
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_isaac-3b56a32cc5e3aace/lib-rand_isaac-3b56a32cc5e3aace
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_jitter-0eae7a116affe3bf/lib-rand_jitter-0eae7a116affe3bf
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_os-d0089d7e26b5937a/lib-rand_os-d0089d7e26b5937a
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_pcg-b20c5b2b552964d2/lib-rand_pcg-b20c5b2b552964d2
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_pcg-bb781c29203fa5b3/build
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] new local fingerprints deps
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_pcg-a98631bb6055212a/build-script-build_script_build-a98631bb6055212a
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler::fingerprint] fingerprint at: /home/ucyo/rust/pzip-cli/target/debug/.fingerprint/rand_xorshift-f84cef5c5125f270/lib-rand_xorshift-f84cef5c5125f270
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: memchr v2.2.0 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/memchr-bb455f9dd9fc59e5/build_script_build-bb455f9dd9fc59e5 to /home/ucyo/rust/pzip-cli/target/debug/build/memchr-bb455f9dd9fc59e5/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: libc v0.2.48 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/libc-555fbe03319d6faa/build_script_build-555fbe03319d6faa to /home/ucyo/rust/pzip-cli/target/debug/build/libc-555fbe03319d6faa/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: autocfg v0.1.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_core v0.4.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: memchr v2.2.0 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: libc v0.2.48 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: autocfg v0.1.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_core v0.4.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: regex v1.1.2 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/regex-20be0c61b6a6be80/build_script_build-20be0c61b6a6be80 to /home/ucyo/rust/pzip-cli/target/debug/build/regex-20be0c61b6a6be80/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: ucd-util v0.1.3 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: lazy_static v1.3.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: quick-error v1.2.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: regex v1.1.2 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: ucd-util v0.1.3 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: lazy_static v1.3.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: quick-error v1.2.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: byteorder v1.3.1 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/byteorder-ecae1be54f33fbb5/build_script_build-ecae1be54f33fbb5 to /home/ucyo/rust/pzip-cli/target/debug/build/byteorder-ecae1be54f33fbb5/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: cfg-if v0.1.7 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: pkg-config v0.3.14 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: utf8-ranges v1.0.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: byteorder v1.3.1 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: cfg-if v0.1.7 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: pkg-config v0.3.14 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: utf8-ranges v1.0.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: termcolor v1.0.4 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: unicode-width v0.1.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: yaml-rust v0.3.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: c_vec v1.0.12 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: termcolor v1.0.4 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: unicode-width v0.1.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: yaml-rust v0.3.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: c_vec v1.0.12 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: vec_map v0.8.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: bitflags v0.9.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: strsim v0.6.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: ansi_term v0.9.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: vec_map v0.8.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: bitflags v0.9.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: strsim v0.6.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: ansi_term v0.9.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: memchr v2.2.0 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: libc v0.2.48 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_pcg v0.1.2 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/rand_pcg-a98631bb6055212a/build_script_build-a98631bb6055212a to /home/ucyo/rust/pzip-cli/target/debug/build/rand_pcg-a98631bb6055212a/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_chacha v0.1.1 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/rand_chacha-1377e310fcf331a9/build_script_build-1377e310fcf331a9 to /home/ucyo/rust/pzip-cli/target/debug/build/rand_chacha-1377e310fcf331a9/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: memchr v2.2.0 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: libc v0.2.48 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_pcg v0.1.2 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_chacha v0.1.1 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand v0.6.5 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/rand-78cc1ec12e44ce36/build_script_build-78cc1ec12e44ce36 to /home/ucyo/rust/pzip-cli/target/debug/build/rand-78cc1ec12e44ce36/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_core v0.3.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_jitter v0.1.3 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: regex v1.1.2 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand v0.6.5 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_core v0.3.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_jitter v0.1.3 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: regex v1.1.2 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: regex-syntax v0.6.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: thread_local v0.3.6 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: humantime v1.2.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: byteorder v1.3.1 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: regex-syntax v0.6.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: thread_local v0.3.6 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: humantime v1.2.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: byteorder v1.3.1 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: log v0.4.6 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: GSL v1.1.0 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/build/GSL-906432e9691be515/build_script_build-906432e9691be515 to /home/ucyo/rust/pzip-cli/target/debug/build/GSL-906432e9691be515/build-script-build
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: textwrap v0.9.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: memchr v2.2.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: log v0.4.6 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: GSL v1.1.0 => Target(script)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: textwrap v0.9.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: memchr v2.2.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: libc v0.2.48 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_pcg v0.1.2 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_chacha v0.1.1 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand v0.6.5 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: libc v0.2.48 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_pcg v0.1.2 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_chacha v0.1.1 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand v0.6.5 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_isaac v0.1.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_xorshift v0.1.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_hc v0.1.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: byteorder v1.3.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_isaac v0.1.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_xorshift v0.1.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_hc v0.1.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: byteorder v1.3.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: GSL v1.1.0 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: aho-corasick v0.6.10 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: atty v0.2.11 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_os v0.1.3 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: GSL v1.1.0 => Target(script)/Profile() => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: aho-corasick v0.6.10 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: atty v0.2.11 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_os v0.1.3 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_pcg v0.1.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand_chacha v0.1.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: GSL v1.1.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: regex v1.1.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_pcg v0.1.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand_chacha v0.1.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: GSL v1.1.0 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: regex v1.1.2 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: clap v2.27.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: rand v0.6.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: env_logger v0.6.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: clap v2.27.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: rand v0.6.5 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: env_logger v0.6.1 => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: pzip v0.2.0 (/home/ucyo/rust/pzip) => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: pzip v0.2.0 (/home/ucyo/rust/pzip) => Target(lib)/Profile(dev) => Host
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] start: pzip-cli v0.1.2 (/home/ucyo/rust/pzip-cli) => Target(example: processing)/Profile(dev) => Host
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] linking /home/ucyo/rust/pzip-cli/target/debug/examples/processing-a05dcbad7a84dfb3 to /home/ucyo/rust/pzip-cli/target/debug/examples/processing
+[2019-03-28T13:47:21Z INFO  cargo::core::compiler::job_queue] end: pzip-cli v0.1.2 (/home/ucyo/rust/pzip-cli) => Target(example: processing)/Profile(dev) => Host
+    Finished dev [unoptimized + debuginfo] target(s) in 0.06s
+[2019-03-28T13:47:21Z DEBUG cargo::core::compiler] Not including path /usr/lib/x86_64-linux-gnu in runtime library search path because it is outside target root /home/ucyo/rust/pzip-cli/target/debug
+     Running `target/debug/examples/processing low-hanging-fruits/emac.ml.tm1.f32.little.5x90x160x320_3.raw.residual.nlzc`
+[2019-03-28T13:47:21Z DEBUG processing] Adding: 34, because
+[2019-03-28T13:47:21Z DEBUG processing] Adding: 43, because
+[2019-03-28T13:47:21Z DEBUG processing] Adding: 63, because
+[2019-03-28T13:47:21Z DEBUG processing] Adding: 648, because
+[2019-03-28T13:47:21Z DEBUG processing] Adding: 3203, because
+[2019-03-28T13:47:21Z DEBUG processing] Adding: 12913, because
+[2019-03-28T13:47:21Z DEBUG processing] Adding: 26843, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 88892, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 88894, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 108574, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 110336, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 110338, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 110340, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 237954, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 363758, because
+[2019-03-28T13:47:22Z DEBUG processing] Adding: 363762, because
+[2019-03-28T13:47:23Z DEBUG processing] Adding: 529914, because
+[2019-03-28T13:47:23Z DEBUG processing] Adding: 529917, because
+[2019-03-28T13:47:23Z DEBUG processing] Adding: 529918, because
+[2019-03-28T13:47:23Z DEBUG processing] Adding: 529920, because
+[2019-03-28T13:47:24Z DEBUG processing] Adding: 773288, because
+[2019-03-28T13:47:24Z INFO  processing] 100000 of 7630272
+[2019-03-28T13:47:27Z INFO  processing] 200000 of 7630272
+[2019-03-28T13:47:28Z DEBUG processing] Adding: 1842921, because
+[2019-03-28T13:47:28Z DEBUG processing] Adding: 1984732, because
+[2019-03-28T13:47:28Z DEBUG processing] Adding: 2024789, because
+[2019-03-28T13:47:29Z DEBUG processing] Adding: 2212324, because
+[2019-03-28T13:47:30Z INFO  processing] 300000 of 7630272
+[2019-03-28T13:47:31Z DEBUG processing] Adding: 2831550, because
+[2019-03-28T13:47:32Z DEBUG processing] Adding: 2962122, because
+[2019-03-28T13:47:33Z INFO  processing] 400000 of 7630272
+[2019-03-28T13:47:36Z INFO  processing] 500000 of 7630272
+[2019-03-28T13:47:36Z DEBUG processing] Adding: 4066292, because
+[2019-03-28T13:47:39Z INFO  processing] 600000 of 7630272
+[2019-03-28T13:47:42Z INFO  processing] 700000 of 7630272
+[2019-03-28T13:47:46Z INFO  processing] 800000 of 7630272
+[2019-03-28T13:47:47Z DEBUG processing] Adding: 6462181, because
+[2019-03-28T13:47:47Z DEBUG processing] Adding: 6462185, because
+[2019-03-28T13:47:47Z DEBUG processing] Adding: 6462190, because
+[2019-03-28T13:47:51Z INFO  processing] 900000 of 7630272
+[2019-03-28T13:47:55Z INFO  processing] 1000000 of 7630272
+[2019-03-28T13:48:00Z INFO  processing] 1100000 of 7630272
+[2019-03-28T13:48:04Z INFO  processing] 1200000 of 7630272
+[2019-03-28T13:48:07Z DEBUG processing] Adding: 10054745, because
+[2019-03-28T13:48:08Z INFO  processing] 1300000 of 7630272
+[2019-03-28T13:48:10Z INFO  processing] 1400000 of 7630272
+[2019-03-28T13:48:11Z DEBUG processing] Adding: 11518884, because
+[2019-03-28T13:48:12Z INFO  processing] 1500000 of 7630272
+[2019-03-28T13:48:15Z INFO  processing] 1600000 of 7630272
+[2019-03-28T13:48:17Z INFO  processing] 1700000 of 7630272
+[2019-03-28T13:48:19Z INFO  processing] 1800000 of 7630272
+[2019-03-28T13:48:22Z INFO  processing] 1900000 of 7630272
+[2019-03-28T13:48:24Z DEBUG processing] Adding: 15823831, because
+[2019-03-28T13:48:24Z INFO  processing] 2000000 of 7630272
+[2019-03-28T13:48:27Z INFO  processing] 2100000 of 7630272
+[2019-03-28T13:48:30Z INFO  processing] 2200000 of 7630272
+[2019-03-28T13:48:32Z INFO  processing] 2300000 of 7630272
+[2019-03-28T13:48:35Z INFO  processing] 2400000 of 7630272
+[2019-03-28T13:48:37Z INFO  processing] 2500000 of 7630272
+[2019-03-28T13:48:37Z DEBUG processing] Adding: 20011443, because
+[2019-03-28T13:48:39Z INFO  processing] 2600000 of 7630272
+[2019-03-28T13:48:42Z INFO  processing] 2700000 of 7630272
+[2019-03-28T13:48:44Z INFO  processing] 2800000 of 7630272
+[2019-03-28T13:48:47Z INFO  processing] 2900000 of 7630272
+[2019-03-28T13:48:47Z DEBUG processing] Adding: 23411475, because
+[2019-03-28T13:48:49Z INFO  processing] 3000000 of 7630272
+[2019-03-28T13:48:52Z INFO  processing] 3100000 of 7630272
+[2019-03-28T13:48:54Z INFO  processing] 3200000 of 7630272
+[2019-03-28T13:48:57Z INFO  processing] 3300000 of 7630272
+[2019-03-28T13:49:00Z INFO  processing] 3400000 of 7630272
+[2019-03-28T13:49:01Z DEBUG processing] Adding: 27391604, because
+[2019-03-28T13:49:02Z DEBUG processing] Adding: 27938507, because
+[2019-03-28T13:49:02Z INFO  processing] 3500000 of 7630272
+[2019-03-28T13:49:05Z INFO  processing] 3600000 of 7630272
+[2019-03-28T13:49:07Z INFO  processing] 3700000 of 7630272
+[2019-03-28T13:49:09Z INFO  processing] 3800000 of 7630272
+[2019-03-28T13:49:12Z INFO  processing] 3900000 of 7630272
+[2019-03-28T13:49:14Z INFO  processing] 4000000 of 7630272
+[2019-03-28T13:49:17Z INFO  processing] 4100000 of 7630272
+[2019-03-28T13:49:19Z INFO  processing] 4200000 of 7630272
+[2019-03-28T13:49:21Z INFO  processing] 4300000 of 7630272
+[2019-03-28T13:49:24Z INFO  processing] 4400000 of 7630272
+[2019-03-28T13:49:26Z INFO  processing] 4500000 of 7630272
+[2019-03-28T13:49:28Z INFO  processing] 4600000 of 7630272
+[2019-03-28T13:49:31Z INFO  processing] 4700000 of 7630272
+[2019-03-28T13:49:33Z INFO  processing] 4800000 of 7630272
+[2019-03-28T13:49:36Z INFO  processing] 4900000 of 7630272
+[2019-03-28T13:49:37Z DEBUG processing] Adding: 39523741, because
+[2019-03-28T13:49:37Z DEBUG processing] Adding: 39523747, because
+[2019-03-28T13:49:38Z INFO  processing] 5000000 of 7630272
+[2019-03-28T13:49:41Z INFO  processing] 5100000 of 7630272
+[2019-03-28T13:49:44Z INFO  processing] 5200000 of 7630272
+[2019-03-28T13:49:47Z INFO  processing] 5300000 of 7630272
+[2019-03-28T13:49:50Z INFO  processing] 5400000 of 7630272
+[2019-03-28T13:49:53Z INFO  processing] 5500000 of 7630272
+[2019-03-28T13:49:56Z INFO  processing] 5600000 of 7630272
+[2019-03-28T13:49:59Z INFO  processing] 5700000 of 7630272
+[2019-03-28T13:50:02Z INFO  processing] 5800000 of 7630272
+[2019-03-28T13:50:05Z INFO  processing] 5900000 of 7630272
+[2019-03-28T13:50:08Z INFO  processing] 6000000 of 7630272
+[2019-03-28T13:50:10Z INFO  processing] 6100000 of 7630272
+[2019-03-28T13:50:13Z INFO  processing] 6200000 of 7630272
+[2019-03-28T13:50:16Z INFO  processing] 6300000 of 7630272
+[2019-03-28T13:50:19Z INFO  processing] 6400000 of 7630272
+[2019-03-28T13:50:22Z INFO  processing] 6500000 of 7630272
+[2019-03-28T13:50:25Z INFO  processing] 6600000 of 7630272
+[2019-03-28T13:50:28Z INFO  processing] 6700000 of 7630272
+[2019-03-28T13:50:29Z DEBUG processing] Adding: 53953418, because
+[2019-03-28T13:50:29Z DEBUG processing] Adding: 53953420, because
+[2019-03-28T13:50:29Z DEBUG processing] Adding: 53953421, because
+[2019-03-28T13:50:29Z DEBUG processing] Adding: 53953422, because
+[2019-03-28T13:50:29Z DEBUG processing] Adding: 53953423, because
+[2019-03-28T13:50:32Z INFO  processing] 6800000 of 7630272
+[2019-03-28T13:50:36Z INFO  processing] 6900000 of 7630272
+[2019-03-28T13:50:41Z INFO  processing] 7000000 of 7630272
+[2019-03-28T13:50:45Z INFO  processing] 7100000 of 7630272
+[2019-03-28T13:50:49Z INFO  processing] 7200000 of 7630272
+[2019-03-28T13:50:54Z INFO  processing] 7300000 of 7630272
+[2019-03-28T13:50:58Z INFO  processing] 7400000 of 7630272
+[2019-03-28T13:51:03Z INFO  processing] 7500000 of 7630272
+[2019-03-28T13:51:07Z INFO  processing] 7600000 of 7630272
+[2019-03-28T13:51:08Z DEBUG processing] Adding: 61042166, because
+[2019-03-28T13:51:08Z DEBUG processing] Adding: 61042167, because
+[2019-03-28T13:51:08Z DEBUG processing] Adding: 61042168, because
+[2019-03-28T13:51:08Z DEBUG processing] Adding: 61042170, because

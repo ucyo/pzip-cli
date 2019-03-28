@@ -3,8 +3,8 @@ use rgsl::statistics::correlation;
 use log::{info,debug};
 use std::{env, fs};
 
-const BLOCKSIZE: usize = 128;
-const THRESHOLD:   f64 = 0.9;
+const BLOCKSIZE: usize =  32;
+const THRESHOLD:   f64 = 0.95;
 
 fn remove_and_push(val: &u8, pos: u8, vec: &mut Vec<f64>) {
     let num = *val & (1 << pos) > 0;
