@@ -66,6 +66,17 @@ fn main() {
         }
     }
 
+    formatted_output(&args[1], candidates);
+}
+
+fn formatted_output(filename: &String, candidates: Vec<Vec<f64>>) {
+    println!("File {}", filename);
+    let mut titles : Vec<String> = Vec::new();
+    titles.push("ix".to_string());
+    for i in 0..candidates.len() {
+        titles.push(format!("unit{:03}", i));
+    }
+    println!("{}", titles.join(","));
     for i in 0..BLOCKSIZE {
         let mut line = i.to_string();
         for k in 0..candidates.len() {
@@ -74,6 +85,7 @@ fn main() {
         println!("{}", line)
     }
 }
+
 
 #[allow(unused_imports)]
 mod tests {
