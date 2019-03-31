@@ -120,6 +120,12 @@ def plot_slice(df, s, external=False):
     plt.show()
     plt.clf()
 
+def get_multi_index_df(df, clusters):
+    tmp = [x for x in zip(range(1, len(clusters)+1), clusters[:5])]
+    clustered_index = [('C{:02}'.format(x),df.columns[y]) for x,j in tmp for y in j]
+    mix = pd.MultiIndex.from_tuples(clustered_index, names=['Probability Series', 'cluster'])
+    cdf = pd.DataFrame(df.values, index=df.index, columns=mix)
+    return cdf
 
 if __name__ == '__main__':
     main()
