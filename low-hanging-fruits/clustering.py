@@ -88,7 +88,8 @@ def get_spectral_clusters(corrarr, n_clusters=5, mode='co'):
         model.fit(corrarr)
         indices = np.arange(corrarr.columns.size)
         clusters = [indices[x].tolist() for x in model.columns_]
-        return clusters
+        repetition_start = clusters[1:].index(clusters[0]) + 1
+        return clusters[:repetition_start]
     else:
         raise("Mode wrong?")
 
