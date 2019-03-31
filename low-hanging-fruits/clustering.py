@@ -108,6 +108,18 @@ def get_spectral_clusters(corrarr, n_clusters=5, mode='co'):
     else:
         raise("Mode wrong?")
 
+def plot_sns(df, clusters):
+    mdf = get_multi_index_df(df, clusters)
+    sns.scatterplot(data=mdf)
+    plt.show()
+    sns.lineplot(data=mdf)
+    plt.show()
+    colors = ['orange','red','green','skyblue']
+    for i,c in enumerate(clusters):
+        for v in c:
+            df.iloc[:,v].plot(color=colors[i%len(colors)], style=':', marker='x')
+    plt.show()
+
 def plot_clustered_heatmap(df, clusters):
     _, ax = plt.subplots(figsize=(15,15))
     rearranged = df.iloc[:,[x for x in chain.from_iterable(clusters)]]
