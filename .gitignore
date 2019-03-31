@@ -4,3 +4,4 @@ low-hanging-fruits/
 raid6/
 **/*.rs.bk
 settings.json
+.vscode/
