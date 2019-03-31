@@ -44,14 +44,24 @@ def building_clusters(corrarr, mode, **kwargs):
         assert not missing, "Missing keywords {}".format(missing)
         method, metric, lvl = kwargs['method'], kwargs['metric'], kwargs['lvl']
         link = scipy.cluster.hierarchy.linkage(corrarr, method=method, metric=metric)
-        return get_members_of_lvl(link=link, lvl=lvl)
+        result = get_members_of_lvl(link=link, lvl=lvl)
     else:
         necessary = ['n_clusters']
         missing = [x for x in necessary if x not in kwargs.keys()]
         assert not missing, "Missing keywords {}".format(missing)
         n_clusters = kwargs['n_clusters']
-        return get_spectral_clusters(corrarr, mode=mode, n_clusters=n_clusters)
+        result = get_spectral_clusters(corrarr, mode=mode, n_clusters=n_clusters)
+    return result, [x for x in corrarr.columns]
 
+def cross_correlation(df, min=1):
+    values_to_drop = df.corr(min_periods=min).isnull().all().values
+    return df.iloc[:, ~values_to_drop].corr(min_periods=min)
+
+def map_correlation_back_to_original(df, mclusters):
+    orig_index = []
+    for cluster in mclusters[0]:
+        orig_index.append([list(df.columns.values).index(mclusters[1][x]) for x in cluster])
+    return orig_index
 
 def get_members_of_lvl(lvl, link):
     LVL = namedtuple("Level","members,lvl")
