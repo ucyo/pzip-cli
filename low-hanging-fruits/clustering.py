@@ -53,6 +53,11 @@ def building_clusters(corrarr, mode, **kwargs):
         result = get_spectral_clusters(corrarr, mode=mode, n_clusters=n_clusters)
     return result, [x for x in corrarr.columns]
 
+def get_clusters(df, mode, minimum=1, **kwargs):
+    min_clusters = building_clusters(cross_correlation(df, minimum), mode, **kwargs)
+    clusters = map_correlation_back_to_original(df, min_clusters)
+    return clusters
+
 def cross_correlation(df, min=1):
     values_to_drop = df.corr(min_periods=min).isnull().all().values
     return df.iloc[:, ~values_to_drop].corr(min_periods=min)
@@ -133,6 +138,9 @@ def plot_slice(df, s, external=False):
 def get_multi_index_df(df, clusters):
     tmp = [x for x in zip(range(1, len(clusters)+1), clusters[:5])]
     clustered_index = [('C{:02}'.format(x),df.columns[y]) for x,j in tmp for y in j]
+
+    b = list(chain.from_iterable(clusters))
+    clustered_index += [('CXX', df.columns[x]) for x in range(df.columns.size) if x not in b]
     mix = pd.MultiIndex.from_tuples(clustered_index, names=['Probability Series', 'cluster'])
     cdf = pd.DataFrame(df.values, index=df.index, columns=mix)
     return cdf
