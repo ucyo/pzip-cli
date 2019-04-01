@@ -15,6 +15,10 @@ from matplotlib.patches import Rectangle
 
 
 def main():
+    # filename = "emac.ml.tm1.f32.little.5x90x160x320_3.raw.residual.bplanes.32.csv"
+    # df = pd.read_csv(filename, skiprows=1, index_col=0).astype(float)
+
+    # df = pd.read_pickle('mq_forward_probabilities.pickle').fillna(np.nan)
     df = pd.read_pickle('mq_backwards_probabilities.pickle').fillna(np.nan)
     clusters = calculate_clusters(df, mode='bi', minimum=1, n_clusters=3)
 
@@ -145,8 +149,12 @@ def plot_sns(df, clusters, *args, **kwargs):
 
 def plot_clustered_heatmap(df, clusters, *args, **kwargs):
     _, ax = plt.subplots(figsize=(15,15))
+    sns.heatmap(calculate_correlation(df), ax=ax, square=True, cbar_kws={"shrink": 0.5})
+    plt.show()
+
+    _, ax = plt.subplots(figsize=(15,15))
     rearranged = df.iloc[:,[x for x in chain.from_iterable(clusters)]]
-    sns.heatmap(rearranged.corr(), ax=ax, square=True, cbar_kws={"shrink": 0.5})
+    sns.heatmap(calculate_correlation(rearranged), ax=ax, square=True, cbar_kws={"shrink": 0.5})
 
     i = 0
     start = 0
@@ -155,6 +163,7 @@ def plot_clustered_heatmap(df, clusters, *args, **kwargs):
                                len(clusters[i]), fill=False, edgecolor='blue', lw=3))
         start += len(clusters[i])
         i += 1
+    plt.show()
 
 
 def plot_slice(df, s, external=False, *args, **kwargs):
