@@ -11,14 +11,15 @@ from itertools import chain
 from functools import namedtuple
 
 def main(filename):
-    filename, ext = '../emac.ml.tm1.f32.little.5x90x160x320_3.raw.residual.bplanes.32.csv', True
     df = pd.read_csv(filename, skiprows=1, index_col=0).astype(float)
     ones = df.multiply(df.index.size).divide(np.arange(df.index.size)+1, axis=0)
     result = final_function(ones)
 
     atleast = 9
     sinking = get_series_with_at_least_k_valid_values(result.sinking, atleast)
-    rising = get_series_with_at_least_k_valid_values(result.rising, atleast)
+    rising = get_series_with_at_least_k_valid_values(result.rising, atleast - 6)
+    print(sinking)
+    print(rising)
 
 
 def final_function(ones):
@@ -90,7 +91,7 @@ def create_blocks(ones):
 
 
 def create_sinking_df(df):
-    sinking = (blocks.shift(1) >= blocks).astype(int)  # 1 if it is sinking
+    sinking = (df.shift(1) >= df).astype(int)  # 1 if it is sinking
     sinking.iloc[0,:] = sinking.iloc[1,:]
     return sinking, 1
 
@@ -139,7 +140,9 @@ def add_nans(series, splits):
 
 
 def get_series_with_at_least_k_valid_values(df, k):
-    return df.loc[:,df.index.size - df.isna().sum() > k]
+    df = df.loc[:,df.index.size - df.isna().sum() > k]
+    df.rename({x: "c{:03d}".format(x) for x in df.columns}, axis=1)
+    return df
 
 
 def _nan_equal(a,b):
@@ -148,3 +151,8 @@ def _nan_equal(a,b):
     except AssertionError:
         return False
     return True
+
+
+if __name__ == '__main__':
+    filename = '../emac.ml.tm1.f32.little.5x90x160x320_3.raw.residual.bplanes.32.csv'
+    main(filename)
