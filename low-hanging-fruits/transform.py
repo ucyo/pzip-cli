@@ -24,7 +24,7 @@ def main(filename):
 def final_function(ones):
     df = create_blocks(ones)
     sinking, sink = create_sinking_df(df)
-    r_f_splits = [split_columns(blocks, sinking, col, sink) for col in sinking]
+    r_f_splits = [split_columns(df, sinking, col, sink) for col in sinking]
     sinking = [x['sinking'] for x in r_f_splits if 'sinking' in x.keys()]
     sinking = pd.DataFrame(list(chain.from_iterable(sinking)))
     sinking.name = 'sinking'
