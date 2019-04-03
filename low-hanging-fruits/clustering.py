@@ -13,6 +13,12 @@ from itertools import chain
 from sklearn.cluster.bicluster import SpectralCoclustering, SpectralBiclustering
 from matplotlib.patches import Rectangle
 
+CLUSTERING_METHODS = dict(
+    co = "SpectralCoClustering",
+    bi = "SpectralBiClustering",
+    easy = "EasyVectorDistance"
+)
+
 
 def main():
     # filename = "emac.ml.tm1.f32.little.5x90x160x320_3.raw.residual.bplanes.32.csv"
@@ -32,6 +38,8 @@ def calculate_clusters(df, mode, minimum=1, **kwargs):
     correlationmatrix = calculate_correlation(df, minimum)
     min_clusters = _clusters(correlationmatrix, mode, **kwargs)
     clusters = _map_minima_correlation_back_to_original_df(df, min_clusters)
+    print("Clustering method: {}".format(CLUSTERING_METHODS[mode]))
+    print("Clusters: {} with size {}".format(clusters, len(clusters)))
     return clusters
 
 
@@ -129,6 +137,16 @@ def get_df_with_cluster_labels(df, clusters):
     return cdf
 
 
+def reverse_dataframe(df):
+    """
+    Reverse Dataframe so that all NaN values are at the beginning.
+    """
+    rev = pd.DataFrame()
+    for i,val in enumerate(df.isna().sum()):
+        rev[df.columns[i]] = df.iloc[:,i].shift(val)
+    return rev
+
+
 ######################
 ## Plotting scripts ##
 ######################
@@ -136,14 +154,23 @@ def get_df_with_cluster_labels(df, clusters):
 
 def plot_sns(df, clusters, *args, **kwargs):
     mdf = get_df_with_cluster_labels(df, clusters)
-    sns.scatterplot(data=mdf)
+    _, ax = plt.subplots(figsize=(10,5))
+    sns.scatterplot(data=mdf, ax=ax)
     plt.show()
-    sns.lineplot(data=mdf)
+    _, ax = plt.subplots(figsize=(10,5))
+    sns.lineplot(data=mdf, ax=ax)
     plt.show()
-    colors = ['orange','red','green','skyblue']
-    for i,c in enumerate(clusters):
-        for v in c:
-            df.iloc[:,v].plot(color=colors[i%len(colors)], style=':', marker='x')
+    # colors = ['orange','red','green','skyblue']
+    # _, ax = plt.subplots(figsize=(10,5))
+    # for i,c in enumerate(clusters):
+    #     for v in c:
+    #         df.iloc[:,v].plot(color=colors[i%len(colors)], style=':', marker='x', ax=ax)
+    # plt.show()
+
+
+def plot_line(df, *args, **kwargs):
+    _, ax = plt.subplots(figsize=(10,5))
+    df.plot(ax=ax, *args, **kwargs)
     plt.show()
 
 

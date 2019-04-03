@@ -61,7 +61,6 @@ def create_blocks(ones):
     blocks = pd.DataFrame(blocks, columns=["c{:03d}".format(x) for x in range(total_columns)])
 
     ix = 0
-    get_rid = []
     for col in ones:
         dframe = ones_with_blocks.reset_index().groupby([col,col+'b'])['ix'].apply(np.array)
         for indices in dframe:
