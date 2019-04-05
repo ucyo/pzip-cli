@@ -35,6 +35,7 @@ def main():
 
 
 def calculate_clusters(df, mode, minimum=1, **kwargs):
+    # TODO: Does not seem to take into account the minimum number of values
     correlationmatrix = calculate_correlation(df, minimum)
     min_clusters = _clusters(correlationmatrix, mode, **kwargs)
     clusters = _map_minima_correlation_back_to_original_df(df, min_clusters)
