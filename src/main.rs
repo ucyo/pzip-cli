@@ -153,6 +153,10 @@ use pzip::residual::ResidualCalculation;
 fn parse_residual_algorithm(matches: &clap::ArgMatches) -> ResidualCalculation {
     match matches.value_of("residual").unwrap() {
         "xor" => ResidualCalculation::ExclusiveOR,
+        "shifted" if matches.value_of("intramapping").unwrap() == "gray" => ResidualCalculation::ShiftedGray,
+        "s" if matches.value_of("intramapping").unwrap() == "gray" => ResidualCalculation::ShiftedGray,
+        "shifted" if matches.value_of("intramapping").unwrap() == "g" => ResidualCalculation::ShiftedGray,
+        "s" if matches.value_of("intramapping").unwrap() == "g" => ResidualCalculation::ShiftedGray,
         "shifted" => ResidualCalculation::Shifted,
         "s" => ResidualCalculation::Shifted,
         "shiftedlzc" => ResidualCalculation::ShiftedLZC,
