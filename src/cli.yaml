@@ -151,3 +151,24 @@ subcommands:
                 takes_value: true
                 possible_values: [f32]
                 default_value: f32
+    - split:
+            name: Analysis
+            version: "0.1.0"
+            author: Ugur Cayoglu <cayoglu@me.com>
+            about: Spliting residual files into *.lzc, *.fz, and *.res files
+            args:
+                - input:
+                    help: Sets the input file to use
+                    short: i
+                    long: input
+                    takes_value: true
+                    required: true
+                    index: 1
+                - type:
+                    help: Floating-point type
+                    short: t
+                    long: type
+                    required: true
+                    takes_value: true
+                    possible_values: [f32]
+                    default_value: f32

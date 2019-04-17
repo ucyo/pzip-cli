@@ -9,6 +9,7 @@ use env_logger;
 
 mod graycodeanalysis;
 mod mqanalysis;
+mod split;
 
 fn main() {
     env_logger::init();
@@ -21,6 +22,8 @@ fn main() {
         graycode(&matches.subcommand_matches("analysis").unwrap());
     } else if matches.is_present("mqanalysis"){
         mqanalysis::mqanalysis(&matches.subcommand_matches("mqanalysis").unwrap());
+    } else if matches.is_present("split") {
+        split::split(&matches.subcommand_matches("split").unwrap());
     } else {
         App::from_yaml(yaml).print_help().unwrap();
     }
