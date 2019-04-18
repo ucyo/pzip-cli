@@ -37,7 +37,7 @@ pub fn split(matches: &clap::ArgMatches) {
         .zip(truth.iter())
         .map(|(&p, &t)| (p.max(t) - p.min(t)).leading_zeros() as u8)
         .zip(lzc.iter())
-        .filter(|(_d, &xor)| xor != 32)  // or where d != 0 (only accept values where LZC != 32 )
+        .filter(|(_d, &xor)| xor != 32) // or where d != 0 (only accept values where LZC != 32 )
         .map(|(d, &xor)| d - xor)
         .collect();
 
