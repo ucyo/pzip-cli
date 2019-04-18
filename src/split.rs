@@ -1,5 +1,23 @@
 use super::graycodeanalysis::read_u32;
 use super::pzip::transform::{Compact, CompactMapping};
+use byteorder::{BigEndian, ByteOrder};
+
+fn truncate(data: Vec<u32>) -> Vec<u8> {
+    let src = &data[..];
+    let mut ds: Vec<u8> = vec![0; 4 * data.len()];
+    BigEndian::write_u32_into(src, &mut ds[..]);
+    // TODO: Why do I need to use BigEndian? Are the other implementations using LittleEndian wrong?
+
+    let mut last_element;
+    loop {
+        last_element = ds.pop().unwrap();
+        if last_element != 0 {
+            break;
+        }
+    }
+    ds.push(last_element);
+    ds
+}
 
 pub fn split(matches: &clap::ArgMatches) {
     let pfile = String::from(matches.value_of("prediction").unwrap());
