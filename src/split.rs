@@ -19,6 +19,7 @@ pub fn split(matches: &clap::ArgMatches) {
         .zip(truth.iter())
         .map(|(&p, &t)| (p.max(t) - p.min(t)).leading_zeros() as u8)
         .zip(lzc.iter())
+        .filter(|(_d, &xor)| xor != 32)  // or where d != 0 (only accept values where LZC != 32 )
         .map(|(d, &xor)| d - xor)
         .collect();
 
@@ -43,5 +44,5 @@ pub fn split(matches: &clap::ArgMatches) {
     // }
 
 
-    println!("LZC: {:?}\nfz:{:?}\nResidual: {:?}\n", lzc, fz, compact_residuals.len())
+    println!("LZC: {:?}\nfz:{:?}\nResidual: {:?}\n", lzc.len(), fz.len(), compact_residuals.len())
 }
