@@ -47,19 +47,21 @@ pub fn split(matches: &clap::ArgMatches) {
         .map(|(&p, &t)| p.max(t) - p.min(t))
         .map(|diff| diff - (diff.next_power_of_two() >> 1))
         .collect::<Vec<u32>>();
-
-    // check residuals
-    // for v in residual.iter() {
-    //     println!("{:b}", v)
-    // }
+    // TODO: This might be wrong if the leading zeros are not safed.
+    // TODO: Export function to eliminate first ones (but including all following zeros)
+    // TODO: Use bitVec!!!
 
     let compact_residuals = Compact::NoLZC.compact_u32(residual);
-    // TODO: This does fill up to 32. But should be 8. Maybe we rewrite this using bit vec?
+    let compact_residuals = truncate(compact_residuals);
+    // TODO: Check if compact_u32 is really doing what it is suppposed to do including adding leading zeros
 
-    // check compact form
-    // for v in compact_residuals.iter() {
-    //     println!("{:b}", v)
-    // }
+    println!(
+        "LZC: {:?}\nfz:{:?}\nResidual: {:?}\n",
+        lzc.len(),
+        fz.len(),
+        compact_residuals.len()
+    )
+}
 
 #[cfg(test)]
 mod tests {
