@@ -43,6 +43,24 @@ pub fn split(matches: &clap::ArgMatches) {
     //     println!("{:b}", v)
     // }
 
+#[cfg(test)]
+mod tests {
+    use super::*;
+    #[test]
+    fn test_truncate_numbers() {
+        let data: Vec<u32> = vec![164787381, 1 << 30, 4036830976, 3778694784];
+        let expected_length = vec![4, 1, 3, 4];
 
-    println!("LZC: {:?}\nfz:{:?}\nResidual: {:?}\n", lzc.len(), fz.len(), compact_residuals.len())
+        for (val, exp) in data.into_iter().zip(expected_length.into_iter()) {
+            println!("{}", val);
+            let single: Vec<u32> = vec![val];
+            let result = truncate(single);
+            println!("{:032b}", val);
+            for s in result.iter() {
+                print!("{:08b}", s);
+            }
+            print!("\n\n");
+            assert_eq!(result.len(), exp);
+        }
+    }
 }
