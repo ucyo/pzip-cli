@@ -7,6 +7,9 @@ use super::graycodeanalysis::read_u32;
 use bit_vec::BitVec;
 use byteorder::{BigEndian, ByteOrder};
 use pzip_huffman;
+use std::fs::File;
+use std::io::{BufWriter, Write};
+use super::mqanalysis::from_vec_u32_to_vec_u8;
 
 /// Transforms a Vector of u32 to u8 and eliminates of zero values at the end of the Vector.
 fn truncate(data: Vec<u32>) -> Vec<u8> {
@@ -65,6 +68,22 @@ pub fn split(matches: &clap::ArgMatches) {
         .filter(|&d| d != 0)  // do not save the residual being 0
         .collect();
     let compact_residuals = to_u8(pack(&diff, true));
+
+
+    let basename = tfile[..tfile.len() - 4].to_string();
+    // write lzc as raw u8
+    let lzc_filename = basename.clone() + ".lzc";
+    let mut lzc_writer = BufWriter::new(File::create(lzc_filename).unwrap());
+    lzc_writer.write_all(lzc.as_slice()).unwrap();
+    // write fz as raw u8
+    let fz_filename = basename.clone() + ".fz";
+    let mut fz_writer = BufWriter::new(File::create(fz_filename).unwrap());
+    fz_writer.write_all(fz.as_slice()).unwrap();
+    // write diff as raw u8
+    let diff_filename = basename + ".diff";
+    let mut diff_writer = BufWriter::new(File::create(diff_filename).unwrap());
+    let diffu8 = from_vec_u32_to_vec_u8(diff);
+    diff_writer.write_all(diffu8.as_slice()).unwrap();
 
 
     // Follwing is just output formatting
