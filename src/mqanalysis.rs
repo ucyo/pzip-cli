@@ -22,7 +22,7 @@ pub fn mqanalysis(matches: &clap::ArgMatches) {
     output.write_all(data_only_residual.as_slice()).unwrap();
 }
 
-fn from_vec_u32_to_vec_u8(data: Vec<u32>) -> Vec<u8> {
+pub fn from_vec_u32_to_vec_u8(data: Vec<u32>) -> Vec<u8> {
     let mut result: Vec<u8> = Vec::new();
     for n in data {
         let _ = result.write_u32::<LittleEndian>(n);
