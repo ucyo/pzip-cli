@@ -108,6 +108,7 @@ pub fn split(matches: &clap::ArgMatches) {
     // let power_encoded = pzip_huffman::hufbites::adaptive_encode_to_bytes(&power);
 
     let position = calculate_position_to_truth(&predictions, &truth);
+    let position_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&position);
 
 
     // File output
@@ -194,6 +195,20 @@ pub fn split(matches: &clap::ArgMatches) {
         "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded LZC, raw binary direction]",
         lzc_encoded.len(),
         position.len(),
+        compact_residuals.len(),
+        nbytes,
+        onbytes,
+        nbytes as f64 / onbytes as f64,
+        onbytes as f64 / nbytes as f64
+    );
+
+    let nbytes = lzc_encoded.len() + position_encoded.len() + compact_residuals.len();
+    let onbytes = predictions.len() * 4;
+
+    println!(
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded LZC, binary direction]",
+        lzc_encoded.len(),
+        position_encoded.len(),
         compact_residuals.len(),
         nbytes,
         onbytes,
