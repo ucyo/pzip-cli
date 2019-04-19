@@ -1,6 +1,7 @@
 use super::graycodeanalysis::read_u32;
-use super::pzip::transform::{Compact, CompactMapping};
+use bit_vec::BitVec;
 use byteorder::{BigEndian, ByteOrder};
+use pzip_huffman;
 
 fn truncate(data: Vec<u32>) -> Vec<u8> {
     let src = &data[..];
@@ -63,6 +64,7 @@ pub fn split(matches: &clap::ArgMatches) {
     )
 }
 
+
 #[cfg(test)]
 mod tests {
     use super::*;
@@ -82,5 +84,51 @@ mod tests {
             print!("\n\n");
             assert_eq!(result.len(), exp);
         }
+    }
+
+    #[test]
+    fn test_to_bitvec() {
+        let data: Vec<u32> = vec![0b101010_01001001_01111101_11010111]; //
+        let result = to_bitvec(&data, false);
+
+        assert_eq!(to_u8(result), vec![169, 37, 247, 92]);
+    }
+
+    #[test]
+    fn test_to_bitvec_skipped() {
+        let data: Vec<u32> = vec![0b101010_01001001_01111101_11010111]; //
+        let result = to_bitvec(&data, true);
+
+        assert_eq!(to_u8(result), vec![82, 75, 238, 92 << 1]);
+    }
+
+    #[test]
+    fn test_bitvec_to_u32() {
+        let data: Vec<u32> = vec![62736423];
+        let lz = data[0].leading_zeros();
+        let result = to_bitvec(&data, false);
+        println!("{:?}", result);
+        let result = to_u32(result);
+
+        for r in result.iter() {
+            println!("{:#032b}", r);
+        }
+
+        assert_eq!(result[0], data[0] << lz);  // bitvec will fill the values with zeros
+    }
+
+    #[test]
+    fn test_bitvec_to_u32_skipped() {
+        let data: Vec<u32> = vec![62736423];
+        let lz = data[0].leading_zeros() + 1;  // because first is skipped
+        let result = to_bitvec(&data, true);
+        println!("{:?}", result);
+        let result = to_u32(result);
+
+        for r in result.iter() {
+            println!("{:#032b}", r);
+        }
+
+        assert_eq!(result[0], data[0] << lz);  // bitvec will fill the values with zeros
     }
 }
