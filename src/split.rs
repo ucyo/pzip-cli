@@ -107,6 +107,8 @@ pub fn split(matches: &clap::ArgMatches) {
     let power_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&power);
     // let power_encoded = pzip_huffman::hufbites::adaptive_encode_to_bytes(&power);
 
+    let position = calculate_position_to_truth(&predictions, &truth);
+
 
     // File output
 
@@ -184,6 +186,20 @@ pub fn split(matches: &clap::ArgMatches) {
         nbytes as f64 / onbytes as f64,
         onbytes as f64 / nbytes as f64
     );
+
+    let nbytes = lzc_encoded.len() + position.len() + compact_residuals.len();
+    let onbytes = predictions.len() * 4;
+
+    println!(
+        "{} + {} + {} = {} of {} ({}% | {:.2})",
+        lzc_encoded.len(),
+        position.len(),
+        compact_residuals.len(),
+        nbytes,
+        onbytes,
+        nbytes as f64 / onbytes as f64,
+        onbytes as f64 / nbytes as f64
+    );
 }
 
 fn _calculate_power(p: u32, t: u32) -> u8 {
@@ -202,6 +218,17 @@ pub fn calculate_power(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
         .zip(truth.iter())
         .map(|(&p, &t)| _calculate_power(p, t)).collect();
     result
+}
+
+/// Calculates if prediction is too high (true) or too low (false)
+fn calculate_position_to_truth(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8> {
+    let mut bv = BitVec::new();
+    bv.push(true);
+
+    for (&p, &t) in predictions.iter().zip(truth.iter()) {
+        bv.push(p > t);
+    }
+    bv.to_bytes()
 }
 
 /// Transforms BitVec into a Vector of u8 values with padding on the last element
