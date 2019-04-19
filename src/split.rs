@@ -1,3 +1,8 @@
+//! An application for the encoding phase of the compression algorithm.
+//!
+//! This application should help identifying and optimizing methods for actual
+//! encoding of the data to be compressed.
+
 use super::graycodeanalysis::read_u32;
 use bit_vec::BitVec;
 use byteorder::{BigEndian, ByteOrder};
