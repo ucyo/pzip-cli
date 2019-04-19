@@ -11,6 +11,11 @@ use std::fs::File;
 use std::io::{BufWriter, Write};
 use super::mqanalysis::from_vec_u32_to_vec_u8;
 
+fn most_significant_bit(val: u32) -> u32 {
+    32 - val.leading_zeros()
+}
+
+
 /// Transforms a Vector of u32 to u8 and eliminates of zero values at the end of the Vector.
 fn truncate(data: Vec<u32>) -> Vec<u8> {
     let src = &data[..];
@@ -76,6 +81,10 @@ pub fn calculate_abs_diff(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u32> 
 /// 2. Calculates the LZC, FZ and Residual (via Difference) of both files.
 /// 3. Encodes LZC & FZ via Huffman Codes and via Arithmetic Encoder
 /// 4. Prints "outbytes" with Huff(LZC) + Huff(FZ) + Residuals
+///
+/// Power function is a special encoding where the MSB(Diff) + 1 is either added or
+/// subtracted (depending if prediction is lower or higher than truth) to 32. Therefore
+/// one encodes the length of the residual incl. the direction in one codebase
 pub fn split(matches: &clap::ArgMatches) {
     let pfile = String::from(matches.value_of("prediction").unwrap());
     let tfile = String::from(matches.value_of("truth").unwrap());
@@ -94,8 +103,14 @@ pub fn split(matches: &clap::ArgMatches) {
     let diff: Vec<u32> = calculate_abs_diff(&predictions, &truth);
     let compact_residuals = to_u8(pack(&diff, true));
 
+    let power = calculate_power(&predictions, &truth);
+    let power_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&power);
 
     let basename = tfile[..tfile.len() - 4].to_string();
+    // write lzc as raw u8
+    let power_filename = basename.clone() + ".power";
+    let mut power_writer = BufWriter::new(File::create(power_filename).unwrap());
+    power_writer.write_all(power.as_slice()).unwrap();
     // write lzc as raw u8
     let lzc_filename = basename.clone() + ".lzc";
     let mut lzc_writer = BufWriter::new(File::create(lzc_filename).unwrap());
@@ -152,6 +167,37 @@ pub fn split(matches: &clap::ArgMatches) {
         arcnbytes as f64 / arconbytes as f64,
         arconbytes as f64 / arcnbytes as f64,
     );
+
+    let nbytes = power_encoded.len() + compact_residuals.len();
+    let onbytes = predictions.len() * 4;
+
+    println!(
+        "{} + {} = {} of {} ({}% | {:.2})",
+        power_encoded.len(),
+        compact_residuals.len(),
+        nbytes,
+        onbytes,
+        nbytes as f64 / onbytes as f64,
+        onbytes as f64 / nbytes as f64
+    );
+}
+
+fn _calculate_power(p: u32, t: u32) -> u8 {
+    if p > t {
+        (32 - 1 - most_significant_bit(p - t) - 1) as u8
+    } else if t > p {
+        (32 + 1 + most_significant_bit(t - p) - 1) as u8
+    } else {
+        32u8
+    }
+}
+
+pub fn calculate_power(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
+    let result : Vec<u8> = predictions
+        .iter()
+        .zip(truth.iter())
+        .map(|(&p, &t)| _calculate_power(p, t)).collect();
+    result
 }
 
 /// Transforms BitVec into a Vector of u8 values with padding on the last element
