@@ -138,7 +138,7 @@ pub fn split(matches: &clap::ArgMatches) {
     let onbytes = predictions.len() * 4;
 
     println!(
-        "{} + {} + {} = {} of {} ({}% | {:.2})",
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [only packed residuals]",
         lzc.len(),
         fz.len(),
         compact_residuals.len(),
@@ -151,7 +151,7 @@ pub fn split(matches: &clap::ArgMatches) {
     let cnbytes = lzc_encoded.len() + fz_encoded.len() + compact_residuals.len();
     let conbytes = predictions.len() * 4;
     println!(
-        "{} + {} + {} = {} of {} ({}% | {:.2})",
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded LZC, FZ]",
         lzc_encoded.len(),
         fz_encoded.len(),
         compact_residuals.len(),
@@ -164,7 +164,7 @@ pub fn split(matches: &clap::ArgMatches) {
     let arcnbytes = arlzc_encoded.len() + arfz_encoded.len() + compact_residuals.len();
     let arconbytes = predictions.len() * 4;
     println!(
-        "{} + {} + {} = {} of {} ({}% | {:.2})",
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [Arithmetic Range coded LZC, FZ]",
         arlzc_encoded.len(),
         arfz_encoded.len(),
         compact_residuals.len(),
@@ -178,7 +178,7 @@ pub fn split(matches: &clap::ArgMatches) {
     let onbytes = predictions.len() * 4;
 
     println!(
-        "{} + {} = {} of {} ({}% | {:.2})",
+        "{} + {} = {} of {} ({}% | {:.2}) [Power coded LZC inkl. direction]",
         power_encoded.len(),
         compact_residuals.len(),
         nbytes,
@@ -191,7 +191,7 @@ pub fn split(matches: &clap::ArgMatches) {
     let onbytes = predictions.len() * 4;
 
     println!(
-        "{} + {} + {} = {} of {} ({}% | {:.2})",
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded LZC, raw binary direction]",
         lzc_encoded.len(),
         position.len(),
         compact_residuals.len(),
