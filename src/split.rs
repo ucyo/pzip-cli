@@ -8,6 +8,7 @@ use bit_vec::BitVec;
 use byteorder::{BigEndian, ByteOrder};
 use pzip_huffman;
 
+/// Transforms a Vector of u32 to u8 and eliminates of zero values at the end of the Vector.
 fn truncate(data: Vec<u32>) -> Vec<u8> {
     let src = &data[..];
     let mut ds: Vec<u8> = vec![0; 4 * data.len()];
@@ -25,6 +26,12 @@ fn truncate(data: Vec<u32>) -> Vec<u8> {
     ds
 }
 
+/// Split truth and prediction datasets to LZC, FZ and Residual datasets.
+///
+/// 1. Reads two separate files: Truth file and predictions file.
+/// 2. Calculates the LZC, FZ and Residual (via Difference) of both files.
+/// 3. Encodes LZC & FZ via Huffman Codes and via Arithmetic Encoder
+/// 4. Prints "outbytes" with Huff(LZC) + Huff(FZ) + Residuals
 pub fn split(matches: &clap::ArgMatches) {
     let pfile = String::from(matches.value_of("prediction").unwrap());
     let tfile = String::from(matches.value_of("truth").unwrap());
