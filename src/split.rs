@@ -44,6 +44,8 @@ pub fn split(matches: &clap::ArgMatches) {
         .zip(truth.iter())
         .map(|(&p, &t)| (p ^ t).leading_zeros() as u8)
         .collect();
+    let lzc_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&lzc);
+    let arlzc_encoded = pzip_redux::encode(&lzc, 8, 10, 12);
 
     let fz: Vec<u8> = predictions
         .iter()
@@ -53,27 +55,89 @@ pub fn split(matches: &clap::ArgMatches) {
         .filter(|(_d, &xor)| xor != 32) // or where d != 0 (only accept values where LZC != 32 )
         .map(|(d, &xor)| d - xor)
         .collect();
+    let fz_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&fz);
+    let arfz_encoded = pzip_redux::encode(&fz, 8, 10, 12);
 
-    let residual = predictions
+    let diff: Vec<u32> = predictions
         .iter()
         .zip(truth.iter())
         .map(|(&p, &t)| p.max(t) - p.min(t))
-        .map(|diff| diff - (diff.next_power_of_two() >> 1))
-        .collect::<Vec<u32>>();
-    // TODO: This might be wrong if the leading zeros are not safed.
-    // TODO: Export function to eliminate first ones (but including all following zeros)
-    // TODO: Use bitVec!!!
+        .collect();
+    let compact_residuals = to_u8(pack(&diff, true));
 
-    let compact_residuals = Compact::NoLZC.compact_u32(residual);
-    let compact_residuals = truncate(compact_residuals);
-    // TODO: Check if compact_u32 is really doing what it is suppposed to do including adding leading zeros
+
+    // Follwing is just output formatting
+
+    let nbytes = lzc.len() + fz.len() + compact_residuals.len();
+    let onbytes = predictions.len() * 4;
 
     println!(
-        "LZC: {:?}\nfz:{:?}\nResidual: {:?}\n",
+        "{} + {} + {} = {} of {} ({}% | {:.2})",
         lzc.len(),
         fz.len(),
-        compact_residuals.len()
-    )
+        compact_residuals.len(),
+        nbytes,
+        onbytes,
+        nbytes as f64 / onbytes as f64,
+        onbytes as f64 / nbytes as f64
+    );
+
+    let cnbytes = lzc_encoded.len() + fz_encoded.len() + compact_residuals.len();
+    let conbytes = predictions.len() * 4;
+    println!(
+        "{} + {} + {} = {} of {} ({}% | {:.2})",
+        lzc_encoded.len(),
+        fz_encoded.len(),
+        compact_residuals.len(),
+        cnbytes,
+        conbytes,
+        cnbytes as f64 / conbytes as f64,
+        conbytes as f64 / cnbytes as f64,
+    );
+
+    let arcnbytes = arlzc_encoded.len() + arfz_encoded.len() + compact_residuals.len();
+    let arconbytes = predictions.len() * 4;
+    println!(
+        "{} + {} + {} = {} of {} ({}% | {:.2})",
+        arlzc_encoded.len(),
+        arfz_encoded.len(),
+        compact_residuals.len(),
+        arcnbytes,
+        arconbytes,
+        arcnbytes as f64 / arconbytes as f64,
+        arconbytes as f64 / arcnbytes as f64,
+    );
+}
+
+/// Transforms BitVec into a Vector of u8 values with padding on the last element
+fn to_u8(bv: BitVec) -> Vec<u8> {
+    bv.to_bytes()
+}
+
+/// Transforms BitVec into a Vector of u32 values with padding on the last element
+fn to_u32(bv: BitVec) -> Vec<u32> {
+    let data = bv.to_bytes();
+    let mut result : Vec<u32> = vec![0; data.len() / 4];
+    BigEndian::read_u32_into(&data, &mut result);
+    result
+}
+
+/// Packing of bits
+/// All the set/unset bits of a vector are being squashed/packed together to represent the
+/// most minimal representation of the data. The `skip` flag defines if the
+/// first value (which will always be set) should be included or not.
+fn pack(data: &Vec<u32>, skip: bool) -> BitVec {
+    let mut result = BitVec::new();
+    result.push(true);  // necessary for cases where the first value in the following is a false
+
+    for value in data.iter() {
+        let mut next = value.next_power_of_two() >> 1 + skip as usize;
+        while next != 0 {
+            result.push(next & value > 0);
+            next >>= 1;
+        }
+    }
+    result
 }
 
 
@@ -101,7 +165,7 @@ mod tests {
     #[test]
     fn test_to_bitvec() {
         let data: Vec<u32> = vec![0b101010_01001001_01111101_11010111]; //
-        let result = to_bitvec(&data, false);
+        let result = pack(&data, false);
 
         assert_eq!(to_u8(result), vec![169, 37, 247, 92]);
     }
@@ -109,7 +173,7 @@ mod tests {
     #[test]
     fn test_to_bitvec_skipped() {
         let data: Vec<u32> = vec![0b101010_01001001_01111101_11010111]; //
-        let result = to_bitvec(&data, true);
+        let result = pack(&data, true);
 
         assert_eq!(to_u8(result), vec![82, 75, 238, 92 << 1]);
     }
@@ -118,7 +182,7 @@ mod tests {
     fn test_bitvec_to_u32() {
         let data: Vec<u32> = vec![62736423];
         let lz = data[0].leading_zeros();
-        let result = to_bitvec(&data, false);
+        let result = pack(&data, false);
         println!("{:?}", result);
         let result = to_u32(result);
 
@@ -133,7 +197,7 @@ mod tests {
     fn test_bitvec_to_u32_skipped() {
         let data: Vec<u32> = vec![62736423];
         let lz = data[0].leading_zeros() + 1;  // because first is skipped
-        let result = to_bitvec(&data, true);
+        let result = pack(&data, true);
         println!("{:?}", result);
         let result = to_u32(result);
 
