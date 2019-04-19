@@ -62,6 +62,7 @@ pub fn split(matches: &clap::ArgMatches) {
         .iter()
         .zip(truth.iter())
         .map(|(&p, &t)| p.max(t) - p.min(t))
+        .filter(|&d| d != 0)  // do not save the residual being 0
         .collect();
     let compact_residuals = to_u8(pack(&diff, true));
 
