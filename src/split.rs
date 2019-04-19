@@ -105,6 +105,10 @@ pub fn split(matches: &clap::ArgMatches) {
 
     let power = calculate_power(&predictions, &truth);
     let power_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&power);
+    // let power_encoded = pzip_huffman::hufbites::adaptive_encode_to_bytes(&power);
+
+
+    // File output
 
     let basename = tfile[..tfile.len() - 4].to_string();
     // write lzc as raw u8
