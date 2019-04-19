@@ -29,6 +29,47 @@ fn truncate(data: Vec<u32>) -> Vec<u8> {
     ds
 }
 
+fn _calculate_xor_lzc(p: u32, t: u32) -> u8 {
+    (p ^  t).leading_zeros() as u8
+}
+
+pub fn calcualte_xor_lzc(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
+    predictions
+        .iter()
+        .zip(truth.iter())
+        .map(|(&p, &t)| _calculate_xor_lzc(p, t))
+        .collect::<Vec<u8>>()
+}
+
+fn _calculate_filling_zeros(p: u32, t: u32) -> u8 {
+    let diff = p.max(t) - p.min(t);
+    let xor = p ^ t;
+    (diff.leading_zeros() - xor.leading_zeros()) as u8
+}
+
+pub fn calculate_filling_zeros(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
+    predictions
+        .iter()
+        .zip(truth.iter())
+        .filter(|&(p,t)| p^t != 0)
+        .map(|(&p, &t)| _calculate_filling_zeros(p, t))
+        .collect()
+}
+
+fn _calculate_abs_diff(p: u32, t: u32) -> u32 {
+    p.max(t) - p.min(t)
+}
+
+pub fn calculate_abs_diff(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u32> {
+    predictions
+        .iter()
+        .zip(truth.iter())
+        .map(|(&p, &t)| _calculate_abs_diff(p, t))
+        .filter(|&d| d != 0)  // do not save the residual being 0
+        .collect()
+}
+
+
 /// Split truth and prediction datasets to LZC, FZ and Residual datasets.
 ///
 /// 1. Reads two separate files: Truth file and predictions file.
@@ -42,31 +83,15 @@ pub fn split(matches: &clap::ArgMatches) {
     let predictions = read_u32(&pfile);
     let truth = read_u32(&tfile);
 
-    let lzc: Vec<u8> = predictions
-        .iter()
-        .zip(truth.iter())
-        .map(|(&p, &t)| (p ^ t).leading_zeros() as u8)
-        .collect();
+    let lzc = calcualte_xor_lzc(&predictions, &truth);
     let lzc_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&lzc);
     let arlzc_encoded = pzip_redux::encode(&lzc, 8, 10, 12);
 
-    let fz: Vec<u8> = predictions
-        .iter()
-        .zip(truth.iter())
-        .map(|(&p, &t)| (p.max(t) - p.min(t)).leading_zeros() as u8)
-        .zip(lzc.iter())
-        .filter(|(_d, &xor)| xor != 32) // or where d != 0 (only accept values where LZC != 32 )
-        .map(|(d, &xor)| d - xor)
-        .collect();
+    let fz = calculate_filling_zeros(&predictions, &truth);
     let fz_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&fz);
     let arfz_encoded = pzip_redux::encode(&fz, 8, 10, 12);
 
-    let diff: Vec<u32> = predictions
-        .iter()
-        .zip(truth.iter())
-        .map(|(&p, &t)| p.max(t) - p.min(t))
-        .filter(|&d| d != 0)  // do not save the residual being 0
-        .collect();
+    let diff: Vec<u32> = calculate_abs_diff(&predictions, &truth);
     let compact_residuals = to_u8(pack(&diff, true));
 
 
