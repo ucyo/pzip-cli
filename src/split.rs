@@ -103,9 +103,13 @@ pub fn split(matches: &clap::ArgMatches) {
     let diff: Vec<u32> = calculate_abs_diff(&predictions, &truth);
     let compact_residuals = to_u8(pack(&diff, true));
 
+    let lzcdiff: Vec<u8> = diff.iter().map(|&d| d.leading_zeros() as u8).collect();
+    let lzcdiff_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&lzcdiff);
+    let (lzcdiff_merged_encoded, mappings) = pzip_huffman::hufbites::encode_itself_by_merged_huffman_to_bytes(&lzcdiff);
+    let compact_merged_residuals = to_u8(pack_with_mapping(&diff, true, &mappings));
+
     let power = calculate_power(&predictions, &truth);
     let power_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&power);
-    // let power_encoded = pzip_huffman::hufbites::adaptive_encode_to_bytes(&power);
 
     let position = calculate_position_to_truth(&predictions, &truth);
     let position_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&position);
@@ -188,12 +192,12 @@ pub fn split(matches: &clap::ArgMatches) {
         onbytes as f64 / nbytes as f64
     );
 
-    let nbytes = lzc_encoded.len() + position.len() + compact_residuals.len();
+    let nbytes = lzcdiff_encoded.len() + position.len() + compact_residuals.len();
     let onbytes = predictions.len() * 4;
 
     println!(
-        "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded LZC, raw binary direction]",
-        lzc_encoded.len(),
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded diff LZC, raw binary direction]",
+        lzcdiff_encoded.len(),
         position.len(),
         compact_residuals.len(),
         nbytes,
@@ -202,12 +206,12 @@ pub fn split(matches: &clap::ArgMatches) {
         onbytes as f64 / nbytes as f64
     );
 
-    let nbytes = lzc_encoded.len() + position_encoded.len() + compact_residuals.len();
+    let nbytes = lzcdiff_encoded.len() + position_encoded.len() + compact_residuals.len();
     let onbytes = predictions.len() * 4;
 
     println!(
-        "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded LZC, binary direction]",
-        lzc_encoded.len(),
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [Huffman coded diff LZC, binary direction]",
+        lzcdiff_encoded.len(),
         position_encoded.len(),
         compact_residuals.len(),
         nbytes,
@@ -215,6 +219,24 @@ pub fn split(matches: &clap::ArgMatches) {
         nbytes as f64 / onbytes as f64,
         onbytes as f64 / nbytes as f64
     );
+
+
+    let nbytes = lzcdiff_merged_encoded.len() + position_encoded.len() + compact_merged_residuals.len();
+    let onbytes = predictions.len() * 4;
+
+    println!(
+        "{} + {} + {} = {} of {} ({}% | {:.2}) [Merged Huffman coded diff LZC, binary direction]",
+        lzcdiff_merged_encoded.len(),
+        position_encoded.len(),
+        compact_merged_residuals.len(),
+        nbytes,
+        onbytes,
+        nbytes as f64 / onbytes as f64,
+        onbytes as f64 / nbytes as f64
+    );
+
+
+
 }
 
 fn _calculate_power(p: u32, t: u32) -> u8 {
@@ -274,6 +296,39 @@ fn pack(data: &Vec<u32>, skip: bool) -> BitVec {
             next >>= 1;
         }
     }
+    debug!("Bitlength: {}", result.len());
+    result
+}
+
+use std::collections::HashMap;
+use log::debug;
+fn pack_with_mapping(data: &Vec<u32>, skip: bool, map: &HashMap<u8,u8>) -> BitVec {
+    let mut result = BitVec::new();
+    result.push(true);  // necessary for cases where the first value in the following is a false
+
+    let mut s = 0u32;
+    for value in data.into_iter() {
+        let mut next = value.next_power_of_two() >> 1 + skip as usize;
+        match map.get(&(value.leading_zeros() as u8)) {
+            Some(v) => {
+                let mut key = *v;
+                // debug!("Map {:?} to {:?}", value.leading_zeros(), key);
+                s += 1;
+                while key < value.leading_zeros() as u8 {
+                    result.push(false);
+                    // debug!("Push {:?}", false);
+                    key = key + 1;
+                }
+            }
+            _ => {}
+        }
+        while next != 0 {
+            result.push(next & value > 0);
+            next >>= 1;
+        }
+    }
+    debug!("Changed {:?} values", s);
+    debug!("Bitlength: {}", result.len());
     result
 }
 
