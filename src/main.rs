@@ -164,6 +164,8 @@ fn parse_residual_algorithm(matches: &clap::ArgMatches) -> ResidualCalculation {
         "s" => ResidualCalculation::Shifted,
         "shiftedlzc" => ResidualCalculation::ShiftedLZC,
         "slzc" => ResidualCalculation::ShiftedLZC,
+        "diff" => ResidualCalculation::Diff,
+        "d" => ResidualCalculation::Diff,
         _ => panic!("Unknown residual algorithm.")
     }
 }

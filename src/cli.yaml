@@ -76,7 +76,7 @@ subcommands:
             - residual:
                 help: "Residual algorithm to be used"
                 long: residual
-                possible_values: [xor, shifted, s, shiftedlzc, slzc]
+                possible_values: [xor, shifted, s, shiftedlzc, slzc, diff, d]
                 takes_value: true
                 default_value: xor
             - correction:
