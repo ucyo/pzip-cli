@@ -41,10 +41,17 @@ fn calculate_msb_zeros(num: &u32) -> usize {
         return 32
     }
     let next = num.next_power_of_two();
-    let num_without_msb = num - (next >> 1);
-    let zeros = num_without_msb.leading_zeros() - num.leading_zeros();
+    let mut pos = 1;
 
-    (zeros - 1) as usize
+    while ((next >> pos) & num) != 0 {
+        pos += 1
+    }
+    let tmp = pos;
+
+    while ((next >> pos) & num) == 0 {
+        pos += 1
+    }
+    pos - tmp
 }
 
 use std::fs;
