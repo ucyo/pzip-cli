@@ -59,11 +59,11 @@ fn compress_with_information(matches: &clap::ArgMatches) {
 fn graycode(matches: &clap::ArgMatches) {
 
     let input = String::from(matches.value_of("input").unwrap());
-    let analysis = graycodeanalysis::analyse_file(&input);
-    println!("num, lzc, foc, fzc, remaining");
-    for val in analysis{
-        println!("{}", val);
-    }
+    println!("num, lzc, foc, fzc, remaining, residuallength");
+    graycodeanalysis::analyse_file(&input);
+    // for val in analysis{
+    //     println!("{}", val);
+    // }
 }
 
 use pzip::transform::{Inter, Intra, Byte, Compact};
