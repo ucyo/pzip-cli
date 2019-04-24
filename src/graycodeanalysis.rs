@@ -95,11 +95,11 @@ pub fn read_u32(file: &String) -> Vec<u32> {
 pub fn analyse_file(file: &String) {
     let data = read_u32(file);
     let data : Vec<u32> = data.iter().filter(|x| ((**x) != 0u32)).map(|&x| x).collect();
-    for x in data.iter() {
-        let v = GrayCodeAnalysis::new(x);
-        println!("{}", v);
-    }
-    println!("{:?}", positions(&data));
+    // for x in data.iter() {
+    //     let v = GrayCodeAnalysis::new(x);
+    //     println!("{}", v);
+    // }
+    positions(&data);
     positions_by_length(&data, 1, 7);
     println!("{}", data.len());
 }
@@ -122,16 +122,15 @@ fn positions_by_length(data: &Vec<u32>, min: u32, max: u32) {
 }
 
 
-pub fn positions(data: &Vec<u32>) -> Vec<usize>{
+pub fn positions(data: &Vec<u32>) {
     let mut counter = [0usize; 32];
     for value in data.iter() {
         for i in 0..32 {
             counter[i] +=  ((*value & 1 << i) > 0) as usize
         }
     }
-    let mut result = counter.to_vec();
-    result.reverse();
-    result
+    let countermap : BTreeMap<usize, usize> = counter.iter().enumerate().map(|(u,&k)| (u,k)).collect();
+    println!("{:?}", countermap);
 }
 
 fn get_value_first(val: u32, n: u32) -> u32{
