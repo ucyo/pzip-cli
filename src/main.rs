@@ -60,7 +60,7 @@ fn graycode(matches: &clap::ArgMatches) {
 
     let input = String::from(matches.value_of("input").unwrap());
     let analysis = graycodeanalysis::analyse_file(&input);
-    println!("num, leading_zeros, ms_ones, ms_zeros, remaining");
+    println!("num, lzc, foc, fzc, remaining");
     for val in analysis{
         println!("{}", val);
     }
