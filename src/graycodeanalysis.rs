@@ -95,6 +95,7 @@ pub fn read_u32(file: &String) -> Vec<u32> {
 pub fn analyse_file(file: &String) {
     let data = read_u32(file);
     let data : Vec<u32> = data.iter().filter(|x| ((**x) != 0u32)).map(|&x| x).collect();
+    // println!("num, lzc, foc, fzc, remaining, residuallength");
     // for x in data.iter() {
     //     let v = GrayCodeAnalysis::new(x);
     //     println!("{}", v);
