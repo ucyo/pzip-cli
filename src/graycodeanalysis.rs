@@ -134,8 +134,31 @@ pub fn positions(data: &Vec<u32>) {
     println!("POSITIONS: {:?}", countermap);
 }
 
+/// This will return the first n bits of the value in binary representation
+/// If the value is smaller than 1 << n , than addtional zeros will be added
+/// at the LSB positions
 pub fn get_value_first(value: &u32, n: u32) -> u32 {
     let val = if *value <= (1 << n) { *value << n + 1 } else {*value};
     let filter = ((1<<n) - 1) << 32 - val.leading_zeros() - n;
     (val & filter) >> (32 - val.leading_zeros() - n)
+}
+
+/// This wil return the residual plus an additional bit at the front.
+/// This is necessary for getting all the first zeros
+pub fn get_value_after(value: &u32, n: u32) -> Option<u32> {
+    if *value <= (1 << n) {
+        return None
+    }
+    let filter = 32 - (*value).leading_zeros() - n;
+    let range = (1 << filter) - 1;
+    Some((range & *value) + range + 1)
+}
+
+/// This will return the number of bits in the value after the first n bits.
+/// If the value is smaller than 1 << n, the result will be 0
+pub fn get_residual_size_after(value: &u32, n: u32) -> u32 {
+    if *value <= (1 << n) {
+        return 0
+    }
+    32 - (*value).leading_zeros() - n - 1
 }
