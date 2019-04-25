@@ -100,8 +100,14 @@ pub fn split(matches: &clap::ArgMatches) {
     let fz_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&fz);
     let arfz_encoded = pzip_redux::encode(&fz, 8, 10, 12);
 
+    use super::graycodeanalysis::get_value_first;
     let diff: Vec<u32> = calculate_abs_diff(&predictions, &truth);
+    let first_diff_bits : Vec<u8> = diff.iter().map(|&r| get_value_first(r, 4) as u8).collect();
+    let residual_diff : u32 = diff.iter().map(|&r| 4u32.min(32 - r.leading_zeros())).sum();
+    // println!("{:?}", residual_diff);
     let compact_residuals = to_u8(pack(&diff, true));
+    let first_diff_residuals = compact_residuals.len() - (1 + residual_diff as usize / 8);
+    let first_diff_bits_huff = pzip_huffman::hufbites::encode_itself_to_bytes(&first_diff_bits);
 
     let lzcdiff: Vec<u8> = diff.iter().map(|&d| d.leading_zeros() as u8).collect();
     let lzcdiff_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&lzcdiff);
@@ -138,6 +144,21 @@ pub fn split(matches: &clap::ArgMatches) {
 
 
     // Follwing is just output formatting
+
+    let nbytes = lzcdiff_encoded.len() + 1 + predictions.len()/8 + first_diff_bits_huff.len() + first_diff_residuals;
+    let onbytes = predictions.len() * 4;
+
+    println!(
+        "{} + {} + {} + {}= {} of {} ({}% | {:.2}) [lzchuffman, signbare, first5, residual]",
+        lzcdiff_encoded.len(),
+        (1 + predictions.len()/8),
+        first_diff_bits_huff.len(),
+        first_diff_residuals,
+        nbytes,
+        onbytes,
+        nbytes as f64 / onbytes as f64,
+        onbytes as f64 / nbytes as f64
+    );
 
     let nbytes = lzc.len() + fz.len() + compact_residuals.len();
     let onbytes = predictions.len() * 4;
