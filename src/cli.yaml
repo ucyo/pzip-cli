@@ -192,11 +192,10 @@ subcommands:
                     takes_value: true
                     required: true
                     index: 1
-                - type:
-                    help: Floating-point type
-                    short: f  # changed
-                    long: float  # changed
+                - mode:
+                    help: Mode of FOC
+                    short: m  # changed
+                    long: mode  # changed
                     required: true
                     takes_value: true
-                    possible_values: [f32]
-                    default_value: f32
+                    possible_values: [xor, diff]
