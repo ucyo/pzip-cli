@@ -93,6 +93,7 @@ pub fn read_u32(file: &String) -> Vec<u32> {
 }
 
 pub fn analyse_file(file: &String) {
+    println!("FILE: {}", file);
     let data = read_u32(file);
     let data : Vec<u32> = data.iter().filter(|x| ((**x) != 0u32)).map(|&x| x).collect();
     // println!("num, lzc, foc, fzc, remaining, residuallength");
@@ -100,9 +101,9 @@ pub fn analyse_file(file: &String) {
     //     let v = GrayCodeAnalysis::new(x);
     //     println!("{}", v);
     // }
+    positions_by_length(&data, 1, 10);
     positions(&data);
-    positions_by_length(&data, 1, 7);
-    println!("{}", data.len());
+    println!("SIZE: {}", data.len());
 }
 
 use std::collections::{HashMap, BTreeMap};
@@ -116,10 +117,10 @@ fn positions_by_length(data: &Vec<u32>, min: u32, max: u32) {
         }
     }
     let countermap : BTreeMap<usize, usize> = counter.iter().enumerate().map(|(u,&k)| (u,k)).collect();
-    println!("{:?}", countermap);
-    for (k,v) in countermap.into_iter() {
-        println!("{:b}: {} ({:.2}%)", k, v, ((100*v) as f64 / data.len() as f64))
-    }
+    println!("BINARY: {:?}", countermap);
+    // for (k,v) in countermap.into_iter() {
+    //     println!("{:b}: {} ({:.2}%)", k, v, ((100*v) as f64 / data.len() as f64))
+    // }
 }
 
 
@@ -131,10 +132,10 @@ pub fn positions(data: &Vec<u32>) {
         }
     }
     let countermap : BTreeMap<usize, usize> = counter.iter().enumerate().map(|(u,&k)| (u,k)).collect();
-    println!("{:?}", countermap);
+    println!("POSITIONS: {:?}", countermap);
 }
 
-fn get_value_first(val: u32, n: u32) -> u32{
+pub fn get_value_first(val: u32, n: u32) -> u32{
     let filter = ((1<<n) - 1) << 32 - val.leading_zeros() - n;
     (val & filter) >> (32 - val.leading_zeros() - n)
 }
