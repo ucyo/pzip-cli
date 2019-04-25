@@ -106,7 +106,7 @@ pub fn analyse_file(file: &String) {
     println!("SIZE: {}", data.len());
 }
 
-use std::collections::{HashMap, BTreeMap};
+use std::collections::{BTreeMap};
 fn positions_by_length(data: &Vec<u32>, min: u32, max: u32) {
     let mut counter = [0usize; 1 << 6];
     for n in min..max {

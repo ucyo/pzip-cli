@@ -60,9 +60,6 @@ fn graycode(matches: &clap::ArgMatches) {
 
     let input = String::from(matches.value_of("input").unwrap());
     graycodeanalysis::analyse_file(&input);
-    // for val in analysis{
-    //     println!("{}", val);
-    // }
 }
 
 use pzip::transform::{Inter, Intra, Byte, Compact};
