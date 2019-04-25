@@ -101,14 +101,14 @@ pub fn analyse_file(file: &String) {
     //     let v = GrayCodeAnalysis::new(x);
     //     println!("{}", v);
     // }
-    positions_by_length(&data, 1, 10);
+    positions_by_length(&data, 1, 7);
     positions(&data);
     println!("SIZE: {}", data.len());
 }
 
 use std::collections::{HashMap, BTreeMap};
 fn positions_by_length(data: &Vec<u32>, min: u32, max: u32) {
-    let mut counter = [0usize; 64];
+    let mut counter = [0usize; 1 << 6];
     for n in min..max {
         for value in data.iter() {
             let val = if *value <= (1 << n + 1) { value*value << n + 1 } else {*value};
