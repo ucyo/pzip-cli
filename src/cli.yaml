@@ -179,3 +179,24 @@ subcommands:
                     takes_value: true
                     possible_values: [f32]
                     default_value: f32
+    - foc:
+            name: First Ones Count
+            version: "0.1.0"
+            author: Ugur Cayoglu <cayoglu@me.com>
+            about: Make a first one count compression
+            args:
+                - input:
+                    help: Sets the prediction file
+                    short: i
+                    long: input
+                    takes_value: true
+                    required: true
+                    index: 1
+                - type:
+                    help: Floating-point type
+                    short: f  # changed
+                    long: float  # changed
+                    required: true
+                    takes_value: true
+                    possible_values: [f32]
+                    default_value: f32

@@ -10,6 +10,7 @@ use env_logger;
 mod graycodeanalysis;
 mod mqanalysis;
 mod split;
+mod foc;
 
 fn main() {
     env_logger::init();
@@ -24,6 +25,8 @@ fn main() {
         mqanalysis::mqanalysis(&matches.subcommand_matches("mqanalysis").unwrap());
     } else if matches.is_present("split") {
         split::split(&matches.subcommand_matches("split").unwrap());
+    } else if matches.is_present("foc") {
+        foc::foc(&matches.subcommand_matches("foc").unwrap());
     } else {
         App::from_yaml(yaml).print_help().unwrap();
     }
