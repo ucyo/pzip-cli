@@ -111,8 +111,7 @@ fn positions_by_length(data: &Vec<u32>, min: u32, max: u32) {
     let mut counter = [0usize; 1 << 6];
     for n in min..max {
         for value in data.iter() {
-            let val = if *value <= (1 << n + 1) { value*value << n + 1 } else {*value};
-            let v  = get_value_first(val, n) as usize;
+            let v  = get_value_first(value, n) as usize;
             counter[v] += 1;
         }
     }
@@ -135,7 +134,8 @@ pub fn positions(data: &Vec<u32>) {
     println!("POSITIONS: {:?}", countermap);
 }
 
-pub fn get_value_first(val: u32, n: u32) -> u32{
+pub fn get_value_first(value: &u32, n: u32) -> u32 {
+    let val = if *value <= (1 << n) { *value << n + 1 } else {*value};
     let filter = ((1<<n) - 1) << 32 - val.leading_zeros() - n;
     (val & filter) >> (32 - val.leading_zeros() - n)
 }
