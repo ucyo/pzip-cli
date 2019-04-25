@@ -102,7 +102,7 @@ pub fn split(matches: &clap::ArgMatches) {
 
     use super::graycodeanalysis::get_value_first;
     let diff: Vec<u32> = calculate_abs_diff(&predictions, &truth);
-    let first_diff_bits : Vec<u8> = diff.iter().map(|&r| get_value_first(r, 4) as u8).collect();
+    let first_diff_bits : Vec<u8> = diff.iter().map(|&r| get_value_first(&r, 4) as u8).collect();
     let residual_diff : u32 = diff.iter().map(|&r| 4u32.min(32 - r.leading_zeros())).sum();
     // println!("{:?}", residual_diff);
     let compact_residuals = to_u8(pack(&diff, true));
