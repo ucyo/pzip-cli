@@ -199,3 +199,9 @@ subcommands:
                     required: true
                     takes_value: true
                     possible_values: [xor, diff]
+                - cut:
+                    help: "Huffman Coding of the first <cut> values"
+                    long: cut
+                    takes_value: true
+                    required_if:
+                        - [mode, diff]

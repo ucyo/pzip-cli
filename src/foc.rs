@@ -14,7 +14,8 @@ pub fn foc(matches: &clap::ArgMatches) {
 
     let mut outbytes = 0usize;
     if mode == "diff" {
-        outbytes = process_diff(&data, 6);
+        let n = String::from(matches.value_of("cut").unwrap()).parse().unwrap();
+        outbytes = process_diff(&data, n);
     } else if mode == "xor" {
         outbytes = process_xor(&data);
     } else if mode == "power" {
