@@ -1,3 +1,5 @@
+use log::warn;
+
 pub struct GrayCodeAnalysis {
     pub num: u32,
     pub lzc: usize,
@@ -138,6 +140,10 @@ pub fn positions(data: &Vec<u32>) {
 /// If the value is smaller than 1 << n , than addtional zeros will be added
 /// at the LSB positions
 pub fn get_value_first(value: &u32, n: u32) -> u32 {
+    warn!("{} {}", value, n);
+    if *value == 0 {
+        return 0
+    }
     let val = if *value <= (1 << n) { *value << n + 1 } else {*value};
     let filter = ((1<<n) - 1) << (32 - val.leading_zeros() - n);
     (val & filter) >> (32 - val.leading_zeros() - n)
