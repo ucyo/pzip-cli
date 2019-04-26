@@ -291,14 +291,24 @@ fn calculate_position_to_truth(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<
 
 /// Transforms BitVec into a Vector of u8 values with padding on the last element
 fn to_u8(bv: BitVec) -> Vec<u8> {
+    let bv = eliminate_first_bit(bv);
     bv.to_bytes()
 }
 
 /// Transforms BitVec into a Vector of u32 values with padding on the last element
 fn to_u32(bv: BitVec) -> Vec<u32> {
+    let bv = eliminate_first_bit(bv);
     let data = bv.to_bytes();
     let mut result : Vec<u32> = vec![0; data.len() / 4];
     BigEndian::read_u32_into(&data, &mut result);
+    result
+}
+
+fn eliminate_first_bit(bv: BitVec) -> BitVec {
+    let mut result = BitVec::new();
+    for ix in 1..bv.len() {
+        result.push(bv.get(ix).unwrap())
+    }
     result
 }
 
@@ -394,14 +404,11 @@ mod tests {
     #[test]
     fn test_bitvec_to_u32() {
         let data: Vec<u32> = vec![62736423];
+        println!("0b{:b}", data[0]);
         let lz = data[0].leading_zeros();
         let result = pack(&data, false);
-        println!("{:?}", result);
         let result = to_u32(result);
-
-        for r in result.iter() {
-            println!("{:#032b}", r);
-        }
+        println!("0b{:b} {} ", result[0], lz);
 
         assert_eq!(result[0], data[0] << lz);  // bitvec will fill the values with zeros
     }
