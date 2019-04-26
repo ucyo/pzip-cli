@@ -125,3 +125,20 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
 fn process_power(data: &Vec<u32>) -> FileContainer {
     unimplemented!()
 }
+
+
+#[cfg(test)]
+mod tests {
+    use super::*;
+
+    #[test]
+    fn test_compress_using_diff() {
+        let data : Vec<u32> = vec![324, 9384,82, 1, 2 << 31, 9290182];
+        let cut = 6u32;
+
+        let fc = process_diff(&data, cut);
+        let reconstruct = reverse_diff(fc);
+
+        assert_eq!(data, reconstruct)
+    }
+}
