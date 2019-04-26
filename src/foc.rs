@@ -4,9 +4,10 @@ use super::graycodeanalysis::read_u32;
 use super::graycodeanalysis::{get_residual_size_after, get_value_first};
 use bit_vec::BitVec;
 use log::{debug, info};
-use pzip_huffman::hufbites::encode_itself_to_bytes as encode;
+use pzip_huffman::hufbites::{encode_itself_to_bytes as encode, decode};
 use std::collections::HashMap;
 use std::fs::metadata;
+use byteorder::{BigEndian, ByteOrder};
 
 struct FileContainer {
     huff_lzc: Vec<u8>,
@@ -47,7 +48,6 @@ impl std::fmt::Display for FileContainer {
 }
 
 pub fn foc(matches: &clap::ArgMatches) {
-    // println!("{:#?}", matches);
     let ifile = String::from(matches.value_of("input").unwrap());
     let mode = String::from(matches.value_of("mode").unwrap());
     let data = read_u32(&ifile);
@@ -89,6 +89,7 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
         .iter()
         .map(|&x| x.leading_zeros() as u8)
         .collect::<Vec<u8>>();
+    debug!("LZC: {:?} [encoded]", lzc);
     let (lzc, lzc_codebook) = encode(&lzc); // huff(lzc)
     debug!("Size: Huff(LZC)={}", lzc.len());
 
@@ -96,6 +97,7 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
         .iter()
         .map(|&x| get_value_first(&x, n) as u8)
         .collect::<Vec<u8>>();
+    debug!("RE6: {:?} [encoded]", first6);
     let (first6, first6_codebook) = encode(&first6); // huff(6-residual)
     debug!("Size: Huff(6-residual)={}", first6.len());
 
@@ -112,6 +114,70 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
 
     FileContainer::new(lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
 
+}
+
+fn skip_first_zeros(bv: BitVec) -> BitVec {
+    let mut ix = 0;
+    while !bv.get(ix).unwrap() {
+        ix += 1
+    }
+    let mut result = BitVec::new();
+    for i in ix..bv.len() {
+        result.push(bv.get(i).unwrap());
+    }
+    result
+}
+
+fn reverse_diff(fc: FileContainer) -> Vec<u32> {
+    let lzc = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
+    debug!("LZC: {:?} [decoded]", lzc);
+    let re6 = decode(BitVec::from_bytes(&fc.huff_6re[..]), &fc.huff_huff_6re_codebook);
+    debug!("RE6: {:?} [decoded]", re6);  // might be longer
+    let re6 = BitVec::from_bytes(&re6[..]);
+    let re6 = skip_first_zeros(re6);
+    debug!("Again RE6: {:?} [decoded]", re6);  // might be longer
+    let res = BitVec::from_bytes(&fc.raw_res6[..]);
+
+    let mut res6ix = 0;
+    let mut resix = 0;
+    let mut result = BitVec::new();
+    for l in lzc {
+
+        // add LZC
+        for _ in 0..l {
+            result.push(false);
+        }
+
+        // add maximum 6, but at least remaining bits from first 6 Bits encoding
+        let res6length = (32-l).min(6);
+        if res6length == 0 {
+            continue
+        }
+        for _ in 0..res6length {
+            debug!("Pushing {}", re6.get(res6ix).unwrap());
+            result.push(re6.get(res6ix).unwrap());
+            res6ix += 1;
+        }
+
+        // fill remaining residuals if necessary
+        let reslength = 32-l-res6length;
+        if reslength == 0 {
+            continue
+        }
+        for _ in 0..reslength {
+            result.push(res.get(resix).unwrap());
+            resix += 1
+        }
+        println!("Decoded {:?}", result)
+    }
+
+    let result = result.to_bytes();
+    // for r in result.iter() {
+    //     println!("0b{:b}", r)
+    // }
+    let mut data = vec![0_u32; result.len() / 4];
+    BigEndian::read_u32_into(&result, &mut data);
+    data
 }
 
 // Implementation of
@@ -133,7 +199,7 @@ mod tests {
 
     #[test]
     fn test_compress_using_diff() {
-        let data : Vec<u32> = vec![324, 9384,82, 1, 2 << 31, 9290182];
+        let data : Vec<u32> = vec![324, 9384,82, 1, 1 << 31, 9290182];
         let cut = 6u32;
 
         let fc = process_diff(&data, cut);
