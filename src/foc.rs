@@ -42,11 +42,11 @@ fn process_diff(data: &Vec<u32>, n: u32) -> usize {
     debug!("Size: Raw(Sign)={}", signs.len());
 
     let lzc = data.iter().map(|&x| x.leading_zeros() as u8).collect::<Vec<u8>>();
-    let lzc = encode(&lzc);  // huff(lzc)
+    let (lzc, lzc_codebook) = encode(&lzc);  // huff(lzc)
     debug!("Size: Huff(LZC)={}", lzc.len());
 
     let first6 = data.iter().map(|&x| get_value_first(&x, n) as u8).collect::<Vec<u8>>();
-    let first6 = encode(&first6);  // huff(6-residual)
+    let (first6, first6_codebook) = encode(&first6);  // huff(6-residual)
     debug!("Size: Huff(6-residual)={}", first6.len());
 
     let leftresidual = data.iter().map(|&x| get_residual_size_after(&x, n)).sum::<u32>();

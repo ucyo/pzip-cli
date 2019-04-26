@@ -93,11 +93,11 @@ pub fn split(matches: &clap::ArgMatches) {
     let truth = read_u32(&tfile);
 
     let lzc = calcualte_xor_lzc(&predictions, &truth);
-    let lzc_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&lzc);
+    let (lzc_encoded, _) = pzip_huffman::hufbites::encode_itself_to_bytes(&lzc);
     let arlzc_encoded = pzip_redux::encode(&lzc, 8, 10, 12);
 
     let fz = calculate_filling_zeros(&predictions, &truth);
-    let fz_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&fz);
+    let (fz_encoded, _) = pzip_huffman::hufbites::encode_itself_to_bytes(&fz);
     let arfz_encoded = pzip_redux::encode(&fz, 8, 10, 12);
 
     use super::graycodeanalysis::get_value_first;
@@ -107,18 +107,18 @@ pub fn split(matches: &clap::ArgMatches) {
     // println!("{:?}", residual_diff);
     let compact_residuals = to_u8(pack(&diff, true));
     let first_diff_residuals = compact_residuals.len() - (1 + residual_diff as usize / 8);
-    let first_diff_bits_huff = pzip_huffman::hufbites::encode_itself_to_bytes(&first_diff_bits);
+    let (first_diff_bits_huff, _) = pzip_huffman::hufbites::encode_itself_to_bytes(&first_diff_bits);
 
     let lzcdiff: Vec<u8> = diff.iter().map(|&d| d.leading_zeros() as u8).collect();
-    let lzcdiff_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&lzcdiff);
+    let (lzcdiff_encoded, _) = pzip_huffman::hufbites::encode_itself_to_bytes(&lzcdiff);
     let (lzcdiff_merged_encoded, mappings) = pzip_huffman::hufbites::encode_itself_by_merged_huffman_to_bytes(&lzcdiff);
     let compact_merged_residuals = to_u8(pack_with_mapping(&diff, true, &mappings));
 
     let power = calculate_power(&predictions, &truth);
-    let power_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&power);
+    let (power_encoded, _) = pzip_huffman::hufbites::encode_itself_to_bytes(&power);
 
     let position = calculate_position_to_truth(&predictions, &truth);
-    let position_encoded = pzip_huffman::hufbites::encode_itself_to_bytes(&position);
+    let (position_encoded, _) = pzip_huffman::hufbites::encode_itself_to_bytes(&position);
 
 
     // File output
