@@ -304,7 +304,7 @@ fn to_u32(bv: BitVec) -> Vec<u32> {
     result
 }
 
-fn eliminate_first_bit(bv: BitVec) -> BitVec {
+pub fn eliminate_first_bit(bv: BitVec) -> BitVec {
     let mut result = BitVec::new();
     for ix in 1..bv.len() {
         result.push(bv.get(ix).unwrap())

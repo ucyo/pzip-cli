@@ -146,12 +146,18 @@ pub fn get_value_first(value: &u32, n: u32) -> u32 {
 /// This wil return the residual plus an additional bit at the front.
 /// This is necessary for getting all the first zeros
 pub fn get_value_after(value: &u32, n: u32) -> Option<u32> {
-    if *value <= (1 << n) {
+    if *value <= (1 << n - 1) {
         return None
+    }
+    if (*value).is_power_of_two() {
+        let filter = 32 - (*value).leading_zeros() - n;
+        let range = (1 << filter) - 1;
+        return Some(range & *value)
     }
     let filter = 32 - (*value).leading_zeros() - n;
     let range = (1 << filter) - 1;
-    Some((range & *value) + range + 1)
+    let result = (range & *value) + range + 1;
+    Some(result - (result.next_power_of_two() >> 1))
 }
 
 /// This will return the number of bits in the value after the first n bits.
