@@ -11,30 +11,33 @@ use std::fs::metadata;
 use byteorder::{BigEndian, ByteOrder};
 
 struct FileContainer {
+    size : usize,
     huff_lzc: Vec<u8>,
     raw_sign: Vec<u8>,
     huff_6re: Vec<u8>,
     raw_res6: Vec<u8>,
     huff_lzc_codebook: HashMap<u8, BitVec>,
-    huff_huff_6re_codebook: HashMap<u8, BitVec>,
+    huff_6re_codebook: HashMap<u8, BitVec>,
 }
 
 impl FileContainer {
     pub fn new(
+        size : usize,
         huff_lzc: Vec<u8>,
         raw_sign: Vec<u8>,
         huff_6re: Vec<u8>,
         raw_res6: Vec<u8>,
         huff_lzc_codebook: HashMap<u8, BitVec>,
-        huff_huff_6re_codebook: HashMap<u8, BitVec>,
+        huff_6re_codebook: HashMap<u8, BitVec>,
     ) -> Self {
         FileContainer {
+            size,
             huff_lzc,
             raw_sign,
             huff_6re,
             raw_res6,
             huff_lzc_codebook,
-            huff_huff_6re_codebook,
+            huff_6re_codebook,
         }
     }
     pub fn nbytes(&self) -> usize {
@@ -98,34 +101,36 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
         .iter()
         .map(|&x| get_value_first(&x, n) as u8)
         .collect::<Vec<u8>>();
-    debug!("RE6: {:?} [encoded]", first6);
+    debug!("RE6: {:?} [to be encoded]", first6);
     let (first6, first6_codebook) = encode(&first6); // huff(6-residual)
     debug!("Size: Huff(6-residual)={}", first6.len());
+    debug!("RE6: {:?} [encoded]", first6);
 
-    let leftresidual : Vec<Option<u32>> = data
-        .iter()
-        .map(|&x| get_value_after(&x, n))
-        .collect();
-    println!("Left residual {:?}", leftresidual);
-    let mut _bv = BitVec::new();
-    _bv.push(true);
-    for left in leftresidual {
-        match left {
-            Some(v) => {
-                let b = u32_to_bool(v);
-                for i in b.into_iter() {
-                    _bv.push(i);
-                }
-            },
-            _ => {}
+
+    let mut residual = BitVec::new();
+    residual.push(true);
+    get_left_residual(&data, n, &mut residual);
+    debug!("Encoded Residual: {:?}", residual);
+    let leftresidual = residual.to_bytes();
+
+    FileContainer::new(data.len(), lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
+}
+
+fn get_left_residual(data: &Vec<u32>, cut: u32, result: &mut BitVec) {
+    for &d in data.iter() {
+        let lz = if d >= (1 << 31) { 0 } else {d.leading_zeros()};
+        let exclude = lz + cut;
+        if exclude >= 32 {
+            continue
+        }
+        let mut include = (32 - exclude - 1) as i32;
+        debug!{"include {} {} lz: {}", d, include, lz};
+        while include >= 0 {
+            result.push(d & (1 << include) > 0);
+            // dbg!(d & (1 << include) > 0);
+            include -= 1
         }
     }
-    println!("Encoded Res6: {:?}", _bv);
-    let leftresidual = _bv.to_bytes(); // raw(residual - 6)
-    debug!("Size: Raw(residual-6)={}", leftresidual.len());
-
-    FileContainer::new(lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
-
 }
 
 fn skip_first_zeros(bv: BitVec) -> BitVec {
@@ -141,27 +146,35 @@ fn skip_first_zeros(bv: BitVec) -> BitVec {
 }
 
 fn reverse_diff(fc: FileContainer) -> Vec<u32> {
-    println!("Raw FC: {:?}", fc.raw_res6);
+    debug!("Raw FC: {:?}", fc.raw_res6);
     let lzc = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
     debug!("LZC: {:?} [decoded]", lzc);
-    let re6 = decode(BitVec::from_bytes(&fc.huff_6re[..]), &fc.huff_huff_6re_codebook);
+    let re6 = decode(BitVec::from_bytes(&fc.huff_6re[..]), &fc.huff_6re_codebook);
+    let correct_re6length: Vec<u8> = lzc.iter().filter(|&x| (*x < 32)).map(|&u| u).collect();
+    let correct_re6length = correct_re6length.len();
+    let re6: Vec<u8> = re6.into_iter().take(correct_re6length).collect();
     debug!("RE6: {:?} [decoded]", re6);  // might be longer
+
     let mut bv = BitVec::new();
     for v in re6 {
+        print!("{:b} ", v as u32);
         let tmp = u32_to_bool(v as u32);
+        debug!("{:?}", tmp);
         for b in tmp {
             bv.push(b);
         }
     }
     let re6 = bv;
-    debug!("Again RE6: {:?} [decoded]", re6);  // might be longer
+    debug!("RE6: {:?} [decoded]", re6);  // might be longer
     let res = BitVec::from_bytes(&fc.raw_res6[..]);
-    debug!("Decoded Res6: {:?}", res);
+    let res = eliminate_first_bit(res);
+    debug!("Decoded last residuals: {:?}", res);
+    debug!("LEN {} {}", re6.len(), res.len());
 
     let mut res6ix = 0;
     let mut resix = 0;
     let mut result = BitVec::new();
-    for l in lzc {
+    'outer: for &l in lzc.iter() {
 
         // add LZC
         for _ in 0..l {
@@ -170,33 +183,46 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
 
         // add maximum 6, but at least remaining bits from first 6 Bits encoding
         let res6length = (32-l).min(6);
-        if res6length == 0 {
-            continue
+        if res6length <= 0 {
+            continue 'outer
         }
+        debug!("res6length {}", res6length);
         for _ in 0..res6length {
-            debug!("Pushing {}", re6.get(res6ix).unwrap());
-            result.push(re6.get(res6ix).unwrap());
+            debug!("Pushing {} ", re6.get(res6ix).unwrap());
+            let r = match re6.get(res6ix) {
+                Some(v) => v,
+                _ => continue 'outer
+            };
+            result.push(r);
+            res6ix += 1;
+        }
+        for _ in 0..(6 - res6length) {
             res6ix += 1;
         }
 
         // fill remaining residuals if necessary
         let reslength = 32-l-res6length;
-        if reslength == 0 {
-            continue
+        if reslength <= 0 {
+            continue 'outer
         }
         for _ in 0..reslength {
             result.push(res.get(resix).unwrap());
             resix += 1
         }
-        println!("Decoded {:?}", result)
+        debug!("Decoded {:?} {} {}", result.len(), resix, res6ix)
     }
 
+    debug!("{:?} {} {} {}", result, result.len(), res6ix, re6.len());
+
+    let border = res.len() - (res.len() % 8) + 2;
+    for ix in resix..border {
+        debug!("{:?}", res[ix]);
+    }
     let result = result.to_bytes();
-    // for r in result.iter() {
-    //     println!("0b{:b}", r)
-    // }
-    let mut data = vec![0_u32; result.len() / 4];
+    let result : Vec<u8> = result.into_iter().take(fc.size * 4).collect();
+    let mut data = vec![0_u32; fc.size];
     BigEndian::read_u32_into(&result, &mut data);
+    debug!("{:?}", data);
     data
 }
 
@@ -219,9 +245,9 @@ mod tests {
 
     #[test]
     fn test_compress_using_diff() {
-        let data : Vec<u32> = vec![324, 9384,82, 1, 1 << 31, 9290182];
+        let data : Vec<u32> = vec![324, 9384, 123122, 3123, 1, 92823, 1 << 31, 34182, 1, 83847483];
         for d in data.iter() {
-            println!("{:032b}", d)
+            debug!("{:032b}", d)
         }
         let cut = 6u32;
 
@@ -232,7 +258,7 @@ mod tests {
     }
     #[test]
     fn test_u32_to_bool_vec() {
-        let data : Vec<u32> = vec![324, 9384, 1 << 31, 9290182];
+        let data : Vec<u32> = vec![324, 9384, 1 << 31, 1 << 22, 9290182];
         let result : Vec<u32> = data.iter().map(|&x| u32_to_bool(x)).map(|vec| bool_to_u32(vec)).collect();
         assert_eq!(data, result)
     }
@@ -244,7 +270,7 @@ fn bool_to_u32(vec: Vec<bool>) -> u32 {
 
 pub fn u32_to_bool(value: u32) -> Vec<bool> {
     let mut result: Vec<bool> = Vec::new();
-    if value >= 1 << 31 {
+    if value.is_power_of_two() {
         result.push(true)
     }
     let mut pow = value.next_power_of_two() >> 1;
