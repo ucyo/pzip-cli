@@ -76,6 +76,7 @@ pub fn foc(matches: &clap::ArgMatches) {
         fc.nbytes(),
         fsize as f64 / fc.nbytes() as f64
     );
+    println!("{} + {} + {} + {}", fc.huff_lzc.len(), fc.raw_sign.len(), fc.huff_6re.len(), fc.raw_res6.len())
 }
 
 // Implementation of
