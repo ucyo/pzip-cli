@@ -139,7 +139,7 @@ pub fn positions(data: &Vec<u32>) {
 /// at the LSB positions
 pub fn get_value_first(value: &u32, n: u32) -> u32 {
     let val = if *value <= (1 << n) { *value << n + 1 } else {*value};
-    let filter = ((1<<n) - 1) << 32 - val.leading_zeros() - n;
+    let filter = ((1<<n) - 1) << (32 - val.leading_zeros() - n);
     (val & filter) >> (32 - val.leading_zeros() - n)
 }
 
