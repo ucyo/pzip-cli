@@ -281,7 +281,7 @@ fn reverse_power(fc: FileContainer) -> Vec<u32>{
     let mut resix = 0;
 
     let mut result = BitVec::new();
-    for &pow in power.iter() {
+    'outer: for &pow in power.iter() {
         if pow == 32 {
             fillfalse(32, &mut result);
             // println!("{:?}", result);
@@ -293,6 +293,9 @@ fn reverse_power(fc: FileContainer) -> Vec<u32>{
         let mut remainder = pow;
 
         while remainder > 0 {
+            if resix == residues.len() {
+                break 'outer
+            }
             result.push(residues.get(resix).unwrap());
             resix += 1;
             remainder -= 1
