@@ -11,6 +11,7 @@ use std::fs::metadata;
 use byteorder::{BigEndian, ByteOrder};
 
 struct FileContainer {
+    start: u8,
     size : usize,
     huff_lzc: Vec<u8>,
     raw_sign: Vec<u8>,
@@ -22,6 +23,7 @@ struct FileContainer {
 
 impl FileContainer {
     pub fn new(
+        start: u8,
         size : usize,
         huff_lzc: Vec<u8>,
         raw_sign: Vec<u8>,
@@ -31,6 +33,7 @@ impl FileContainer {
         huff_6re_codebook: HashMap<u8, BitVec>,
     ) -> Self {
         FileContainer {
+            start,
             size,
             huff_lzc,
             raw_sign,
@@ -41,7 +44,7 @@ impl FileContainer {
         }
     }
     pub fn nbytes(&self) -> usize {
-        self.huff_lzc.len() + self.raw_sign.len() + self.huff_6re.len() + self.raw_res6.len()
+        self.huff_lzc.len() + self.raw_sign.len() + self.huff_6re.len() + self.raw_res6.len() + 1 // +1 is for start
     }
 }
 
@@ -114,7 +117,7 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
     debug!("Encoded Residual: {:?}", residual);
     let leftresidual = residual.to_bytes();
 
-    FileContainer::new(data.len(), lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
+    FileContainer::new(0, data.len(), lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
 }
 
 fn get_left_residual(data: &Vec<u32>, cut: u32, result: &mut BitVec) {
@@ -227,13 +230,21 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
     data
 }
 
+fn vec_diff(input: &Vec<u8>) -> Vec<u8> {
+    let vals = (*input).iter();
+    let next_vals = (*input).iter().skip(1);
+
+    vals.zip(next_vals).map(|(cur, next)| next - cur).collect()
+}
+
 // Implementation of
 // huff(lzc) + huff(foc) + raw(residual - first 0)
 fn process_xor(data: &Vec<u32>) -> FileContainer {
     let lzc = data
         .iter()
-        .map(|&x| x.leading_zeros() as u8)
+        .map(|&x| (x.leading_zeros() + get_foc(&x) as u32) as u8)
         .collect::<Vec<u8>>();
+    let lzc = vec_diff(&lzc);
     let (lzc, lzc_codebook) = encode(&lzc); // huff(lzc)
 
     let foc : Vec<u8> = data.iter().filter(|&&x| x != 0).map(|&x| get_foc(&x)).collect();
@@ -254,7 +265,9 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
         // bv = BitVec::new();
     }
     let residuals = bv.to_bytes();
-    FileContainer::new(data.len(), lzc, Vec::new(), efoc, residuals, lzc_codebook, efoc_codebook)
+
+    let start = data[0].leading_zeros() as u8 + get_foc(&data[0]);
+    FileContainer::new(start, data.len(), lzc, Vec::new(), efoc, residuals, lzc_codebook, efoc_codebook)
 }
 
 fn reverse_xor(fc: FileContainer) -> Vec<u32> {
@@ -337,7 +350,7 @@ fn process_power(data: &Vec<u32>) -> FileContainer {
     }
     let residue = residue.to_bytes();
 
-    FileContainer::new(data.len(), huff_residuallength, Vec::new(), Vec::new(), residue, huff_residuallength_codebook, HashMap::new())
+    FileContainer::new(0, data.len(), huff_residuallength, Vec::new(), Vec::new(), residue, huff_residuallength_codebook, HashMap::new())
 }
 
 fn reverse_power(fc: FileContainer) -> Vec<u32>{
