@@ -233,23 +233,112 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
     unimplemented!()
 }
 
+use rand::Rng;
 // Implementation of
 // huff(lzc +- power(residual)) + raw(residual)
 fn process_power(data: &Vec<u32>) -> FileContainer {
-    unimplemented!()
+    let mut rng = rand::thread_rng();
+    let residuallength: Vec<u8> = data.iter().map(|&x| {
+        if x == 0 {
+            return 32u8
+        }
+        let k = (32 - x.leading_zeros()) - 1;
+        debug!("{} {}", k, x);
+        if rng.gen::<bool>() {  // TODO: Fix this to not use random bool
+            (32 - 1 - k) as u8
+        } else {
+            (32 + 1 + k) as u8
+        }
+    }).collect();
+    debug!("RL {:?} [encoded]", residuallength);
+    let (huff_residuallength, huff_residuallength_codebook) = encode(&residuallength);
+    let mut residue = BitVec::new();
+    residue.push(true);
+    for d in data.iter().filter(|&&x| x!=0) {
+        let bo = u32_to_bool(*d);
+        for bitx in 1..bo.len() {
+            residue.push(bo[bitx])
+        }
+    }
+    let residue = residue.to_bytes();
+
+    FileContainer::new(data.len(), huff_residuallength, Vec::new(), Vec::new(), residue, huff_residuallength_codebook, HashMap::new())
 }
+
+fn reverse_power(fc: FileContainer) -> Vec<u32>{
+    let residuallength = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
+    debug!("RL {:?} [decoded]", residuallength);
+    let power : Vec<u8> = residuallength.iter().map(|&x| {
+        if x > 32 {
+            x - 32 - 1
+        } else if x < 32 {
+            32 - x - 1
+        } else {
+            32
+        }
+    }).collect();
+    let residues = eliminate_first_bit(BitVec::from_bytes(&fc.raw_res6[..]));
+    let mut resix = 0;
+
+    let mut result = BitVec::new();
+    for &pow in power.iter() {
+        if pow == 32 {
+            fillfalse(32, &mut result);
+            // println!("{:?}", result);
+            // result = BitVec::new();
+            continue
+        }
+        fillfalse(32 - 1 - pow as usize, &mut result);
+        result.push(true);
+        let mut remainder = pow;
+
+        while remainder > 0 {
+            result.push(residues.get(resix).unwrap());
+            resix += 1;
+            remainder -= 1
+        }
+        // println!("{:?}", result);
+        // result = BitVec::new();
+    }
+    let result = result.to_bytes();
+    let result : Vec<u8> = result.into_iter().take(fc.size * 4).collect();
+    let mut data = vec![0_u32; fc.size];
+    BigEndian::read_u32_into(&result, &mut data);
+    debug!("{:?}", data);
+    data
+}
+
+fn fillfalse(num: usize, bv: &mut BitVec) {
+    for _ in 0..num {
+        bv.push(false);
+    }
+}
+
 
 
 #[cfg(test)]
 mod tests {
     use super::*;
+    #[test]
+    fn test_compress_using_power() {
+        let data : Vec<u32> = vec![324, 0, 9384, 2, 123122, 4,
+                                   3123, 0, 1, 92823,
+                                   8823, 1 << 31, 34182, 1, 83847483];
+        // for d in data.iter() {
+        //     println!("{:032b}", d)
+        // }
+        let fc = process_power(&data);
+        let reconstruct = reverse_power(fc);
+
+        assert_eq!(data, reconstruct)
+    }
 
     #[test]
     fn test_compress_using_diff() {
         let data : Vec<u32> = vec![324, 9384, 123122, 3123, 1, 92823, 1 << 31, 34182, 1, 83847483];
-        for d in data.iter() {
-            debug!("{:032b}", d)
-        }
+        // for d in data.iter() {
+        //     debug!("{:032b}", d)
+        // }
         let cut = 6u32;
 
         let fc = process_diff(&data, cut);
