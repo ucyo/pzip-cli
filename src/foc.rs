@@ -290,10 +290,10 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
         .iter()
         .map(|&x| (x.leading_zeros()) as u8)
         .collect::<Vec<u8>>();
-    println!("just LZC {:?} ", justlzc);
-    println!("LZC + FOC: {:?} [encoded, true]", lzc);
+    debug!("just LZC {:?} ", justlzc);
+    debug!("LZC + FOC: {:?} [encoded, true]", lzc);
     let lzc = vec_diff(&lzc);
-    println!("LZC + FOC: {:?} [encoded]", lzc);
+    debug!("LZC + FOC: {:?} [encoded]", lzc);
     let (lzc, lzc_codebook) = encode(&lzc); // huff(lzc)
 
     let foc : Vec<u8> = data.iter().filter(|&&x| x != 0).map(|&x| get_foc(&x)).collect();
@@ -310,7 +310,7 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
         for j in *foc.get(i).unwrap() + 1..v.len() as u8 {
             bv.push(v[j as usize])
         }
-        // println!("Residual {:?}", bv);
+        // debug!("Residual {:?}", bv);
         // bv = BitVec::new();
     }
     let residuals = bv.to_bytes();
@@ -322,11 +322,11 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
 fn reverse_xor(fc: FileContainer) -> Vec<u32> {
     let foc = decode(BitVec::from_bytes(&fc.huff_6re[..]), &fc.huff_6re_codebook);
     let lzc = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
-    println!("LZC + FOC: {:?} [decoded]", lzc);
+    debug!("LZC + FOC: {:?} [decoded]", lzc);
     let lzc: Vec<u8> = lzc.into_iter().take(fc.size).collect();
     let lzc = cumsum(lzc, Some(fc.start + 33));
     let lzc: Vec<u8> = lzc.into_iter().take(fc.size).collect();
-    println!("LZC + FOC: {:?} [decoded, true]", lzc);
+    debug!("LZC + FOC: {:?} [decoded, true]", lzc);
     let res = BitVec::from_bytes(&fc.raw_res6[..]);
     let res = eliminate_first_bit(res);
     let mut focix = 0;
@@ -336,7 +336,7 @@ fn reverse_xor(fc: FileContainer) -> Vec<u32> {
     'outer: for &l in lzc.iter() {
         if l == 32 {
             fillfalse(l as usize, &mut result);
-            println!(" 32 {:?}", result);
+            debug!(" 32 {:?}", result);
             // result = BitVec::new();
             continue 'outer
         }
@@ -346,13 +346,13 @@ fn reverse_xor(fc: FileContainer) -> Vec<u32> {
         fillfalse(l as usize, &mut result);
         filltrue(*f as usize, &mut result);
         let mut free = 32 - *f - l; if free > 0 {result.push(false); free -= 1} else {
-            println!(" 32 {:?}", result);
+            debug!(" 32 {:?}", result);
             // result = BitVec::new();
             continue
         };
         while free > 0 {
             if resix == res.len() {
-                println!(" 32 {:?}", result);
+                debug!(" 32 {:?}", result);
                 // result = BitVec::new();
                 break 'outer
             }
@@ -360,16 +360,16 @@ fn reverse_xor(fc: FileContainer) -> Vec<u32> {
             resix += 1;
             free -= 1;
         }
-        println!(" 32 {:?}", result);
+        debug!(" 32 {:?}", result);
         // result = BitVec::new();
     }
     let result : Vec<u8> = result.to_bytes().into_iter().take(fc.size * 4).collect();
-    // println!("{:?}", result );
-    // println!(" 32 {:?}", result.to_bytes());
+    // debug!("{:?}", result );
+    // debug!(" 32 {:?}", result.to_bytes());
     // let result : Vec<u8> = result.into_iter().take(fc.size * 4).collect();
     let mut data = vec![0_u32; fc.size];
     BigEndian::read_u32_into(&result, &mut data);
-    println!("{:?}", data);
+    debug!("{:?}", data);
     data
 }
 
@@ -435,7 +435,7 @@ fn reverse_power(fc: FileContainer) -> Vec<u32>{
     'outer: for &pow in power.iter() {
         if pow == 32 {
             fillfalse(32, &mut result);
-            // println!("{:?}", result);
+            // debug!("{:?}", result);
             // result = BitVec::new();
             continue
         }
@@ -451,7 +451,7 @@ fn reverse_power(fc: FileContainer) -> Vec<u32>{
             resix += 1;
             remainder -= 1
         }
-        // println!("{:?}", result);
+        // debug!("{:?}", result);
         // result = BitVec::new();
     }
     let result = result.to_bytes();
@@ -487,9 +487,9 @@ mod tests {
                                    8823, 1 << 31, 34182, 1, 83847483
                                    ];
         for d in data.iter() {
-            println!("{:032b}", d)
+            debug!("{:032b}", d)
         }
-        println!("#", );
+        debug!("#", );
         let fc = process_xor(&data);
         let reconstruct = reverse_xor(fc);
 
@@ -502,7 +502,7 @@ mod tests {
                                    3123, 0, 1, 92823,
                                    8823, 1 << 31, 34182, 1, 83847483];
         // for d in data.iter() {
-        //     println!("{:032b}", d)
+        //     debug!("{:032b}", d)
         // }
         let fc = process_power(&data);
         let reconstruct = reverse_power(fc);
