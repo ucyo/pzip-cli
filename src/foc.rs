@@ -234,7 +234,15 @@ fn vec_diff(input: &Vec<u8>) -> Vec<u8> {
     let vals = (*input).iter();
     let next_vals = (*input).iter().skip(1);
 
-    vals.zip(next_vals).map(|(&cur, &next)| (64 - (next as i16 - cur as i16)) as u8).collect()
+    vals.zip(next_vals)
+        .map(|(&cur, &next)| {
+            if next > cur {
+                64 - 1 - (next - cur)
+            } else {
+                64 + 1 + (cur - next)
+            }
+        } as u8)
+        .collect()
 }
 
 fn cumsum(input: Vec<u8>, start: Option<u8>) -> Vec<u8> {
@@ -251,11 +259,11 @@ fn cumsum(input: Vec<u8>, start: Option<u8>) -> Vec<u8> {
         }
     };
     for &v in input.iter() {
-        println!("{} {:?} {:?}", v, result, input);
+        debug!("{} {:?} {:?}", v, result, input);
         if v > 64 {
-            current -= v - 64
+            current -= v - 64 - 1
         } else if v < 64 {
-            current += 64 - v
+            current += 64 - v - 1
         } else {
             current += 0
         }
@@ -271,7 +279,14 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
         .iter()
         .map(|&x| (x.leading_zeros() + get_foc(&x) as u32) as u8)
         .collect::<Vec<u8>>();
+    let justlzc = data
+        .iter()
+        .map(|&x| (x.leading_zeros()) as u8)
+        .collect::<Vec<u8>>();
+    println!("just LZC {:?} ", justlzc);
+    println!("LZC + FOC: {:?} [encoded, true]", lzc);
     let lzc = vec_diff(&lzc);
+    println!("LZC + FOC: {:?} [encoded]", lzc);
     let (lzc, lzc_codebook) = encode(&lzc); // huff(lzc)
 
     let foc : Vec<u8> = data.iter().filter(|&&x| x != 0).map(|&x| get_foc(&x)).collect();
@@ -298,8 +313,13 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
 }
 
 fn reverse_xor(fc: FileContainer) -> Vec<u32> {
-    let lzc = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
     let foc = decode(BitVec::from_bytes(&fc.huff_6re[..]), &fc.huff_6re_codebook);
+    let lzc = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
+    println!("LZC + FOC: {:?} [decoded]", lzc);
+    let lzc: Vec<u8> = lzc.into_iter().take(fc.size).collect();
+    let lzc = cumsum(lzc, Some(fc.start));
+    let lzc: Vec<u8> = lzc.into_iter().take(fc.size).collect();
+    println!("LZC + FOC: {:?} [decoded, true]", lzc);
     let res = BitVec::from_bytes(&fc.raw_res6[..]);
     let res = eliminate_first_bit(res);
     let mut focix = 0;
@@ -307,18 +327,22 @@ fn reverse_xor(fc: FileContainer) -> Vec<u32> {
 
     let mut result = BitVec::new();
     'outer: for &l in lzc.iter() {
-        fillfalse(l as usize, &mut result);
         if l == 32 {
-            // println!(" 32 {:?}", result);
-            // result = BitVec::new();
+            fillfalse(l as usize, &mut result);
+            println!(" 32 {:?}", result);
+            result = BitVec::new();
             continue 'outer
         }
         let f = foc.get(focix).unwrap();
-        filltrue(*f as usize, &mut result);
         focix += 1;
+        let l = l - *f;
+        fillfalse(l as usize, &mut result);
+        filltrue(*f as usize, &mut result);
         let mut free = 32 - *f - l; if free > 0 {result.push(false); free -= 1} else {continue};
         while free > 0 {
             if resix == res.len() {
+                println!(" 32 {:?}", result);
+                result = BitVec::new();
                 break 'outer
             }
             result.push(res.get(resix).unwrap());
@@ -326,15 +350,17 @@ fn reverse_xor(fc: FileContainer) -> Vec<u32> {
             free -= 1;
         }
 
-        // println!(" 32 {:?}", result);
-        // result = BitVec::new();
+        println!(" 32 {:?}", result);
+        result = BitVec::new();
     }
-    let result = result.to_bytes();
-    let result : Vec<u8> = result.into_iter().take(fc.size * 4).collect();
-    let mut data = vec![0_u32; fc.size];
-    BigEndian::read_u32_into(&result, &mut data);
-    debug!("{:?}", data);
-    data
+    vec![0]
+    // println!(" 32 {:?}", result.to_bytes());
+    // let result = result.to_bytes();
+    // let result : Vec<u8> = result.into_iter().take(fc.size * 4).collect();
+    // let mut data = vec![0_u32; fc.size];
+    // BigEndian::read_u32_into(&result, &mut data);
+    // debug!("{:?}", data);
+    // data
 }
 
 fn get_foc(val: &u32) -> u8 {
@@ -493,6 +519,14 @@ mod tests {
         let result : Vec<u32> = data.iter().map(|&x| u32_to_bool(x)).map(|vec| bool_to_u32(vec)).collect();
         assert_eq!(data, result)
     }
+    #[test]
+fn test_vec_diff_cumsum() {
+    let data = vec![4, 4, 1, 33, 35, 16, 14, 15];
+    let start = 4;
+
+    assert_eq!(data, cumsum(vec_diff(&data), Some(start)))
+}
+
 }
 
 fn bool_to_u32(vec: Vec<bool>) -> u32 {
