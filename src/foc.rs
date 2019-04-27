@@ -322,6 +322,24 @@ fn fillfalse(num: usize, bv: &mut BitVec) {
 #[cfg(test)]
 mod tests {
     use super::*;
+
+    #[test]
+    fn test_compress_using_xor() {
+
+        let data : Vec<u32> = vec![324, 0, 9384, 2, 123122, 4,
+                                   3123, 0, 1, 92823, (1 << 26) - 1 - 2929202,
+                                   8823, 1 << 31, 34182, 1, 83847483
+                                   ];
+        for d in data.iter() {
+            println!("{:032b}", d)
+        }
+        println!("#", );
+        let fc = process_xor(&data);
+        let reconstruct = reverse_xor(fc);
+
+        assert_eq!(data, reconstruct)
+    }
+
     #[test]
     fn test_compress_using_power() {
         let data : Vec<u32> = vec![324, 0, 9384, 2, 123122, 4,
