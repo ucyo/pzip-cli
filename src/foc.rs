@@ -234,7 +234,34 @@ fn vec_diff(input: &Vec<u8>) -> Vec<u8> {
     let vals = (*input).iter();
     let next_vals = (*input).iter().skip(1);
 
-    vals.zip(next_vals).map(|(cur, next)| next - cur).collect()
+    vals.zip(next_vals).map(|(&cur, &next)| (64 - (next as i16 - cur as i16)) as u8).collect()
+}
+
+fn cumsum(input: Vec<u8>, start: Option<u8>) -> Vec<u8> {
+    let mut result: Vec<u8> = Vec::new();
+    let mut current : u8;
+    match start {
+        Some(v) => {
+            result.push(v);
+            current = v
+        }
+        _ => {
+            result.push(0);
+            current = 0
+        }
+    };
+    for &v in input.iter() {
+        println!("{} {:?} {:?}", v, result, input);
+        if v > 64 {
+            current -= v - 64
+        } else if v < 64 {
+            current += 64 - v
+        } else {
+            current += 0
+        }
+        result.push(current);
+    }
+    result
 }
 
 // Implementation of
