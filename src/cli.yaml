@@ -76,7 +76,7 @@ subcommands:
             - residual:
                 help: "Residual algorithm to be used"
                 long: residual
-                possible_values: [xor, shifted, s, shiftedlzc, slzc]
+                possible_values: [xor, shifted, s, shiftedlzc, slzc, diff, d]
                 takes_value: true
                 default_value: xor
             - correction:
@@ -179,3 +179,29 @@ subcommands:
                     takes_value: true
                     possible_values: [f32]
                     default_value: f32
+    - foc:
+            name: First Ones Count
+            version: "0.1.0"
+            author: Ugur Cayoglu <cayoglu@me.com>
+            about: Make a first one count compression
+            args:
+                - input:
+                    help: Sets the prediction file
+                    short: i
+                    long: input
+                    takes_value: true
+                    required: true
+                    index: 1
+                - mode:
+                    help: Mode of FOC
+                    short: m  # changed
+                    long: mode  # changed
+                    required: true
+                    takes_value: true
+                    possible_values: [xor, diff, power]
+                - cut:
+                    help: "Huffman Coding of the first <cut> values"
+                    long: cut
+                    takes_value: true
+                    required_if:
+                        - [mode, diff]

@@ -10,6 +10,7 @@ use env_logger;
 mod graycodeanalysis;
 mod mqanalysis;
 mod split;
+mod foc;
 
 fn main() {
     env_logger::init();
@@ -24,6 +25,8 @@ fn main() {
         mqanalysis::mqanalysis(&matches.subcommand_matches("mqanalysis").unwrap());
     } else if matches.is_present("split") {
         split::split(&matches.subcommand_matches("split").unwrap());
+    } else if matches.is_present("foc") {
+        foc::foc(&matches.subcommand_matches("foc").unwrap());
     } else {
         App::from_yaml(yaml).print_help().unwrap();
     }
@@ -59,11 +62,7 @@ fn compress_with_information(matches: &clap::ArgMatches) {
 fn graycode(matches: &clap::ArgMatches) {
 
     let input = String::from(matches.value_of("input").unwrap());
-    let analysis = graycodeanalysis::analyse_file(&input);
-    println!("num, leading_zeros, ms_ones, ms_zeros, remaining");
-    for val in analysis{
-        println!("{}", val);
-    }
+    graycodeanalysis::analyse_file(&input);
 }
 
 use pzip::transform::{Inter, Intra, Byte, Compact};
@@ -164,6 +163,8 @@ fn parse_residual_algorithm(matches: &clap::ArgMatches) -> ResidualCalculation {
         "s" => ResidualCalculation::Shifted,
         "shiftedlzc" => ResidualCalculation::ShiftedLZC,
         "slzc" => ResidualCalculation::ShiftedLZC,
+        "diff" => ResidualCalculation::Diff,
+        "d" => ResidualCalculation::Diff,
         _ => panic!("Unknown residual algorithm.")
     }
 }
