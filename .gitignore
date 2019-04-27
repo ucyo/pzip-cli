@@ -10,3 +10,8 @@ settings.json
 *.nlzc
 *.pyc
 *.svg
+emac*
+icon*
+mu*
+gauss*
+Cargo.lock
