@@ -1,7 +1,7 @@
 //! Reading file and performing a first ones count compression
 //!
 use super::graycodeanalysis::read_u32;
-use super::graycodeanalysis::{get_value_after, get_value_first};
+use super::graycodeanalysis::{get_value_first};
 use super::split::eliminate_first_bit;
 use bit_vec::BitVec;
 use log::{debug, info};
