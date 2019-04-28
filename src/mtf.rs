@@ -7,6 +7,7 @@ use std::io::{BufWriter, BufReader, Read, Write};
 use compress::bwt;
 use compress::entropy::ari;
 use compress::bwt::{dc, mtf};
+use compress::rle;
 
 fn apply_mtf(data: &Vec<u8>) -> Vec<u8> {
     let mut e = mtf::Encoder::new(BufWriter::new(Vec::new()));
@@ -19,6 +20,13 @@ fn apply_range_coding(data: &Vec<u8>) -> Vec<u8> {
     e.write_all(data.as_slice()).unwrap();
     let (encoded, _) = e.finish();
     encoded.into_inner().unwrap()
+}
+
+fn apply_rle(data: &Vec<u8>) -> Vec<u8> {
+    let mut encoder = rle::Encoder::new(Vec::new());
+    encoder.write_all(&data[..]).unwrap();
+    let (buf, _): (Vec<u8>, _) = encoder.finish();
+    buf
 }
 
 pub fn mtf(matches: &clap::ArgMatches) {
@@ -34,6 +42,9 @@ pub fn mtf(matches: &clap::ArgMatches) {
     base.insert("foc_mtf".to_string(), apply_mtf(&get_foc(&data)));
     base.insert("lzc_mtf".to_string(), apply_mtf(&get_lzc(&data)));
     base.insert("lzcfoc_mtf".to_string(), apply_mtf(&get_lzc_and_foc(&data)));
+    base.insert("foc_mtf_rle".to_string(), apply_rle(&apply_mtf(&get_foc(&data))));
+    base.insert("lzc_mtf_rle".to_string(), apply_rle(&apply_mtf(&get_lzc(&data))));
+    base.insert("lzcfoc_mtf_rle".to_string(), apply_rle(&apply_mtf(&get_lzc_and_foc(&data))));
 
     // Huffman compression
     for k in base.iter() {
