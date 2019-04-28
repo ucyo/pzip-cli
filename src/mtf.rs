@@ -84,15 +84,15 @@ pub fn mtf(matches: &clap::ArgMatches) {
     base.insert("foc".to_string(), get_foc(&data));
     base.insert("lzc".to_string(), get_lzc(&data));
     base.insert("lzcfoc".to_string(), get_lzc_and_foc(&data));
-    base.insert("foc_bwt".to_string(), apply_bwt(&get_foc(&data)));
-    base.insert("lzc_bwt".to_string(), apply_bwt(&get_lzc(&data)));
-    base.insert("lzcfoc_bwt".to_string(), apply_bwt(&get_lzc_and_foc(&data)));
-    base.insert("foc_mtf".to_string(), apply_mtf(&get_foc(&data)));
-    base.insert("lzc_mtf".to_string(), apply_mtf(&get_lzc(&data)));
-    base.insert("lzcfoc_mtf".to_string(), apply_mtf(&get_lzc_and_foc(&data)));
-    base.insert("foc_mtf_rle".to_string(), apply_rle(&apply_mtf(&get_foc(&data))));
-    base.insert("lzc_mtf_rle".to_string(), apply_rle(&apply_mtf(&get_lzc(&data))));
-    base.insert("lzcfoc_mtf_rle".to_string(), apply_rle(&apply_mtf(&get_lzc_and_foc(&data))));
+    base.insert("foc_bwt".to_string(), apply_bwt(&base["foc"]));
+    base.insert("lzc_bwt".to_string(), apply_bwt(&base["lzc"]));
+    base.insert("lzcfoc_bwt".to_string(), apply_bwt(&base["lzcfoc"]));
+    base.insert("foc_mtf".to_string(), apply_mtf(&base["foc"]));
+    base.insert("lzc_mtf".to_string(), apply_mtf(&base["lzc"]));
+    base.insert("lzcfoc_mtf".to_string(), apply_mtf(&base["lzcfoc"]));
+    base.insert("foc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["foc"])));
+    base.insert("lzc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzc"])));
+    base.insert("lzcfoc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzcfoc"])));
 
     // Huffman compression
     for k in base.iter() {
