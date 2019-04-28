@@ -230,7 +230,7 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
     data
 }
 
-fn vec_diff(input: &Vec<u8>) -> Vec<u8> {
+pub fn vec_diff(input: &Vec<u8>) -> Vec<u8> {
     let vals = (*input).iter();
     let next_vals = (*input).iter().skip(1);
 

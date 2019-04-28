@@ -1,16 +1,56 @@
 use super::graycodeanalysis::read_u32;
+use pzip_huffman::hufbites::encode_itself_to_bytes;
+use super::foc::vec_diff;
+use std::collections::HashMap;
 
 pub fn mtf(matches: &clap::ArgMatches) {
     let ifile = String::from(matches.value_of("input").unwrap());
     let data = read_u32(&ifile);
+
+    let mut base : HashMap<String, Vec<u8>> = HashMap::new();
+    base.insert("foc".to_string(), get_foc(&data));
+    base.insert("lzc".to_string(), get_lzc(&data));
+    base.insert("lzcfoc".to_string(), get_lzc_and_foc(&data));
+
+    let mut compressed : HashMap<String, usize> = HashMap::new();
+    for k in base.iter() {
+        let c = encode_itself_to_bytes(&k.1).0.len();
+        let mut name = k.0.clone();
+        name.push_str("_huff");
+        compressed.insert(name, c);
+    }
+    for k in base.iter() {
+        let c = encode_itself_to_bytes(&vec_diff(k.1)).0.len();
+        let mut name = k.0.clone();
+        name.push_str("_diff_huff");
+        compressed.insert(name, c);
+    }
+
+    let count_vec: Vec<_> = compressed.iter().collect();
+    println!("{:#?}", count_vec)
+
+    // for (h,d) in
+    // let huff_lzc = encode_itself_to_bytes(&lzc).0.len();
+    // let huff_lzcfoc = encode_itself_to_bytes(&lzcfoc).0.len();
+
+    // let huff_foc = encode_itself_to_bytes(&foc).0.len();
+    // let huff_lzc = encode_itself_to_bytes(&lzc).0.len();
+    // let huff_lzcfoc = encode_itself_to_bytes(&lzcfoc).0.len();
+
+
+    // println!("              Huff");
+    // println!("foc:    {:>10}", huff_foc);
+    // println!("lzc:    {:>10}", huff_lzc);
+    // println!("lzcfoc: {:>10}", huff_lzcfoc);
+
 }
 
 fn get_foc(data: &Vec<u32>) -> Vec<u8> {
-    data.iter().map(|&x| _foc(&x)).collect::<Vec<u8>>()
+    data.iter().filter(|&&x| x != 0).map(|&x| _foc(&x)).collect::<Vec<u8>>()
 }
 
 fn get_fzc(data: &Vec<u32>) -> Vec<u8> {
-    data.iter().map(|&x| _fzc(&x)).collect::<Vec<u8>>()
+    data.iter().filter(|&&x| x != 0).map(|&x| _fzc(&x)).collect::<Vec<u8>>()
 }
 
 fn get_lzc(data: &Vec<u32>) -> Vec<u8> {
