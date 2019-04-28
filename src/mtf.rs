@@ -1,6 +1,6 @@
 use super::graycodeanalysis::read_u32;
-use pzip_huffman::hufbites::encode_itself_to_bytes;
-use super::foc::vec_diff;
+// use pzip_huffman::hufbites::encode_itself_to_bytes;
+// use super::foc::vec_diff;
 use std::collections::HashMap;
 
 use std::io::{BufWriter, BufReader, Read, Write};
@@ -87,31 +87,37 @@ pub fn mtf(matches: &clap::ArgMatches) {
     base.insert("foc_bwt".to_string(), apply_bwt(&base["foc"]));
     base.insert("lzc_bwt".to_string(), apply_bwt(&base["lzc"]));
     base.insert("lzcfoc_bwt".to_string(), apply_bwt(&base["lzcfoc"]));
-    base.insert("foc_mtf".to_string(), apply_mtf(&base["foc"]));
-    base.insert("lzc_mtf".to_string(), apply_mtf(&base["lzc"]));
-    base.insert("lzcfoc_mtf".to_string(), apply_mtf(&base["lzcfoc"]));
-    base.insert("foc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["foc"])));
-    base.insert("lzc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzc"])));
-    base.insert("lzcfoc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzcfoc"])));
+    // base.insert("foc_bwt_mtf".to_string(), apply_mtf(&apply_bwt(&base["foc"])));
+    // base.insert("lzc_bwt_mtf".to_string(), apply_mtf(&apply_bwt(&base["lzc"])));
+    // base.insert("lzcfoc_bwt_mtf".to_string(), apply_mtf(&apply_bwt(&base["lzcfoc"])));
+    // base.insert("foc_bwt_mtf_rle".to_string(), apply_rle(&apply_mtf(&apply_bwt(&base["foc"]))));
+    // base.insert("lzc_bwt_mtf_rle".to_string(), apply_rle(&apply_mtf(&apply_bwt(&base["lzc"]))));
+    // base.insert("lzcfoc_bwt_mtf_rle".to_string(), apply_rle(&apply_mtf(&apply_bwt(&base["lzcfoc"]))));
+    // base.insert("foc_mtf".to_string(), apply_mtf(&base["foc"]));
+    // base.insert("lzc_mtf".to_string(), apply_mtf(&base["lzc"]));
+    // base.insert("lzcfoc_mtf".to_string(), apply_mtf(&base["lzcfoc"]));
+    // base.insert("foc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["foc"])));
+    // base.insert("lzc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzc"])));
+    // base.insert("lzcfoc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzcfoc"])));
 
     // Huffman compression
-    for k in base.iter() {
-        let c = encode_itself_to_bytes(&k.1).0.len();
-        let dc = encode_itself_to_bytes(&vec_diff(k.1)).0.len();
-        let mut name = k.0.clone(); name.push_str("_huff");
-        compressed.insert(name, c);
-        let mut name = k.0.clone(); name.push_str("_diff_huff");
-        compressed.insert(name, dc);
-    }
+    // for k in base.iter() {
+    //     let c = encode_itself_to_bytes(&k.1).0.len();
+    //     let dc = encode_itself_to_bytes(&vec_diff(k.1)).0.len();
+    //     let mut name = k.0.clone(); name.push_str("_huff");
+    //     compressed.insert(name, c);
+    //     let mut name = k.0.clone(); name.push_str("_diff_huff");
+    //     compressed.insert(name, dc);
+    // }
 
     // Range Encoding
     for k in base.iter() {
         let c = apply_range_coding(&k.1).len();
-        let dc = apply_range_coding(&vec_diff(k.1)).len();
         let mut name = k.0.clone(); name.push_str("_range");
         compressed.insert(name, c);
-        let mut name = k.0.clone(); name.push_str("_diff_range");
-        compressed.insert(name, dc);
+        // let dc = apply_range_coding(&vec_diff(k.1)).len();
+        // let mut name = k.0.clone(); name.push_str("_diff_range");
+        // compressed.insert(name, dc);
     }
 
     // Output
