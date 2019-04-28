@@ -5,12 +5,20 @@ use std::collections::HashMap;
 
 use std::io::{BufWriter, BufReader, Read, Write};
 use compress::bwt;
+use compress::entropy::ari;
 use compress::bwt::{dc, mtf};
 
 fn apply_mtf(data: &Vec<u8>) -> Vec<u8> {
     let mut e = mtf::Encoder::new(BufWriter::new(Vec::new()));
     e.write_all((*data).as_slice()).unwrap();
     e.finish().into_inner().unwrap()
+}
+
+fn apply_range_coding(data: &Vec<u8>) -> Vec<u8> {
+    let mut e = ari::ByteEncoder::new(BufWriter::new(Vec::new()));
+    e.write_all(data.as_slice()).unwrap();
+    let (encoded, _) = e.finish();
+    encoded.into_inner().unwrap()
 }
 
 pub fn mtf(matches: &clap::ArgMatches) {
@@ -34,6 +42,16 @@ pub fn mtf(matches: &clap::ArgMatches) {
         let mut name = k.0.clone(); name.push_str("_huff");
         compressed.insert(name, c);
         let mut name = k.0.clone(); name.push_str("_diff_huff");
+        compressed.insert(name, dc);
+    }
+
+    // Range Encoding
+    for k in base.iter() {
+        let c = apply_range_coding(&k.1).len();
+        let dc = apply_range_coding(&vec_diff(k.1)).len();
+        let mut name = k.0.clone(); name.push_str("_range");
+        compressed.insert(name, c);
+        let mut name = k.0.clone(); name.push_str("_diff_range");
         compressed.insert(name, dc);
     }
 
