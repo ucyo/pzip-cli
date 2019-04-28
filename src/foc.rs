@@ -66,8 +66,8 @@ pub fn foc(matches: &clap::ArgMatches) {
             .parse()
             .unwrap();
         fc = process_diff(&data, n);
-    } else if mode == "xor" {
-        fc = process_xor(&data);
+    } else if mode == "foc" {
+        fc = process_foc(&data);
     } else {
         // mode == "power"
         fc = process_power(&data);
@@ -274,7 +274,7 @@ fn cumsum(input: Vec<u8>, start: Option<u8>) -> Vec<u8> {
 
 // Implementation of
 // huff(lzc) + huff(foc) + raw(residual - first 0)
-fn process_xor(data: &Vec<u32>) -> FileContainer {
+fn process_foc(data: &Vec<u32>) -> FileContainer {
     let lzc = data
         .iter()
         .map(|&x| {
@@ -319,7 +319,7 @@ fn process_xor(data: &Vec<u32>) -> FileContainer {
     FileContainer::new(start, data.len(), lzc, Vec::new(), efoc, residuals, lzc_codebook, efoc_codebook)
 }
 
-fn reverse_xor(fc: FileContainer) -> Vec<u32> {
+fn reverse_foc(fc: FileContainer) -> Vec<u32> {
     let foc = decode(BitVec::from_bytes(&fc.huff_6re[..]), &fc.huff_6re_codebook);
     let lzc = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
     debug!("LZC + FOC: {:?} [decoded]", lzc);
@@ -480,7 +480,7 @@ mod tests {
     use super::*;
 
     #[test]
-    fn test_compress_using_xor() {
+    fn test_compress_using_foc() {
 
         let data : Vec<u32> = vec![324, 0, 9384, 2, 123122, 4,
                                    3123, 0, 1, 92823, (1 << 26) - 1 - 2929202,
@@ -490,8 +490,8 @@ mod tests {
             debug!("{:032b}", d)
         }
         debug!("#", );
-        let fc = process_xor(&data);
-        let reconstruct = reverse_xor(fc);
+        let fc = process_foc(&data);
+        let reconstruct = reverse_foc(fc);
 
         assert_eq!(data, reconstruct)
     }

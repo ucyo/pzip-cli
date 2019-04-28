@@ -198,7 +198,7 @@ subcommands:
                     long: mode  # changed
                     required: true
                     takes_value: true
-                    possible_values: [xor, diff, power]
+                    possible_values: [foc, diff, power]
                 - cut:
                     help: "Huffman Coding of the first <cut> values"
                     long: cut

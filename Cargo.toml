@@ -1,6 +1,6 @@
 [package]
 name = "pzip-cli"
-version = "0.1.2"
+version = "0.3.2"
 authors = ["ucyo <cayoglu@me.com>"]
 edition = "2018"
 
@@ -10,8 +10,8 @@ pzip-huffman = { path = "../pzip-huffman"}
 pzip-redux = {path = "../pzip-redux"}
 clap = {version = "~2.27.0", features = ["yaml"]}
 byteorder = "1.2.7"
-log = "*"
+log = "0.4.6"
 env_logger = "0.6.0"
 GSL="1.1.0"
 bit-vec = "0.4.4"
-rand = "*"
+rand = "0.6.5"
