@@ -6,28 +6,27 @@ use std::collections::HashMap;
 pub fn mtf(matches: &clap::ArgMatches) {
     let ifile = String::from(matches.value_of("input").unwrap());
     let data = read_u32(&ifile);
+    let mut compressed : HashMap<String, usize> = HashMap::new();
 
+    // base data
     let mut base : HashMap<String, Vec<u8>> = HashMap::new();
     base.insert("foc".to_string(), get_foc(&data));
     base.insert("lzc".to_string(), get_lzc(&data));
     base.insert("lzcfoc".to_string(), get_lzc_and_foc(&data));
 
-    let mut compressed : HashMap<String, usize> = HashMap::new();
+    // Huffman compression
     for k in base.iter() {
         let c = encode_itself_to_bytes(&k.1).0.len();
-        let mut name = k.0.clone();
-        name.push_str("_huff");
+        let dc = encode_itself_to_bytes(&vec_diff(k.1)).0.len();
+        let mut name = k.0.clone(); name.push_str("_huff");
         compressed.insert(name, c);
-    }
-    for k in base.iter() {
-        let c = encode_itself_to_bytes(&vec_diff(k.1)).0.len();
-        let mut name = k.0.clone();
-        name.push_str("_diff_huff");
-        compressed.insert(name, c);
+        let mut name = k.0.clone(); name.push_str("_diff_huff");
+        compressed.insert(name, dc);
     }
 
-    let count_vec: Vec<_> = compressed.iter().collect();
-    println!("{:#?}", count_vec)
+    let mut count_vec: Vec<_> = compressed.iter().collect();
+    count_vec.sort_by(|a, b| a.1.cmp(b.1));
+    println!("{:?}", count_vec)
 
     // for (h,d) in
     // let huff_lzc = encode_itself_to_bytes(&lzc).0.len();
