@@ -9,6 +9,21 @@ use compress::entropy::ari;
 use compress::bwt::{dc, mtf};
 use compress::rle;
 
+fn apply_bwt(data: &Vec<u8>) -> Vec<u8> {
+    let mut e = bwt::Encoder::new(BufWriter::new(Vec::new()), 4 << 20);
+    e.write(data).unwrap();
+    let (encoded, _) = e.finish();
+    encoded.into_inner().unwrap()
+}
+
+fn reverse_bwt(data: &Vec<u8>) -> Vec<u8> {
+    let mut d = bwt::Decoder::new(BufReader::new(&data[..]), true);
+    let mut decoded = Vec::new();
+    d.read_to_end(&mut decoded).unwrap();
+    decoded
+}
+
+
 fn apply_mtf(data: &Vec<u8>) -> Vec<u8> {
     let mut e = mtf::Encoder::new(BufWriter::new(Vec::new()));
     e.write_all((*data).as_slice()).unwrap();
@@ -60,6 +75,9 @@ pub fn mtf(matches: &clap::ArgMatches) {
     base.insert("foc".to_string(), get_foc(&data));
     base.insert("lzc".to_string(), get_lzc(&data));
     base.insert("lzcfoc".to_string(), get_lzc_and_foc(&data));
+    base.insert("foc_bwt".to_string(), apply_bwt(&get_foc(&data)));
+    base.insert("lzc_bwt".to_string(), apply_bwt(&get_lzc(&data)));
+    base.insert("lzcfoc_bwt".to_string(), apply_bwt(&get_lzc_and_foc(&data)));
     base.insert("foc_mtf".to_string(), apply_mtf(&get_foc(&data)));
     base.insert("lzc_mtf".to_string(), apply_mtf(&get_lzc(&data)));
     base.insert("lzcfoc_mtf".to_string(), apply_mtf(&get_lzc_and_foc(&data)));
@@ -190,6 +208,14 @@ mod tests {
     fn test_mtf_encoding() {
         let data = "This is a test".as_bytes().to_vec();
         let result = reverse_mtf(&apply_mtf(&data));
+
+        assert_eq!(data, result)
+    }
+
+    #[test]
+    fn test_bwt_encoding() {
+        let data = "This is a test".as_bytes().to_vec();
+        let result = reverse_bwt(&apply_bwt(&data));
 
         assert_eq!(data, result)
     }
