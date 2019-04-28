@@ -3,6 +3,16 @@ use pzip_huffman::hufbites::encode_itself_to_bytes;
 use super::foc::vec_diff;
 use std::collections::HashMap;
 
+use std::io::{BufWriter, BufReader, Read, Write};
+use compress::bwt;
+use compress::bwt::{dc, mtf};
+
+fn apply_mtf(data: &Vec<u8>) -> Vec<u8> {
+    let mut e = mtf::Encoder::new(BufWriter::new(Vec::new()));
+    e.write_all((*data).as_slice()).unwrap();
+    e.finish().into_inner().unwrap()
+}
+
 pub fn mtf(matches: &clap::ArgMatches) {
     let ifile = String::from(matches.value_of("input").unwrap());
     let data = read_u32(&ifile);
@@ -13,6 +23,9 @@ pub fn mtf(matches: &clap::ArgMatches) {
     base.insert("foc".to_string(), get_foc(&data));
     base.insert("lzc".to_string(), get_lzc(&data));
     base.insert("lzcfoc".to_string(), get_lzc_and_foc(&data));
+    base.insert("foc_mtf".to_string(), apply_mtf(&get_foc(&data)));
+    base.insert("lzc_mtf".to_string(), apply_mtf(&get_lzc(&data)));
+    base.insert("lzcfoc_mtf".to_string(), apply_mtf(&get_lzc_and_foc(&data)));
 
     // Huffman compression
     for k in base.iter() {
