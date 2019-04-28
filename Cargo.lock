@@ -250,7 +250,7 @@ dependencies = [
 
 [[package]]
 name = "pzip-cli"
-version = "0.4.0"
+version = "0.4.1"
 dependencies = [
  "GSL 1.1.0 (registry+https://github.com/rust-lang/crates.io-index)",
  "bit-vec 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)",
