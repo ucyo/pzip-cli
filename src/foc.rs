@@ -68,9 +68,11 @@ pub fn foc(matches: &clap::ArgMatches) {
         fc = process_diff(&data, n);
     } else if mode == "foc" {
         fc = process_foc(&data);
-    } else {
-        // mode == "power"
+    } else if mode == "power" {
         fc = process_power(&data);
+    } else {
+        // case: bwt
+        fc = process_bwt_and_range(&data); // and range encoder
     }
 
     let fsize = metadata(ifile).unwrap().len();
@@ -80,6 +82,86 @@ pub fn foc(matches: &clap::ArgMatches) {
         fsize as f64 / fc.nbytes() as f64
     );
     println!("{} + {} + {} + {}", fc.huff_lzc.len(), fc.raw_sign.len(), fc.huff_6re.len(), fc.raw_res6.len())
+}
+
+// Implementation of
+// bwt_range(lzc) + bwt_range(foc) + raw(residual - first 0)
+use super::mtf::{get_lzc, apply_bwt, apply_range_coding, get_foc as gf};
+fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
+    let lzc = get_lzc(&data);
+    debug!("L {:?} [encoded]", lzc);
+    let lzc = apply_range_coding(&apply_bwt(&lzc)); // bwt_range(lzc)
+
+    let foc = gf(&data);
+    debug!("F {:?} [encoded]", foc);
+    let efoc = apply_range_coding(&apply_bwt(&foc)); // bwt_range(foc)
+
+    let mut bv = BitVec::new();
+    bv.push(true);
+    'outer: for (i, &d) in data.iter().filter(|&&x| x != 0).enumerate() {
+        let v = u32_to_bool(d);
+        if v.len() == (*foc.get(i).unwrap() + 1) as usize {
+            continue 'outer
+        }
+        for j in *foc.get(i).unwrap() + 1..v.len() as u8 {
+            bv.push(v[j as usize])
+        }
+    }
+    let residuals = bv.to_bytes();
+
+    FileContainer::new(0, data.len(), lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
+}
+
+use super::mtf::{reverse_bwt, reverse_range_coding};
+fn reverse_bwt_and_range(fc: FileContainer) -> Vec<u32> {
+    let lzc = reverse_bwt(&reverse_range_coding(&fc.huff_lzc));
+    debug!("L {:?} [decoded]", lzc);
+    let foc = reverse_bwt(&reverse_range_coding(&fc.huff_6re));
+    debug!("F {:?} [decoded]", foc);
+    let res = BitVec::from_bytes(&fc.raw_res6[..]);
+    let res = eliminate_first_bit(res);
+    let mut focix = 0;
+    let mut resix = 0;
+
+    let mut result = BitVec::new();
+    'outer: for &l in lzc.iter() {
+        if l == 32 {
+            fillfalse(l as usize, &mut result);
+            debug!(" 32 {:?}", result);
+            // result = BitVec::new();
+            continue 'outer
+        }
+        let f = foc.get(focix).unwrap();
+        focix += 1;
+        // let l = l - *f;
+        fillfalse(l as usize, &mut result);
+        filltrue(*f as usize, &mut result);
+        let mut free = 32 - *f - l; if free > 0 {result.push(false); free -= 1} else {
+            debug!(" 32 {:?}", result);
+            // result = BitVec::new();
+            continue
+        };
+        while free > 0 {
+            if resix == res.len() {
+                debug!(" 32 {:?}", result);
+                // result = BitVec::new();
+                break 'outer
+            }
+            result.push(res.get(resix).unwrap());
+            resix += 1;
+            free -= 1;
+        }
+        debug!(" 32 {:?}", result);
+        // result = BitVec::new();
+    }
+    let result : Vec<u8> = result.to_bytes().into_iter().take(fc.size * 4).collect();
+    // debug!("{:?}", result );
+    // debug!(" 32 {:?}", result.to_bytes());
+    // let result : Vec<u8> = result.into_iter().take(fc.size * 4).collect();
+    let mut data = vec![0_u32; fc.size];
+    BigEndian::read_u32_into(&result, &mut data);
+    debug!("{:?}", data);
+    data
 }
 
 // Implementation of
@@ -492,6 +574,23 @@ mod tests {
         debug!("#", );
         let fc = process_foc(&data);
         let reconstruct = reverse_foc(fc);
+
+        assert_eq!(data, reconstruct)
+    }
+
+    #[test]
+    fn test_compress_using_bwt_and_range() {
+
+        let data : Vec<u32> = vec![324, 0, 9384, 2, 123122, 4,
+                                   3123, 0, 1, 92823, (1 << 26) - 1 - 2929202,
+                                   8823, 1 << 31, 34182, 1, 83847483
+                                   ];
+        for d in data.iter() {
+            debug!("{:032b}", d)
+        }
+        let fc = process_bwt_and_range(&data);
+        debug!("# {}", fc);
+        let reconstruct = reverse_bwt_and_range(fc);
 
         assert_eq!(data, reconstruct)
     }

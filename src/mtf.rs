@@ -9,14 +9,14 @@ use compress::entropy::ari;
 use compress::bwt::{dc, mtf};
 use compress::rle;
 
-fn apply_bwt(data: &Vec<u8>) -> Vec<u8> {
+pub fn apply_bwt(data: &Vec<u8>) -> Vec<u8> {
     let mut e = bwt::Encoder::new(BufWriter::new(Vec::new()), 4 << 20);
     e.write(data).unwrap();
     let (encoded, _) = e.finish();
     encoded.into_inner().unwrap()
 }
 
-fn reverse_bwt(data: &Vec<u8>) -> Vec<u8> {
+pub fn reverse_bwt(data: &Vec<u8>) -> Vec<u8> {
     let mut d = bwt::Decoder::new(BufReader::new(&data[..]), true);
     let mut decoded = Vec::new();
     d.read_to_end(&mut decoded).unwrap();
@@ -46,14 +46,14 @@ fn reverse_mtf(data: &Vec<u8>) -> Vec<u8> {
     decoded
 }
 
-fn apply_range_coding(data: &Vec<u8>) -> Vec<u8> {
+pub fn apply_range_coding(data: &Vec<u8>) -> Vec<u8> {
     let mut e = ari::ByteEncoder::new(BufWriter::new(Vec::new()));
     e.write_all(data.as_slice()).unwrap();
     let (encoded, _) = e.finish();
     encoded.into_inner().unwrap()
 }
 
-fn reverse_range_coding(data: &Vec<u8>) -> Vec<u8> {
+pub fn reverse_range_coding(data: &Vec<u8>) -> Vec<u8> {
     let mut d = ari::ByteDecoder::new(BufReader::new(&data[..]));
     let mut decoded = Vec::new();
     d.read_to_end(&mut decoded).unwrap();
@@ -126,7 +126,7 @@ pub fn mtf(matches: &clap::ArgMatches) {
     println!("{}: {:?}", ifile, count_vec)
 }
 
-fn get_foc(data: &Vec<u32>) -> Vec<u8> {
+pub fn get_foc(data: &Vec<u32>) -> Vec<u8> {
     data.iter().filter(|&&x| x != 0).map(|&x| _foc(&x)).collect::<Vec<u8>>()
 }
 
@@ -134,7 +134,7 @@ fn get_fzc(data: &Vec<u32>) -> Vec<u8> {
     data.iter().filter(|&&x| x != 0).map(|&x| _fzc(&x)).collect::<Vec<u8>>()
 }
 
-fn get_lzc(data: &Vec<u32>) -> Vec<u8> {
+pub fn get_lzc(data: &Vec<u32>) -> Vec<u8> {
     data.iter()
         .map(|&x| x.leading_zeros() as u8)
         .collect::<Vec<u8>>()
