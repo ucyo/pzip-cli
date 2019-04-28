@@ -15,6 +15,13 @@ fn apply_mtf(data: &Vec<u8>) -> Vec<u8> {
     e.finish().into_inner().unwrap()
 }
 
+fn reverse_mtf(data: &Vec<u8>) -> Vec<u8> {
+    let mut d = mtf::Decoder::new(BufReader::new(&data[..]));
+    let mut decoded = Vec::new();
+    d.read_to_end(&mut decoded).unwrap();
+    decoded
+}
+
 fn apply_range_coding(data: &Vec<u8>) -> Vec<u8> {
     let mut e = ari::ByteEncoder::new(BufWriter::new(Vec::new()));
     e.write_all(data.as_slice()).unwrap();
@@ -22,11 +29,25 @@ fn apply_range_coding(data: &Vec<u8>) -> Vec<u8> {
     encoded.into_inner().unwrap()
 }
 
+fn reverse_range_coding(data: &Vec<u8>) -> Vec<u8> {
+    let mut d = ari::ByteDecoder::new(BufReader::new(&data[..]));
+    let mut decoded = Vec::new();
+    d.read_to_end(&mut decoded).unwrap();
+    decoded
+}
+
 fn apply_rle(data: &Vec<u8>) -> Vec<u8> {
     let mut encoder = rle::Encoder::new(Vec::new());
     encoder.write_all(&data[..]).unwrap();
     let (buf, _): (Vec<u8>, _) = encoder.finish();
     buf
+}
+
+fn reverse_rle(data: &Vec<u8>) -> Vec<u8> {
+    let mut decoder = rle::Decoder::new(&data[..]);
+    let mut decoder_buf = Vec::new();
+    decoder.read_to_end(&mut decoder_buf).unwrap();
+    decoder_buf
 }
 
 pub fn mtf(matches: &clap::ArgMatches) {
@@ -147,5 +168,29 @@ mod tests {
         let expected: Vec<u8> = vec![5, 1, 0, 1, 1, 0, 31, 3, 2];
 
         assert_eq!(result, expected);
+    }
+
+    #[test]
+    fn test_range_encoding() {
+        let data = "This is a test".as_bytes().to_vec();
+        let result = reverse_range_coding(&apply_range_coding(&data));
+
+        assert_eq!(data, result)
+    }
+
+    #[test]
+    fn test_rle_encoding() {
+        let data = "This is a test".as_bytes().to_vec();
+        let result = reverse_rle(&apply_rle(&data));
+
+        assert_eq!(data, result)
+    }
+
+    #[test]
+    fn test_mtf_encoding() {
+        let data = "This is a test".as_bytes().to_vec();
+        let result = reverse_mtf(&apply_mtf(&data));
+
+        assert_eq!(data, result)
     }
 }
