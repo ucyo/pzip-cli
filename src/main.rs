@@ -11,6 +11,7 @@ mod graycodeanalysis;
 mod mqanalysis;
 mod split;
 mod foc;
+mod mtf;
 
 fn main() {
     env_logger::init();
@@ -27,6 +28,8 @@ fn main() {
         split::split(&matches.subcommand_matches("split").unwrap());
     } else if matches.is_present("foc") {
         foc::foc(&matches.subcommand_matches("foc").unwrap());
+    } else if matches.is_present("mtf") {
+        mtf::mtf(&matches.subcommand_matches("mtf").unwrap());
     } else {
         App::from_yaml(yaml).print_help().unwrap();
     }

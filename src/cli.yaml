@@ -205,3 +205,16 @@ subcommands:
                     takes_value: true
                     required_if:
                         - [mode, diff]
+    - mtf:
+            name: Move to Front (& others) Test
+            version: "0.1.0"
+            author: Ugur Cayoglu <cayoglu@me.com>
+            about: Testing mtf algorithm for compression of foc & huff+foc
+            args:
+                - input:
+                    help: Sets the diff file
+                    short: i
+                    long: input
+                    takes_value: true
+                    required: true
+                    index: 1
