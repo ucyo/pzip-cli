@@ -23,6 +23,15 @@ fn reverse_bwt(data: &Vec<u8>) -> Vec<u8> {
     decoded
 }
 
+fn apply_dc(data: &Vec<u8>) -> Vec<u8> {
+    let result = dc::encode_simple::<u8>(&data[..]);
+    result
+}
+
+fn reverse_dc(data: &Vec<u8>, size: &usize) -> Vec<u8> {
+    let result = dc::decode_simple(*size, &data[..]);
+    result
+}
 
 fn apply_mtf(data: &Vec<u8>) -> Vec<u8> {
     let mut e = mtf::Encoder::new(BufWriter::new(Vec::new()));
@@ -216,6 +225,14 @@ mod tests {
     fn test_bwt_encoding() {
         let data = "This is a test".as_bytes().to_vec();
         let result = reverse_bwt(&apply_bwt(&data));
+
+        assert_eq!(data, result)
+    }
+
+    #[test]
+    fn test_dc_encoding() {
+        let data = "This is a test".as_bytes().to_vec();
+        let result = reverse_dc(&apply_dc(&data), &data.len());
 
         assert_eq!(data, result)
     }
