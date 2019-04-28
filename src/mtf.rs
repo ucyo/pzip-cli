@@ -24,24 +24,10 @@ pub fn mtf(matches: &clap::ArgMatches) {
         compressed.insert(name, dc);
     }
 
+    // Output
     let mut count_vec: Vec<_> = compressed.iter().collect();
     count_vec.sort_by(|a, b| a.1.cmp(b.1));
     println!("{}: {:?}", ifile, count_vec)
-
-    // for (h,d) in
-    // let huff_lzc = encode_itself_to_bytes(&lzc).0.len();
-    // let huff_lzcfoc = encode_itself_to_bytes(&lzcfoc).0.len();
-
-    // let huff_foc = encode_itself_to_bytes(&foc).0.len();
-    // let huff_lzc = encode_itself_to_bytes(&lzc).0.len();
-    // let huff_lzcfoc = encode_itself_to_bytes(&lzcfoc).0.len();
-
-
-    // println!("              Huff");
-    // println!("foc:    {:>10}", huff_foc);
-    // println!("lzc:    {:>10}", huff_lzc);
-    // println!("lzcfoc: {:>10}", huff_lzcfoc);
-
 }
 
 fn get_foc(data: &Vec<u32>) -> Vec<u8> {
