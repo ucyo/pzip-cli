@@ -26,7 +26,7 @@ pub fn mtf(matches: &clap::ArgMatches) {
 
     let mut count_vec: Vec<_> = compressed.iter().collect();
     count_vec.sort_by(|a, b| a.1.cmp(b.1));
-    println!("{:?}", count_vec)
+    println!("{}: {:?}", ifile, count_vec)
 
     // for (h,d) in
     // let huff_lzc = encode_itself_to_bytes(&lzc).0.len();
