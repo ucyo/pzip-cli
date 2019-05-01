@@ -1,0 +1,56 @@
+STOPWATCH: get_lzc() = 0.04883849 sec
+STOPWATCH: apply_range_coding() = 153.19548894 sec
+STOPWATCH: gf() = 0.12332329 sec
+STOPWATCH: apply_range_coding() = 18.27986765 sec
+STOPWATCH: residual() = 0.10376091 sec
+outbytes=631814 ratio=29.17
+300117 + 0 + 169504 + 162192
+STOPWATCH: get_lzc() = 0.04755563 sec
+STOPWATCH: apply_range_coding() = 28.52576165 sec
+STOPWATCH: gf() = 0.65624375 sec
+STOPWATCH: apply_range_coding() = 11.09086056 sec
+STOPWATCH: residual() = 0.628365975 sec
+outbytes=6053885 ratio=3.04
+1180966 + 0 + 901769 + 3971149
+STOPWATCH: get_lzc() = 0.04347433 sec
+STOPWATCH: apply_range_coding() = 28.79984475 sec
+STOPWATCH: gf() = 0.57490079 sec
+STOPWATCH: apply_range_coding() = 11.19958807 sec
+STOPWATCH: residual() = 0.529872009 sec
+outbytes=5121418 ratio=3.60
+1144227 + 0 + 898852 + 3078338
+STOPWATCH: get_lzc() = 0.04024242 sec
+STOPWATCH: apply_range_coding() = 28.98068013 sec
+STOPWATCH: gf() = 0.76296394 sec
+STOPWATCH: apply_range_coding() = 11.35518574 sec
+STOPWATCH: residual() = 0.7888694 sec
+outbytes=7456676 ratio=2.47
+1212728 + 0 + 931059 + 5312888
+STOPWATCH: get_lzc() = 0.06255516 sec
+STOPWATCH: apply_range_coding() = 28.73330386 sec
+STOPWATCH: gf() = 0.50947944 sec
+STOPWATCH: apply_range_coding() = 11.10324648 sec
+STOPWATCH: residual() = 0.426485535 sec
+outbytes=4167022 ratio=4.42
+1148537 + 0 + 883658 + 2134826
+STOPWATCH: get_lzc() = 0.16698366 sec
+STOPWATCH: apply_range_coding() = 98.59286728 sec
+STOPWATCH: gf() = 2.46950512 sec
+STOPWATCH: apply_range_coding() = 36.2927904 sec
+STOPWATCH: residual() = 2.532378243 sec
+outbytes=23783170 ratio=2.50
+3896561 + 0 + 2878547 + 17008061
+STOPWATCH: get_lzc() = 0.13625323 sec
+STOPWATCH: apply_range_coding() = 97.72225115 sec
+STOPWATCH: gf() = 1.85641317 sec
+STOPWATCH: apply_range_coding() = 36.23012125 sec
+STOPWATCH: residual() = 1.728476541 sec
+outbytes=16276884 ratio=3.65
+3251043 + 0 + 2836130 + 10189710
+STOPWATCH: get_lzc() = 0.13456832 sec
+STOPWATCH: apply_range_coding() = 98.96946239 sec
+STOPWATCH: gf() = 2.62219996 sec
+STOPWATCH: apply_range_coding() = 37.49516407 sec
+STOPWATCH: residual() = 2.73097939 sec
+outbytes=25551705 ratio=2.33
+3993007 + 0 + 2968320 + 18590377

@@ -87,15 +87,18 @@ pub fn foc(matches: &clap::ArgMatches) {
 // Implementation of
 // bwt_range(lzc) + bwt_range(foc) + raw(residual - first 0)
 use super::mtf::{get_lzc, apply_bwt, apply_range_coding, get_foc as gf};
+use stopwatch::sw;
+use std::time::Instant;
 fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
-    let lzc = get_lzc(&data);
+    let lzc = sw!(get_lzc(&data));
     debug!("L {:?} [encoded]", lzc);
-    let lzc = apply_range_coding(&apply_bwt(&lzc)); // bwt_range(lzc)
+    let lzc = sw!(apply_range_coding(&apply_bwt(&lzc))); // bwt_range(lzc)
 
-    let foc = gf(&data);
+    let foc = sw!(gf(&data));
     debug!("F {:?} [encoded]", foc);
-    let efoc = apply_range_coding(&apply_bwt(&foc)); // bwt_range(foc)
+    let efoc = sw!(apply_range_coding(&apply_bwt(&foc))); // bwt_range(foc)
 
+    let start = Instant::now();
     let mut bv = BitVec::new();
     bv.push(true);
     'outer: for (i, &d) in data.iter().filter(|&&x| x != 0).enumerate() {
@@ -108,6 +111,7 @@ fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
         }
     }
     let residuals = bv.to_bytes();
+    println!("STOPWATCH: residual() = {} sec", start.elapsed().as_float_secs());
 
     FileContainer::new(0, data.len(), lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
 }

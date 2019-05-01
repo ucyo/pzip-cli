@@ -8,6 +8,7 @@ edition = "2018"
 pzip = { path = "../pzip/"}
 pzip-huffman = { path = "../pzip-huffman"}
 pzip-redux = {path = "../pzip-redux"}
+stopwatch = {path = "../stopwatch"}
 clap = {version = "~2.27.0", features = ["yaml"]}
 byteorder = "1.2.7"
 log = "0.4.6"

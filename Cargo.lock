@@ -263,6 +263,7 @@ dependencies = [
  "pzip-huffman 0.1.0",
  "pzip-redux 0.1.0",
  "rand 0.6.5 (registry+https://github.com/rust-lang/crates.io-index)",
+ "stopwatch 0.2.0",
 ]
 
 [[package]]
@@ -452,6 +453,14 @@ dependencies = [
 name = "rustc-serialize"
 version = "0.3.24"
 source = "registry+https://github.com/rust-lang/crates.io-index"
+
+[[package]]
+name = "stopwatch"
+version = "0.2.0"
+dependencies = [
+ "env_logger 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
+ "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
+]
 
 [[package]]
 name = "strsim"
