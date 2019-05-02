@@ -140,7 +140,7 @@ pub fn get_lzc(data: &Vec<u32>) -> Vec<u8> {
         .collect::<Vec<u8>>()
 }
 
-fn get_lzc_and_foc(data: &Vec<u32>) -> Vec<u8> {
+pub fn get_lzc_and_foc(data: &Vec<u32>) -> Vec<u8> {
     data.iter()
         .map(|&x| {
             let gf = _foc(&x);

@@ -11,6 +11,7 @@ mod graycodeanalysis;
 mod mqanalysis;
 mod split;
 mod foc;
+mod export;
 mod mtf;
 
 fn main() {
@@ -30,6 +31,8 @@ fn main() {
         foc::foc(&matches.subcommand_matches("foc").unwrap());
     } else if matches.is_present("mtf") {
         mtf::mtf(&matches.subcommand_matches("mtf").unwrap());
+    } else if matches.is_present("export") {
+        export::export(&matches.subcommand_matches("export").unwrap());
     } else {
         App::from_yaml(yaml).print_help().unwrap();
     }

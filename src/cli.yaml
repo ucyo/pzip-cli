@@ -218,3 +218,16 @@ subcommands:
                     takes_value: true
                     required: true
                     index: 1
+    - export:
+            name: Export
+            version: "0.1.0"
+            author: Ugur Cayoglu <cayoglu@me.com>
+            about: Export lzc, foc, and lzcfoc
+            args:
+                - input:
+                    help: Input file
+                    short: i
+                    long: input
+                    takes_value: true
+                    required: true
+                    index: 1
