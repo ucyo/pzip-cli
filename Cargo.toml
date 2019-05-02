@@ -7,8 +7,8 @@ edition = "2018"
 [dependencies]
 pzip = { path = "../pzip/"}
 pzip-huffman = { path = "../pzip-huffman"}
-pzip-redux = {path = "../pzip-redux"}
-stopwatch = {path = "../stopwatch"}
+pzip-redux = { path = "../pzip-redux" }
+stopwatch = { path = "../stopwatch" }
 clap = {version = "~2.27.0", features = ["yaml"]}
 byteorder = "1.2.7"
 log = "0.4.6"
@@ -16,4 +16,4 @@ env_logger = "0.6.0"
 GSL="1.1.0"
 bit-vec = "0.4.4"
 rand = "0.6.5"
-compress = "0.1.2"
+compress = { path = "../rust-compress-uc", version = "0.1.2"}

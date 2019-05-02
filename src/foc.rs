@@ -92,11 +92,13 @@ use std::time::Instant;
 fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
     let lzc = sw!(get_lzc(&data));
     debug!("L {:?} [encoded]", lzc);
-    let lzc = sw!(apply_range_coding(&apply_bwt(&lzc))); // bwt_range(lzc)
+    let t = sw!(apply_bwt(&lzc));
+    let lzc = sw!(apply_range_coding(&t)); // bwt_range(lzc)
 
     let foc = sw!(gf(&data));
     debug!("F {:?} [encoded]", foc);
-    let efoc = sw!(apply_range_coding(&apply_bwt(&foc))); // bwt_range(foc)
+    let t = sw!(apply_bwt(&foc));
+    let efoc = sw!(apply_range_coding(&t)); // bwt_range(foc)
 
     let start = Instant::now();
     let mut bv = BitVec::new();

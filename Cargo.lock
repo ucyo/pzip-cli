@@ -96,8 +96,7 @@ dependencies = [
 
 [[package]]
 name = "compress"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
+version = "0.1.3"
 dependencies = [
  "byteorder 0.4.2 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.3.9 (registry+https://github.com/rust-lang/crates.io-index)",
@@ -256,7 +255,7 @@ dependencies = [
  "bit-vec 0.4.4 (registry+https://github.com/rust-lang/crates.io-index)",
  "byteorder 1.3.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "clap 2.27.1 (registry+https://github.com/rust-lang/crates.io-index)",
- "compress 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)",
+ "compress 0.1.3",
  "env_logger 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)",
  "log 0.4.6 (registry+https://github.com/rust-lang/crates.io-index)",
  "pzip 0.2.0",
@@ -578,7 +577,6 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 "checksum cfg-if 0.1.7 (registry+https://github.com/rust-lang/crates.io-index)" = "11d43355396e872eefb45ce6342e4374ed7bc2b3a502d1b28e36d6e23c05d1f4"
 "checksum clap 2.27.1 (registry+https://github.com/rust-lang/crates.io-index)" = "1b8c532887f1a292d17de05ae858a8fe50a301e196f9ef0ddb7ccd0d1d00f180"
 "checksum cloudabi 0.0.3 (registry+https://github.com/rust-lang/crates.io-index)" = "ddfc5b9aa5d4507acaf872de71051dfd0e309860e88966e1051e462a077aac4f"
-"checksum compress 0.1.2 (registry+https://github.com/rust-lang/crates.io-index)" = "b175f2657191d74b13d574c36ae58f598b1510d42df2b65e692347fdaf7a9268"
 "checksum env_logger 0.6.1 (registry+https://github.com/rust-lang/crates.io-index)" = "b61fa891024a945da30a9581546e8cfaf5602c7b3f4c137a2805cf388f92075a"
 "checksum fuchsia-cprng 0.1.1 (registry+https://github.com/rust-lang/crates.io-index)" = "a06f77d526c1a601b7c4cdd98f54b5eaabffc14d5f2f0296febdc7f357c6d3ba"
 "checksum humantime 1.2.0 (registry+https://github.com/rust-lang/crates.io-index)" = "3ca7e5f2e110db35f93b837c81797f3714500b81d517bf20c431b16d3ca4f114"
