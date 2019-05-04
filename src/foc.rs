@@ -92,15 +92,17 @@ pub fn foc(matches: &clap::ArgMatches) {
 use super::mtf::{get_lzc, apply_range_coding, get_foc as gf};
 use rust_bwt::{apply_bwt as abwt};
 fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
-    let mut bwt = [0i32;2];
+    let mut plzc = 0i32;
+    let mut pfoc = 0i32;
+
     let mut lzc = get_lzc(&data);
     debug!("L {:?} [encoded]", lzc);
-    bwt[0] = abwt(&mut lzc);
+    plzc = abwt(&mut lzc);
     let lzc = apply_range_coding(&lzc); // bwt_range(lzc)
     let mut foc = gf(&data);
     let cfoc = foc.clone();
     debug!("F {:?} [encoded]", foc);
-    bwt[1] = abwt(&mut foc);
+    pfoc = abwt(&mut foc);
     let efoc = apply_range_coding(&foc); // bwt_range(foc)
 
     let mut bv = BitVec::new();
@@ -116,7 +118,7 @@ fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
     }
     let residuals = bv.to_bytes();
     debug!("R: {:?}", residuals); // R: [196, 74, 128, 242, 12, 245, 75, 205, 55, 52, 157, 192, 0, 0, 0, 22, 25, 254, 210, 118]
-    FileContainer::new(0, data.len(), bwt,lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
+    FileContainer::new(0, data.len(), [plzc, pfoc],lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
 }
 
 use super::mtf::{reverse_range_coding};
