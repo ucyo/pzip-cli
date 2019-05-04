@@ -243,3 +243,13 @@ subcommands:
                     takes_value: true
                     required: true
                     index: 1
+                - ring:
+                    help: "Should the data be connected along the first axis?"
+                    long: ring
+                - shape:
+                    help: Shape of the input file [z y x]
+                    short: s
+                    long: shape
+                    multiple: true
+                    takes_value: true
+                    required: true
