@@ -89,23 +89,20 @@ pub fn foc(matches: &clap::ArgMatches) {
 
 // Implementation of
 // bwt_range(lzc) + bwt_range(foc) + raw(residual - first 0)
-use super::mtf::{get_lzc, apply_bwt, apply_range_coding, get_foc as gf};
-use stopwatch::sw;
-use std::time::Instant;
+use super::mtf::{get_lzc, apply_range_coding, get_foc as gf};
 use rust_bwt::{apply_bwt as abwt};
 fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
     let mut bwt = [0i32;2];
-    let mut lzc = sw!(get_lzc(&data));
+    let mut lzc = get_lzc(&data);
     debug!("L {:?} [encoded]", lzc);
-    bwt[0] = sw!(abwt(&mut lzc));
-    let lzc = sw!(apply_range_coding(&lzc)); // bwt_range(lzc)
-    let mut foc = sw!(gf(&data));
+    bwt[0] = abwt(&mut lzc);
+    let lzc = apply_range_coding(&lzc); // bwt_range(lzc)
+    let mut foc = gf(&data);
     let cfoc = foc.clone();
     debug!("F {:?} [encoded]", foc);
-    bwt[1] = sw!(abwt(&mut foc));
-    let efoc = sw!(apply_range_coding(&foc)); // bwt_range(foc)
+    bwt[1] = abwt(&mut foc);
+    let efoc = apply_range_coding(&foc); // bwt_range(foc)
 
-    let start = Instant::now();
     let mut bv = BitVec::new();
     bv.push(true);
     'outer: for (i, &d) in data.iter().filter(|&&x| x != 0).enumerate() {
@@ -118,12 +115,11 @@ fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
         }
     }
     let residuals = bv.to_bytes();
-    println!("STOPWATCH: residual() = {} sec", start.elapsed().as_float_secs());
     debug!("R: {:?}", residuals); // R: [196, 74, 128, 242, 12, 245, 75, 205, 55, 52, 157, 192, 0, 0, 0, 22, 25, 254, 210, 118]
     FileContainer::new(0, data.len(), bwt,lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
 }
 
-use super::mtf::{reverse_bwt, reverse_range_coding};
+use super::mtf::{reverse_range_coding};
 use rust_bwt::reverse_bwt as rbwt;
 fn reverse_bwt_and_range(fc: FileContainer) -> Vec<u32> {
     let mut lzc = reverse_range_coding(&fc.huff_lzc);
