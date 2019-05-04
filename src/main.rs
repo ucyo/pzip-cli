@@ -42,7 +42,7 @@ fn lzcanalysis(matches: &clap::ArgMatches) -> (u32, f64) {
     let input = String::from(matches.value_of("output").unwrap());
     let data = graycodeanalysis::read_u32(&input);
     let lzc: u32 = data.iter().map(|x| x.leading_zeros()).sum();
-    (lzc, lzc as f64 / data.len() as f64)
+    (lzc, f64::from(lzc) / data.len() as f64)
 }
 
 fn compress_with_information(matches: &clap::ArgMatches) {
@@ -56,7 +56,7 @@ fn compress_with_information(matches: &clap::ArgMatches) {
     if matches.value_of("type").unwrap() == "f32" {
         let (lzc,mean_lzc) = lzcanalysis(&matches);
         let of = fsize * 8;
-        print!("LZC: {} ({:.15}% | {:.3}) ", lzc, (lzc as f64 / of as f64) * 100.0, mean_lzc)
+        print!("LZC: {} ({:.15}% | {:.3}) ", lzc, (f64::from(lzc) / of as f64) * 100.0, mean_lzc)
 
     }
     let throughput = mbytes as f64 / duration;
@@ -112,8 +112,8 @@ fn parse_shape(matches: &clap::ArgMatches) -> pzip::position::Position {
 
 fn parse_predictor(matches: &clap::ArgMatches) -> Ignorant<f32> {
    match matches.value_of("predictor").unwrap() {
-        "lv" => return pzip::predictors::predictors::get_last_value_f32(),
-        "lorenz" => return pzip::predictors::predictors::get_lorenz_f32(),
+        "lv" => pzip::predictors::predictors::get_last_value_f32(),
+        "lorenz" => pzip::predictors::predictors::get_lorenz_f32(),
         _ => panic!("Unknown predictor")
    }
 }

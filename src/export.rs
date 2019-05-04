@@ -29,7 +29,7 @@ pub fn export(matches: &clap::ArgMatches) {
     write_u8(&lzcfoc_bwt, lzcfocfilename_bwt);
 }
 
-fn write_u8(data: &Vec<u8>, fname: String) {
+fn write_u8(data: &[u8], fname: String) {
     let mut output = BufWriter::new(File::create(fname).unwrap());
-    output.write_all(data.as_slice()).unwrap();
+    output.write_all(data).unwrap();
 }

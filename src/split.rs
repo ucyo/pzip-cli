@@ -38,7 +38,7 @@ fn _calculate_xor_lzc(p: u32, t: u32) -> u8 {
     (p ^  t).leading_zeros() as u8
 }
 
-pub fn calcualte_xor_lzc(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
+pub fn calcualte_xor_lzc(predictions: &[u32], truth: &[u32]) -> Vec<u8>{
     predictions
         .iter()
         .zip(truth.iter())
@@ -52,7 +52,7 @@ fn _calculate_filling_zeros(p: u32, t: u32) -> u8 {
     (diff.leading_zeros() - xor.leading_zeros()) as u8
 }
 
-pub fn calculate_filling_zeros(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
+pub fn calculate_filling_zeros(predictions: &[u32], truth: &[u32]) -> Vec<u8>{
     predictions
         .iter()
         .zip(truth.iter())
@@ -65,7 +65,7 @@ fn _calculate_abs_diff(p: u32, t: u32) -> u32 {
     p.max(t) - p.min(t)
 }
 
-pub fn calculate_abs_diff(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u32> {
+pub fn calculate_abs_diff(predictions: &[u32], truth: &[u32]) -> Vec<u32> {
     predictions
         .iter()
         .zip(truth.iter())
@@ -102,7 +102,7 @@ pub fn split(matches: &clap::ArgMatches) {
 
     use super::graycodeanalysis::get_value_first;
     let diff: Vec<u32> = calculate_abs_diff(&predictions, &truth);
-    let first_diff_bits : Vec<u8> = diff.iter().map(|&r| get_value_first(&r, 4) as u8).collect();
+    let first_diff_bits : Vec<u8> = diff.iter().map(|&r| get_value_first(r, 4) as u8).collect();
     let residual_diff : u32 = diff.iter().map(|&r| 4u32.min(32 - r.leading_zeros())).sum();
     // println!("{:?}", residual_diff);
     let compact_residuals = to_u8(pack(&diff, true));
@@ -270,7 +270,7 @@ fn _calculate_power(p: u32, t: u32) -> u8 {
     }
 }
 
-pub fn calculate_power(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
+pub fn calculate_power(predictions: &[u32], truth: &[u32]) -> Vec<u8>{
     let result : Vec<u8> = predictions
         .iter()
         .zip(truth.iter())
@@ -279,7 +279,7 @@ pub fn calculate_power(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8>{
 }
 
 /// Calculates if prediction is too high (true) or too low (false)
-fn calculate_position_to_truth(predictions: &Vec<u32>, truth: &Vec<u32>) -> Vec<u8> {
+fn calculate_position_to_truth(predictions: &[u32], truth: &[u32]) -> Vec<u8> {
     let mut bv = BitVec::new();
     bv.push(true);
 
@@ -316,12 +316,12 @@ pub fn eliminate_first_bit(bv: BitVec) -> BitVec {
 /// All the set/unset bits of a vector are being squashed/packed together to represent the
 /// most minimal representation of the data. The `skip` flag defines if the
 /// first value (which will always be set) should be included or not.
-fn pack(data: &Vec<u32>, skip: bool) -> BitVec {
+fn pack(data: &[u32], skip: bool) -> BitVec {
     let mut result = BitVec::new();
     result.push(true);  // necessary for cases where the first value in the following is a false
 
     for value in data.iter() {
-        let mut next = value.next_power_of_two() >> 1 + skip as usize;
+        let mut next = value.next_power_of_two() >> (1 + skip as usize);
         while next != 0 {
             result.push(next & value > 0);
             next >>= 1;
@@ -333,13 +333,13 @@ fn pack(data: &Vec<u32>, skip: bool) -> BitVec {
 
 use std::collections::HashMap;
 use log::debug;
-fn pack_with_mapping(data: &Vec<u32>, skip: bool, map: &HashMap<u8,u8>) -> BitVec {
+fn pack_with_mapping(data: &[u32], skip: bool, map: &HashMap<u8,u8>) -> BitVec {
     let mut result = BitVec::new();
     result.push(true);  // necessary for cases where the first value in the following is a false
 
     let mut s = 0u32;
-    for value in data.into_iter() {
-        let mut next = value.next_power_of_two() >> 1 + skip as usize;
+    for value in data.iter() {
+        let mut next = value.next_power_of_two() >> (1 + skip as usize);
         match map.get(&(value.leading_zeros() as u8)) {
             Some(v) => {
                 let mut key = *v;
@@ -348,7 +348,7 @@ fn pack_with_mapping(data: &Vec<u32>, skip: bool, map: &HashMap<u8,u8>) -> BitVe
                 while key < value.leading_zeros() as u8 {
                     result.push(false);
                     // debug!("Push {:?}", false);
-                    key = key + 1;
+                    key += 1;
                 }
             }
             _ => {}

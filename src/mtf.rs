@@ -9,65 +9,63 @@ use compress::entropy::ari;
 use compress::bwt::{dc, mtf};
 use compress::rle;
 
-pub fn apply_bwt(data: &Vec<u8>) -> Vec<u8> {
+pub fn apply_bwt(data: &[u8]) -> Vec<u8> {
     let mut e = bwt::Encoder::new(BufWriter::new(Vec::new()), 4 << 20);
     e.write(data).unwrap();
     let (encoded, _) = e.finish();
     encoded.into_inner().unwrap()
 }
 
-pub fn reverse_bwt(data: &Vec<u8>) -> Vec<u8> {
+pub fn reverse_bwt(data: &[u8]) -> Vec<u8> {
     let mut d = bwt::Decoder::new(BufReader::new(&data[..]), true);
     let mut decoded = Vec::new();
     d.read_to_end(&mut decoded).unwrap();
     decoded
 }
 
-fn apply_dc(data: &Vec<u8>) -> Vec<u8> {
-    let result = dc::encode_simple::<u8>(&data[..]);
-    result
+fn apply_dc(data: &[u8]) -> Vec<u8> {
+    dc::encode_simple::<u8>(&data[..])
 }
 
-fn reverse_dc(data: &Vec<u8>, size: &usize) -> Vec<u8> {
-    let result = dc::decode_simple(*size, &data[..]);
-    result
+fn reverse_dc(data: &[u8], size: usize) -> Vec<u8> {
+    dc::decode_simple(size, &data[..])
 }
 
-fn apply_mtf(data: &Vec<u8>) -> Vec<u8> {
+fn apply_mtf(data: &[u8]) -> Vec<u8> {
     let mut e = mtf::Encoder::new(BufWriter::new(Vec::new()));
-    e.write_all((*data).as_slice()).unwrap();
+    e.write_all(data).unwrap();
     e.finish().into_inner().unwrap()
 }
 
-fn reverse_mtf(data: &Vec<u8>) -> Vec<u8> {
+fn reverse_mtf(data: &[u8]) -> Vec<u8> {
     let mut d = mtf::Decoder::new(BufReader::new(&data[..]));
     let mut decoded = Vec::new();
     d.read_to_end(&mut decoded).unwrap();
     decoded
 }
 
-pub fn apply_range_coding(data: &Vec<u8>) -> Vec<u8> {
+pub fn apply_range_coding(data: &[u8]) -> Vec<u8> {
     let mut e = ari::ByteEncoder::new(BufWriter::new(Vec::new()));
-    e.write_all(data.as_slice()).unwrap();
+    e.write_all(data).unwrap();
     let (encoded, _) = e.finish();
     encoded.into_inner().unwrap()
 }
 
-pub fn reverse_range_coding(data: &Vec<u8>) -> Vec<u8> {
+pub fn reverse_range_coding(data: &[u8]) -> Vec<u8> {
     let mut d = ari::ByteDecoder::new(BufReader::new(&data[..]));
     let mut decoded = Vec::new();
     d.read_to_end(&mut decoded).unwrap();
     decoded
 }
 
-fn apply_rle(data: &Vec<u8>) -> Vec<u8> {
+fn apply_rle(data: &[u8]) -> Vec<u8> {
     let mut encoder = rle::Encoder::new(Vec::new());
     encoder.write_all(&data[..]).unwrap();
     let (buf, _): (Vec<u8>, _) = encoder.finish();
     buf
 }
 
-fn reverse_rle(data: &Vec<u8>) -> Vec<u8> {
+fn reverse_rle(data: &[u8]) -> Vec<u8> {
     let mut decoder = rle::Decoder::new(&data[..]);
     let mut decoder_buf = Vec::new();
     decoder.read_to_end(&mut decoder_buf).unwrap();
@@ -126,26 +124,26 @@ pub fn mtf(matches: &clap::ArgMatches) {
     println!("{}: {:?}", ifile, count_vec)
 }
 
-pub fn get_foc(data: &Vec<u32>) -> Vec<u8> {
-    data.iter().filter(|&&x| x != 0).map(|&x| _foc(&x)).collect::<Vec<u8>>()
+pub fn get_foc(data: &[u32]) -> Vec<u8> {
+    data.iter().filter(|&&x| x != 0).map(|&x| _foc(x)).collect::<Vec<u8>>()
 }
 
-fn get_fzc(data: &Vec<u32>) -> Vec<u8> {
-    data.iter().filter(|&&x| x != 0).map(|&x| _fzc(&x)).collect::<Vec<u8>>()
+fn get_fzc(data: &[u32]) -> Vec<u8> {
+    data.iter().filter(|&&x| x != 0).map(|&x| _fzc(x)).collect::<Vec<u8>>()
 }
 
-pub fn get_lzc(data: &Vec<u32>) -> Vec<u8> {
+pub fn get_lzc(data: &[u32]) -> Vec<u8> {
     data.iter()
         .map(|&x| x.leading_zeros() as u8)
         .collect::<Vec<u8>>()
 }
 
-pub fn get_lzc_and_foc(data: &Vec<u32>) -> Vec<u8> {
+pub fn get_lzc_and_foc(data: &[u32]) -> Vec<u8> {
     data.iter()
         .map(|&x| {
-            let gf = _foc(&x);
+            let gf = _foc(x);
             if gf > 0 {
-                (x.leading_zeros() + 33 + _foc(&x) as u32) as u8
+                (x.leading_zeros() + 33 + u32::from(_foc(x))) as u8
             } else {
                 x.leading_zeros() as u8
             }
@@ -153,12 +151,12 @@ pub fn get_lzc_and_foc(data: &Vec<u32>) -> Vec<u8> {
         .collect::<Vec<u8>>()
 }
 
-fn get_lzc_and_fzc(data: &Vec<u32>) -> Vec<u8> {
+fn get_lzc_and_fzc(data: &[u32]) -> Vec<u8> {
     data.iter()
         .map(|&x| {
-            let gf = _fzc(&x);
+            let gf = _fzc(x);
             if gf > 0 {
-                (x.leading_zeros() + 33 + _fzc(&x) as u32) as u8
+                (x.leading_zeros() + 33 + u32::from(_fzc(x))) as u8
             } else {
                 x.leading_zeros() as u8
             }
@@ -166,21 +164,21 @@ fn get_lzc_and_fzc(data: &Vec<u32>) -> Vec<u8> {
         .collect::<Vec<u8>>()
 }
 
-fn _foc(val: &u32) -> u8 {
-    let mut result = 32 - (*val).leading_zeros();
+fn _foc(val: u32) -> u8 {
+    let mut result = 32 - val.leading_zeros();
     let mut ix = 0;
-    while result > 0 && !((*val >> ix) + 1).is_power_of_two() {
+    while result > 0 && !((val >> ix) + 1).is_power_of_two() {
         ix += 1;
         result -= 1
     }
     result as u8
 }
 
-fn _fzc(val: &u32) -> u8 {
-    if *val == 0 {
+fn _fzc(val: u32) -> u8 {
+    if val == 0 {
         return 0;
     }
-    let mut value = *val;
+    let mut value = val;
     let mut ix = 0u8;
     while !value.is_power_of_two() {
         ix += 1;
@@ -197,7 +195,7 @@ mod tests {
     #[test]
     fn test_fzc() {
         let data: Vec<u32> = vec![32, 5345, 0, 21321, 0696, 3837, 1 << 31, 1 << 3, 9283];
-        let result: Vec<u8> = data.iter().map(|&x| _fzc(&x)).collect();
+        let result: Vec<u8> = data.iter().map(|&x| _fzc(x)).collect();
         let expected: Vec<u8> = vec![5, 1, 0, 1, 1, 0, 31, 3, 2];
 
         assert_eq!(result, expected);
@@ -238,7 +236,7 @@ mod tests {
     #[test]
     fn test_dc_encoding() {
         let data = "This is a test".as_bytes().to_vec();
-        let result = reverse_dc(&apply_dc(&data), &data.len());
+        let result = reverse_dc(&apply_dc(&data), data.len());
 
         assert_eq!(data, result)
     }

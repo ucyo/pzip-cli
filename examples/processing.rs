@@ -16,7 +16,7 @@ fn remove_and_push(val: &u8, pos: u8, vec: &mut Vec<f64>) {
 }
 
 
-fn first_block(bytes: &Vec<u8>) -> Vec<f64> {
+fn first_block(bytes: &[u8]) -> Vec<f64> {
     let mut result = vec![0f64;BLOCKSIZE];
     for val in bytes.into_iter().take(BLOCKSIZE/8) {
         for j in 0..8 {

@@ -91,9 +91,9 @@ pub fn foc(matches: &clap::ArgMatches) {
 // bwt_range(lzc) + bwt_range(foc) + raw(residual - first 0)
 use super::mtf::{get_lzc, apply_range_coding, get_foc as gf};
 use rust_bwt::{apply_bwt as abwt};
-fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
-    let mut plzc = 0i32;
-    let mut pfoc = 0i32;
+fn process_bwt_and_range(data: &[u32]) -> FileContainer {
+    let plzc : i32;
+    let pfoc : i32;
 
     let mut lzc = get_lzc(&data);
     debug!("L {:?} [encoded]", lzc);
@@ -109,11 +109,11 @@ fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
     bv.push(true);
     'outer: for (i, &d) in data.iter().filter(|&&x| x != 0).enumerate() {
         let v = u32_to_bool(d);
-        if v.len() == (*cfoc.get(i).unwrap() + 1) as usize {
+        if v.len() == (cfoc[i] + 1) as usize {
             continue 'outer
         }
-        for j in *cfoc.get(i).unwrap() + 1..v.len() as u8 {
-            bv.push(v[j as usize])
+        for val in v.iter().skip(usize::from(cfoc[i] + 1)) {
+            bv.push(*val)
         }
     }
     let residuals = bv.to_bytes();
@@ -144,12 +144,12 @@ fn reverse_bwt_and_range(fc: FileContainer) -> Vec<u32> {
             // result = BitVec::new();
             continue 'outer
         }
-        let f = foc.get(focix).unwrap();
+        let f = foc[focix];
         focix += 1;
         // let l = l - *f;
         fillfalse(l as usize, &mut result);
-        filltrue(*f as usize, &mut result);
-        let mut free = 32 - *f - l; if free > 0 {result.push(false); free -= 1} else {
+        filltrue(f as usize, &mut result);
+        let mut free = 32 - f - l; if free > 0 {result.push(false); free -= 1} else {
             debug!(" 32 {:?}", result);
             // result = BitVec::new();
             continue
@@ -179,7 +179,7 @@ fn reverse_bwt_and_range(fc: FileContainer) -> Vec<u32> {
 
 // Implementation of
 // huff(lzc) + raw(sign) + huff(6-residual) + raw(residual)
-fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
+fn process_diff(data: &[u32], n: u32) -> FileContainer {
     info!("Cut: {}", n);
     let mut signs = BitVec::new();
     for _ in 0..data.len() {
@@ -198,7 +198,7 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
 
     let first6 = data
         .iter()
-        .map(|&x| get_value_first(&x, n) as u8)
+        .map(|&x| get_value_first(x, n) as u8)
         .collect::<Vec<u8>>();
     debug!("RE6: {:?} [to be encoded]", first6);
     let (first6, first6_codebook) = encode(&first6); // huff(6-residual)
@@ -215,7 +215,7 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
     FileContainer::new(0, data.len(), [0i32;2], lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
 }
 
-fn get_left_residual(data: &Vec<u32>, cut: u32, result: &mut BitVec) {
+fn get_left_residual(data: &[u32], cut: u32, result: &mut BitVec) {
     for &d in data.iter() {
         let lz = if d >= (1 << 31) { 0 } else {d.leading_zeros()};
         let exclude = lz + cut;
@@ -256,8 +256,8 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
 
     let mut bv = BitVec::new();
     for v in re6 {
-        print!("{:b} ", v as u32);
-        let tmp = u32_to_bool(v as u32);
+        print!("{:b} ", u32::from(v));
+        let tmp = u32_to_bool(u32::from(v));
         debug!("{:?}", tmp);
         for b in tmp {
             bv.push(b);
@@ -325,7 +325,7 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
     data
 }
 
-pub fn vec_diff(input: &Vec<u8>) -> Vec<u8> {
+pub fn vec_diff(input: &[u8]) -> Vec<u8> {
     let vals = (*input).iter();
     let next_vals = (*input).iter().skip(1);
 
@@ -369,13 +369,13 @@ fn cumsum(input: Vec<u8>, start: Option<u8>) -> Vec<u8> {
 
 // Implementation of
 // huff(lzc) + huff(foc) + raw(residual - first 0)
-fn process_foc(data: &Vec<u32>) -> FileContainer {
+fn process_foc(data: &[u32]) -> FileContainer {
     let lzc = data
         .iter()
         .map(|&x| {
-            let gf = get_foc(&x);
+            let gf = get_foc(x);
             if gf > 0 {
-                (x.leading_zeros() + 33 + get_foc(&x) as u32) as u8
+                (x.leading_zeros() + 33 + u32::from(get_foc(x))) as u8
             } else {
                 x.leading_zeros() as u8
             }
@@ -391,18 +391,18 @@ fn process_foc(data: &Vec<u32>) -> FileContainer {
     debug!("LZC + FOC: {:?} [encoded]", lzc);
     let (lzc, lzc_codebook) = encode(&lzc); // huff(lzc)
 
-    let foc : Vec<u8> = data.iter().filter(|&&x| x != 0).map(|&x| get_foc(&x)).collect();
+    let foc : Vec<u8> = data.iter().filter(|&&x| x != 0).map(|&x| get_foc(x)).collect();
     let (efoc, efoc_codebook) = encode(&foc); // huff(foc)
 
     let mut bv = BitVec::new();
     bv.push(true);
     'outer: for (i, &d) in data.iter().filter(|&&x| x != 0).enumerate() {
-        debug!("{}: {:032b} with FOC {}", i, d, foc.get(i).unwrap());
+        debug!("{}: {:032b} with FOC {}", i, d, foc[i]);
         let v = u32_to_bool(d);
-        if v.len() == (*foc.get(i).unwrap() + 1) as usize {
+        if v.len() == (foc[i] + 1) as usize {
             continue 'outer
         }
-        for j in *foc.get(i).unwrap() + 1..v.len() as u8 {
+        for j in foc[i] + 1..v.len() as u8 {
             bv.push(v[j as usize])
         }
         // debug!("Residual {:?}", bv);
@@ -410,7 +410,7 @@ fn process_foc(data: &Vec<u32>) -> FileContainer {
     }
     let residuals = bv.to_bytes();
 
-    let start = data[0].leading_zeros() as u8 + get_foc(&data[0]);
+    let start = data[0].leading_zeros() as u8 + get_foc(data[0]);
     FileContainer::new(start, data.len(), [0i32;2], lzc, Vec::new(), efoc, residuals, lzc_codebook, efoc_codebook)
 }
 
@@ -435,12 +435,12 @@ fn reverse_foc(fc: FileContainer) -> Vec<u32> {
             // result = BitVec::new();
             continue 'outer
         }
-        let f = foc.get(focix).unwrap();
+        let f = foc[focix];
         focix += 1;
-        let l = l - *f - 33;
+        let l = l - f - 33;
         fillfalse(l as usize, &mut result);
-        filltrue(*f as usize, &mut result);
-        let mut free = 32 - *f - l; if free > 0 {result.push(false); free -= 1} else {
+        filltrue(f as usize, &mut result);
+        let mut free = 32 - f - l; if free > 0 {result.push(false); free -= 1} else {
             debug!(" 32 {:?}", result);
             // result = BitVec::new();
             continue
@@ -468,21 +468,21 @@ fn reverse_foc(fc: FileContainer) -> Vec<u32> {
     data
 }
 
-fn get_foc(val: &u32) -> u8 {
-    let mut result = 32 - (*val).leading_zeros();
+fn get_foc(val: u32) -> u8 {
+    let mut result = 32 - val.leading_zeros();
     let mut ix = 0;
-    while result > 0 && !((*val >> ix) + 1).is_power_of_two() {
+    while result > 0 && !((val >> ix) + 1).is_power_of_two() {
         ix += 1;
         result -=1
     }
-    debug!("Calculated FOC {:032b} {}", *val, result);
+    debug!("Calculated FOC {:032b} {}", val, result);
     result as u8
 }
 
 use rand::Rng;
 // Implementation of
 // huff(lzc +- power(residual)) + raw(residual)
-fn process_power(data: &Vec<u32>) -> FileContainer {
+fn process_power(data: &[u32]) -> FileContainer {
     let mut rng = rand::thread_rng();
     let residuallength: Vec<u8> = data.iter().map(|&x| {
         if x == 0 {
@@ -502,8 +502,8 @@ fn process_power(data: &Vec<u32>) -> FileContainer {
     residue.push(true);
     for d in data.iter().filter(|&&x| x!=0) {
         let bo = u32_to_bool(*d);
-        for bitx in 1..bo.len() {
-            residue.push(bo[bitx])
+        for val in bo.iter().skip(1) {
+            residue.push(*val);
         }
     }
     let residue = residue.to_bytes();
