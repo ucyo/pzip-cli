@@ -13,6 +13,7 @@ mod split;
 mod foc;
 mod export;
 mod mtf;
+mod best;
 
 fn main() {
     env_logger::init();
@@ -33,6 +34,8 @@ fn main() {
         mtf::mtf(&matches.subcommand_matches("mtf").unwrap());
     } else if matches.is_present("export") {
         export::export(&matches.subcommand_matches("export").unwrap());
+    } else if matches.is_present("best") {
+        best::best(&matches.subcommand_matches("best").unwrap());
     } else {
         App::from_yaml(yaml).print_help().unwrap();
     }

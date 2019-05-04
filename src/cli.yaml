@@ -231,3 +231,15 @@ subcommands:
                     takes_value: true
                     required: true
                     index: 1
+    - best:
+            name: Read and output current fastest and best method
+            version: "0.1.0"
+            author: Ugur Cayoglu <cayoglu@me.com>
+            args:
+                - input:
+                    help: Input file
+                    short: i
+                    long: input
+                    takes_value: true
+                    required: true
+                    index: 1
