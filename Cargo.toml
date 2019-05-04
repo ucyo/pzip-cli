@@ -17,3 +17,4 @@ GSL="1.1.0"
 bit-vec = "0.4.4"
 rand = "0.6.5"
 compress = { path = "../rust-compress-uc", version = "0.1.2"}
+rust-bwt = { path = "../rust-bwt" }

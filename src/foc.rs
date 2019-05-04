@@ -12,6 +12,7 @@ use byteorder::{BigEndian, ByteOrder};
 
 struct FileContainer {
     start: u8,
+    bwt: [i32;2],
     size : usize,
     huff_lzc: Vec<u8>,
     raw_sign: Vec<u8>,
@@ -25,6 +26,7 @@ impl FileContainer {
     pub fn new(
         start: u8,
         size : usize,
+        bwt : [i32;2],
         huff_lzc: Vec<u8>,
         raw_sign: Vec<u8>,
         huff_6re: Vec<u8>,
@@ -34,6 +36,7 @@ impl FileContainer {
     ) -> Self {
         FileContainer {
             start,
+            bwt,
             size,
             huff_lzc,
             raw_sign,
@@ -89,41 +92,60 @@ pub fn foc(matches: &clap::ArgMatches) {
 use super::mtf::{get_lzc, apply_bwt, apply_range_coding, get_foc as gf};
 use stopwatch::sw;
 use std::time::Instant;
+use rust_bwt::{apply_bwt as abwt};
 fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
-    let lzc = sw!(get_lzc(&data));
-    debug!("L {:?} [encoded]", lzc);
-    let t = sw!(apply_bwt(&lzc));
-    let lzc = sw!(apply_range_coding(&t)); // bwt_range(lzc)
+    // let lzc = sw!(get_lzc(&data));
+    // debug!("L {:?} [encoded]", lzc);
+    // let t = sw!(apply_bwt(&lzc));
+    // let lzc = sw!(apply_range_coding(&t)); // bwt_range(lzc)
 
-    let foc = sw!(gf(&data));
+    // let foc = sw!(gf(&data));
+    // debug!("F {:?} [encoded]", foc);
+    // let t = sw!(apply_bwt(&foc));
+    // let efoc = sw!(apply_range_coding(&t)); // bwt_range(foc)
+    let mut bwt = [0i32;2];
+    let mut lzc = sw!(get_lzc(&data));
+    debug!("L {:?} [encoded]", lzc);
+    bwt[0] = sw!(abwt(&mut lzc));
+    let lzc = sw!(apply_range_coding(&lzc)); // bwt_range(lzc)
+    let mut foc = sw!(gf(&data));
+    let cfoc = foc.clone();
     debug!("F {:?} [encoded]", foc);
-    let t = sw!(apply_bwt(&foc));
-    let efoc = sw!(apply_range_coding(&t)); // bwt_range(foc)
+    bwt[1] = sw!(abwt(&mut foc));
+    let efoc = sw!(apply_range_coding(&foc)); // bwt_range(foc)
 
     let start = Instant::now();
     let mut bv = BitVec::new();
     bv.push(true);
     'outer: for (i, &d) in data.iter().filter(|&&x| x != 0).enumerate() {
         let v = u32_to_bool(d);
-        if v.len() == (*foc.get(i).unwrap() + 1) as usize {
+        if v.len() == (*cfoc.get(i).unwrap() + 1) as usize {
             continue 'outer
         }
-        for j in *foc.get(i).unwrap() + 1..v.len() as u8 {
+        for j in *cfoc.get(i).unwrap() + 1..v.len() as u8 {
             bv.push(v[j as usize])
         }
     }
     let residuals = bv.to_bytes();
     println!("STOPWATCH: residual() = {} sec", start.elapsed().as_float_secs());
-
-    FileContainer::new(0, data.len(), lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
+    debug!("R: {:?}", residuals); // R: [196, 74, 128, 242, 12, 245, 75, 205, 55, 52, 157, 192, 0, 0, 0, 22, 25, 254, 210, 118]
+    FileContainer::new(0, data.len(), bwt,lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
 }
 
 use super::mtf::{reverse_bwt, reverse_range_coding};
+use rust_bwt::reverse_bwt as rbwt;
 fn reverse_bwt_and_range(fc: FileContainer) -> Vec<u32> {
-    let lzc = reverse_bwt(&reverse_range_coding(&fc.huff_lzc));
+    let mut lzc = reverse_range_coding(&fc.huff_lzc);
+    rbwt(&mut lzc, fc.bwt[0]);
     debug!("L {:?} [decoded]", lzc);
-    let foc = reverse_bwt(&reverse_range_coding(&fc.huff_6re));
+    let mut foc = reverse_range_coding(&fc.huff_6re);
+    rbwt(&mut foc, fc.bwt[1]);
     debug!("F {:?} [decoded]", foc);
+    // let lzc = reverse_bwt(&reverse_range_coding(&fc.huff_lzc));
+    // debug!("L {:?} [decoded]", lzc);
+    // let foc = reverse_bwt(&reverse_range_coding(&fc.huff_6re));
+    // debug!("F {:?} [decoded]", foc);
+
     let res = BitVec::from_bytes(&fc.raw_res6[..]);
     let res = eliminate_first_bit(res);
     let mut focix = 0;
@@ -205,7 +227,7 @@ fn process_diff(data: &Vec<u32>, n: u32) -> FileContainer {
     debug!("Encoded Residual: {:?}", residual);
     let leftresidual = residual.to_bytes();
 
-    FileContainer::new(0, data.len(), lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
+    FileContainer::new(0, data.len(), [0i32;2], lzc, signs, first6, leftresidual, lzc_codebook, first6_codebook)
 }
 
 fn get_left_residual(data: &Vec<u32>, cut: u32, result: &mut BitVec) {
@@ -404,7 +426,7 @@ fn process_foc(data: &Vec<u32>) -> FileContainer {
     let residuals = bv.to_bytes();
 
     let start = data[0].leading_zeros() as u8 + get_foc(&data[0]);
-    FileContainer::new(start, data.len(), lzc, Vec::new(), efoc, residuals, lzc_codebook, efoc_codebook)
+    FileContainer::new(start, data.len(), [0i32;2], lzc, Vec::new(), efoc, residuals, lzc_codebook, efoc_codebook)
 }
 
 fn reverse_foc(fc: FileContainer) -> Vec<u32> {
@@ -501,7 +523,7 @@ fn process_power(data: &Vec<u32>) -> FileContainer {
     }
     let residue = residue.to_bytes();
 
-    FileContainer::new(0, data.len(), huff_residuallength, Vec::new(), Vec::new(), residue, huff_residuallength_codebook, HashMap::new())
+    FileContainer::new(0, data.len(), [0i32;2], huff_residuallength, Vec::new(), Vec::new(), residue, huff_residuallength_codebook, HashMap::new())
 }
 
 fn reverse_power(fc: FileContainer) -> Vec<u32>{
