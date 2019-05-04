@@ -249,8 +249,7 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
     let lzc = decode(BitVec::from_bytes(&fc.huff_lzc[..]), &fc.huff_lzc_codebook);
     debug!("LZC: {:?} [decoded]", lzc);
     let re6 = decode(BitVec::from_bytes(&fc.huff_6re[..]), &fc.huff_6re_codebook);
-    let correct_re6length: Vec<u8> = lzc.iter().filter(|&x| (*x < 32)).map(|&u| u).collect();
-    let correct_re6length = correct_re6length.len();
+    let correct_re6length: usize = lzc.iter().filter(|&x| (*x < 32)).count();
     let re6: Vec<u8> = re6.into_iter().take(correct_re6length).collect();
     debug!("RE6: {:?} [decoded]", re6);  // might be longer
 
@@ -281,7 +280,7 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
         }
 
         // add maximum 6, but at least remaining bits from first 6 Bits encoding
-        let res6length = (32-l).min(6);
+        let res6length = (32 - i16::from(l)).min(6) as i16;
         if res6length <= 0 {
             continue 'outer
         }
@@ -300,7 +299,7 @@ fn reverse_diff(fc: FileContainer) -> Vec<u32> {
         }
 
         // fill remaining residuals if necessary
-        let reslength = 32-l-res6length;
+        let reslength = 32 as i16 -i16::from(l) - res6length;
         if reslength <= 0 {
             continue 'outer
         }
