@@ -94,15 +94,6 @@ use stopwatch::sw;
 use std::time::Instant;
 use rust_bwt::{apply_bwt as abwt};
 fn process_bwt_and_range(data: &Vec<u32>) -> FileContainer {
-    // let lzc = sw!(get_lzc(&data));
-    // debug!("L {:?} [encoded]", lzc);
-    // let t = sw!(apply_bwt(&lzc));
-    // let lzc = sw!(apply_range_coding(&t)); // bwt_range(lzc)
-
-    // let foc = sw!(gf(&data));
-    // debug!("F {:?} [encoded]", foc);
-    // let t = sw!(apply_bwt(&foc));
-    // let efoc = sw!(apply_range_coding(&t)); // bwt_range(foc)
     let mut bwt = [0i32;2];
     let mut lzc = sw!(get_lzc(&data));
     debug!("L {:?} [encoded]", lzc);
@@ -141,10 +132,6 @@ fn reverse_bwt_and_range(fc: FileContainer) -> Vec<u32> {
     let mut foc = reverse_range_coding(&fc.huff_6re);
     rbwt(&mut foc, fc.bwt[1]);
     debug!("F {:?} [decoded]", foc);
-    // let lzc = reverse_bwt(&reverse_range_coding(&fc.huff_lzc));
-    // debug!("L {:?} [decoded]", lzc);
-    // let foc = reverse_bwt(&reverse_range_coding(&fc.huff_6re));
-    // debug!("F {:?} [decoded]", foc);
 
     let res = BitVec::from_bytes(&fc.raw_res6[..]);
     let res = eliminate_first_bit(res);
