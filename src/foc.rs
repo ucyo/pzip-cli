@@ -10,7 +10,7 @@ use std::collections::HashMap;
 use std::fs::metadata;
 use byteorder::{BigEndian, ByteOrder};
 
-struct FileContainer {
+pub struct FileContainer {
     start: u8,
     bwt: [i32;2],
     size : usize,
@@ -91,7 +91,7 @@ pub fn foc(matches: &clap::ArgMatches) {
 // bwt_range(lzc) + bwt_range(foc) + raw(residual - first 0)
 use super::mtf::{get_lzc, apply_range_coding, get_foc as gf};
 use rust_bwt::{apply_bwt as abwt};
-fn process_bwt_and_range(data: &[u32]) -> FileContainer {
+pub fn process_bwt_and_range(data: &[u32]) -> FileContainer {
     let plzc : i32;
     let pfoc : i32;
 
