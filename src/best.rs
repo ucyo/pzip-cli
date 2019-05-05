@@ -55,3 +55,17 @@ pub fn best(matches: &clap::ArgMatches) {
 
     println!("{} cr={}", fc, s as f64 / fc.nbytes() as f64);
 }
+
+use pzip::predictors::Ignorant;
+use pzip::position::Position;
+use pzip::gen::GeneratorIteratorAdapter;
+use pzip::ptraversal::single_neighbours_grouped_no_ring_float;
+fn consume(predictor : &mut Ignorant<f32>, data : &Vec<f32>, shape: &Position) -> Vec<f32> {
+    let spaces: Vec<Vec<f32>> = GeneratorIteratorAdapter(single_neighbours_grouped_no_ring_float(shape, &predictor.cells, data)).collect();
+    let mut result = Vec::new();
+    for (i, space) in spaces.iter().enumerate() {
+        result.push(predictor.predict(space));
+        predictor.update(data[i]);
+    }
+    result
+}

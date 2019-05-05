@@ -1,5 +1,6 @@
 #![allow(dead_code)]
 #![feature(duration_float)]
+#![feature(generators, generator_trait)]
 
 use pzip;
 use clap::{App, load_yaml};
