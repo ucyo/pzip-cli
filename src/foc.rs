@@ -91,19 +91,31 @@ pub fn foc(matches: &clap::ArgMatches) {
 // bwt_range(lzc) + bwt_range(foc) + raw(residual - first 0)
 use super::mtf::{get_lzc, apply_range_coding, get_foc as gf};
 use rust_bwt::{apply_bwt as abwt};
+use std::thread;
 pub fn process_bwt_and_range(data: &[u32]) -> FileContainer {
-    let plzc : i32;
+    let mut plzc = 0i32;
     let pfoc : i32;
+    let bata = (*data).to_vec().clone();
 
-    let mut lzc = get_lzc(&data);
-    debug!("L {:?} [encoded]", lzc);
-    plzc = abwt(&mut lzc);
-    let lzc = apply_range_coding(&lzc); // bwt_range(lzc)
+    let h = thread::spawn(move || {
+        let mut lzc = get_lzc(&bata);
+        debug!("L {:?} [encoded]", lzc);
+        // plzc = abwt(&mut lzc);
+        // apply_range_coding(&lzc) // bwt_range(lzc)
+        lzc
+    });
+
     let mut foc = gf(&data);
     let cfoc = foc.clone();
     debug!("F {:?} [encoded]", foc);
     pfoc = abwt(&mut foc);
     let efoc = apply_range_coding(&foc); // bwt_range(foc)
+
+    let mut lzc = h.join().unwrap();
+    // let mut lzc = get_lzc(&bata);
+    // debug!("L {:?} [encoded]", lzc);
+    plzc = abwt(&mut lzc);
+    let lzc = apply_range_coding(&lzc); // bwt_range(lzc)
 
     let mut bv = BitVec::new();
     bv.push(true);
