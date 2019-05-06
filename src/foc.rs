@@ -97,12 +97,12 @@ pub fn process_bwt_and_range(data: &[u32]) -> FileContainer {
     let pfoc : i32;
     let bata = (*data).to_vec().clone();
 
+    // split lzc calculation into separate method
     let h = thread::spawn(move || {
         let mut lzc = get_lzc(&bata);
         debug!("L {:?} [encoded]", lzc);
-        // plzc = abwt(&mut lzc);
-        // apply_range_coding(&lzc) // bwt_range(lzc)
-        lzc
+        plzc = abwt(&mut lzc);
+        apply_range_coding(&lzc) // bwt_range(lzc)
     });
 
     let mut foc = gf(&data);
@@ -110,12 +110,6 @@ pub fn process_bwt_and_range(data: &[u32]) -> FileContainer {
     debug!("F {:?} [encoded]", foc);
     pfoc = abwt(&mut foc);
     let efoc = apply_range_coding(&foc); // bwt_range(foc)
-
-    let mut lzc = h.join().unwrap();
-    // let mut lzc = get_lzc(&bata);
-    // debug!("L {:?} [encoded]", lzc);
-    plzc = abwt(&mut lzc);
-    let lzc = apply_range_coding(&lzc); // bwt_range(lzc)
 
     let mut bv = BitVec::new();
     bv.push(true);
@@ -129,7 +123,8 @@ pub fn process_bwt_and_range(data: &[u32]) -> FileContainer {
         }
     }
     let residuals = bv.to_bytes();
-    debug!("R: {:?}", residuals); // R: [196, 74, 128, 242, 12, 245, 75, 205, 55, 52, 157, 192, 0, 0, 0, 22, 25, 254, 210, 118]
+    let lzc = h.join().unwrap();  // merge with lzc spawn
+    debug!("R: {:?}", residuals);
     FileContainer::new(0, data.len(), [plzc, pfoc],lzc, Vec::new(), efoc, residuals, HashMap::new(), HashMap::new())
 }
 
