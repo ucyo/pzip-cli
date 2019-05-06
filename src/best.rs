@@ -7,7 +7,7 @@ use pzip::residual::{RContext, ResidualTrait};
 use super::foc::process_bwt_and_range;
 
 pub fn best(matches: &clap::ArgMatches) {
-    // let start = std::time::Instant::now();
+    let start = std::time::Instant::now();
     // parse cli
     // let start = std::time::Instant::now();
     let ifile = String::from(matches.value_of("input").unwrap());
@@ -38,8 +38,10 @@ pub fn best(matches: &clap::ArgMatches) {
 
     // get new predictions
     let start = std::time::Instant::now();
-    let predictions = get_lorenz_predictions(&data, shape);
+    let npredictions = get_lorenz_predictions(&data, shape);
     println!("preds (n): {:.5} sec {}", start.elapsed().as_float_secs(), predictions.len());
+
+    panic!("sad");
 
     let data : Vec<u32> = data.iter().map(|&x| x.to_bits()).collect();
     let predictions : Vec<u32> = predictions.iter().map(|&x| x.to_bits()).collect();
@@ -58,7 +60,7 @@ pub fn best(matches: &clap::ArgMatches) {
     let fc = process_bwt_and_range(&diff);
     // println!("      enc: {:.5} sec", start.elapsed().as_float_secs());
 
-    println!("{} ratio={:.2} throughput={:.2} MiB/s", fc, s as f64 / fc.nbytes() as f64, (size as f64 * 4_f64 /1024_f64/1024_f64) / start.elapsed().as_float_secs());
+    // println!("{} ratio={:.2} throughput={:.2} MiB/s", fc, s as f64 / fc.nbytes() as f64, (size as f64 * 4_f64 /1024_f64/1024_f64) / start.elapsed().as_float_secs());
 }
 
 use pzip::predictors::Ignorant;
@@ -78,7 +80,7 @@ fn consume(predictor : &mut Ignorant<f32>, data : &Vec<f32>, shape: &Position) -
 
 use pzip::position::Position as Coordinate;
 use pzip::ptraversal::calculate_offset;
-/// Delivers the lorenz predictions with disregard if the value is valid or not
+/// Delivers the lorenz predictions with disregard if the value is valid with ring
 fn get_lorenz_predictions(data: &Vec<f32>, shape: Coordinate) -> Vec<f32> {
     let ptr = data.as_ptr();
     let position = vec![
@@ -117,8 +119,6 @@ fn get_lorenz_predictions(data: &Vec<f32>, shape: Coordinate) -> Vec<f32> {
         }
     }).collect();
 
-    println!("offsets {:?}", offsets);
-    println!("skipping: {}", shape.x as usize * shape.y as usize);
     let mut remainder : Vec<f32> = data.iter().enumerate().skip(shape.x as usize * shape.y as usize + shape.x as usize).map(|(i,_)| {
         unsafe {
             *ptr.offset(i as isize - offsets[0]) * -1f32 +
