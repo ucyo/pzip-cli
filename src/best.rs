@@ -103,31 +103,31 @@ fn get_lorenz_predictions(data: &Vec<f32>, shape: Coordinate) -> Vec<f32> {
 
     let mut first_2d : Vec<f32> = data.iter().enumerate().take(shape.x as usize * shape.y as usize).skip(shape.x as usize).map(|(i,_)| {
         unsafe {
-            *ptr.offset(i as isize - offsets[0]) * -1f32 +
-            *ptr.offset(i as isize - offsets[1]) * 1f32 +
+            *ptr.offset(i as isize - offsets[0]) * 1f32 +
+            *ptr.offset(i as isize - offsets[1]) * -1f32 +
             *ptr.offset(i as isize - offsets[2]) * 1f32
         }
     }).collect();
 
     let mut first_3d : Vec<f32> = data.iter().enumerate().skip(shape.x as usize * shape.y as usize).take(shape.x as usize).map(|(i,_)| {
         unsafe {
-            *ptr.offset(i as isize - offsets[0]) * -1f32 +
-            *ptr.offset(i as isize - offsets[1]) * 1f32 +
+            *ptr.offset(i as isize - offsets[0]) * 1f32 +
+            *ptr.offset(i as isize - offsets[1]) * -1f32 +
             *ptr.offset(i as isize - offsets[2]) * 1f32 +
-            *ptr.offset(i as isize - offsets[3]) * 1f32 +
+            *ptr.offset(i as isize - offsets[3]) * -1f32 +
             *ptr.offset(i as isize - offsets[4]) * 1f32
         }
     }).collect();
 
     let mut remainder : Vec<f32> = data.iter().enumerate().skip(shape.x as usize * shape.y as usize + shape.x as usize).map(|(i,_)| {
         unsafe {
-            *ptr.offset(i as isize - offsets[0]) * -1f32 +
-            *ptr.offset(i as isize - offsets[1]) * 1f32 +
+            *ptr.offset(i as isize - offsets[0]) * 1f32 +
+            *ptr.offset(i as isize - offsets[1]) * -1f32 +
             *ptr.offset(i as isize - offsets[2]) * 1f32 +
-            *ptr.offset(i as isize - offsets[3]) * 1f32 +
+            *ptr.offset(i as isize - offsets[3]) * -1f32 +
             *ptr.offset(i as isize - offsets[4]) * 1f32 +
             *ptr.offset(i as isize - offsets[5]) * -1f32 +
-            *ptr.offset(i as isize - offsets[6]) * -1f32
+            *ptr.offset(i as isize - offsets[6]) * 1f32
         }
     }).collect();
 
