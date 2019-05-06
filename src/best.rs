@@ -53,7 +53,7 @@ pub fn best(matches: &clap::ArgMatches) {
     let fc = process_bwt_and_range(&diff);
     // println!("      enc: {:.5} sec", start.elapsed().as_float_secs());
 
-    println!("{} cr={:.5} throughput={:.5}", fc, s as f64 / fc.nbytes() as f64, (size as f64 * 4_f64 /1024_f64/1024_f64) / start.elapsed().as_float_secs());
+    println!("{} ratio={:.2} throughput={:.2} MiB/s", fc, s as f64 / fc.nbytes() as f64, (size as f64 * 4_f64 /1024_f64/1024_f64) / start.elapsed().as_float_secs());
 }
 
 use pzip::predictors::Ignorant;
