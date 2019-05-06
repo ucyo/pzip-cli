@@ -53,7 +53,7 @@ impl FileContainer {
 
 impl std::fmt::Display for FileContainer {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "outbyte={}", self.nbytes())
+        write!(f, "outbytes={}", self.nbytes())
     }
 }
 
