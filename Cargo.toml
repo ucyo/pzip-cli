@@ -20,4 +20,4 @@ compress = { path = "../rust-compress-uc", version = "0.1.2"}
 rust-bwt = { path = "../rust-bwt" }
 
 [profile.release]
-lto = false
+lto = true
