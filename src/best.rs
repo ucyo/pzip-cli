@@ -7,7 +7,7 @@ use pzip::residual::{RContext, ResidualTrait};
 use super::foc::process_bwt_and_range;
 
 pub fn best(matches: &clap::ArgMatches) {
-    let start = std::time::Instant::now();
+    // let start = std::time::Instant::now();
     // parse cli
     // let start = std::time::Instant::now();
     let ifile = String::from(matches.value_of("input").unwrap());
@@ -31,13 +31,18 @@ pub fn best(matches: &clap::ArgMatches) {
     // println!("     read: {:.5} sec", start.elapsed().as_float_secs());
 
     // get predictions
-    // let start = std::time::Instant::now();
+    let start = std::time::Instant::now();
     let mut predictor = pzip::predictors::predictors::get_lorenz_f32();
     let predictions = predictor.consume(&data, &shape, ring);
+    println!("preds (o): {:.5} sec {}", start.elapsed().as_float_secs(), predictions.len());
+
+    // get new predictions
+    let start = std::time::Instant::now();
+    let predictions = get_lorenz_predictions(&data, shape);
+    println!("preds (n): {:.5} sec {}", start.elapsed().as_float_secs(), predictions.len());
+
     let data : Vec<u32> = data.iter().map(|&x| x.to_bits()).collect();
     let predictions : Vec<u32> = predictions.iter().map(|&x| x.to_bits()).collect();
-    // println!("    preds: {:.5} sec", start.elapsed().as_float_secs());
-
     //calculate residuals
     // let start = std::time::Instant::now();
     let mut rctx = RContext::new(cut);
@@ -68,4 +73,67 @@ fn consume(predictor : &mut Ignorant<f32>, data : &Vec<f32>, shape: &Position) -
         predictor.update(data[i]);
     }
     result
+}
+
+
+use pzip::position::Position as Coordinate;
+use pzip::ptraversal::calculate_offset;
+/// Delivers the lorenz predictions with disregard if the value is valid or not
+fn get_lorenz_predictions(data: &Vec<f32>, shape: Coordinate) -> Vec<f32> {
+    let ptr = data.as_ptr();
+    let position = vec![
+        Coordinate { x:1, y:0, z:0 },
+
+        Coordinate { x:1, y:1, z:0 },
+        Coordinate { x:0, y:1, z:0 },
+
+        Coordinate { x:1, y:0, z:1 },
+        Coordinate { x:0, y:0, z:1 },
+
+        Coordinate { x:0, y:1, z:1 },
+        Coordinate { x:1, y:1, z:1 },
+        ];
+    let offsets : Vec<isize> = position.iter().map(|p| calculate_offset(&shape, p) as isize ).collect();
+
+    let mut first_1d : Vec<f32> = data.iter().enumerate().take(shape.x as usize).skip(1).map(|(i,_)| {
+        unsafe { *ptr.offset(i as isize - offsets[0]) }
+    }).collect();
+
+    let mut first_2d : Vec<f32> = data.iter().enumerate().take(shape.x as usize * shape.y as usize).skip(shape.x as usize).map(|(i,_)| {
+        unsafe {
+            *ptr.offset(i as isize - offsets[0]) * -1f32 +
+            *ptr.offset(i as isize - offsets[1]) * 1f32 +
+            *ptr.offset(i as isize - offsets[2]) * 1f32
+        }
+    }).collect();
+
+    let mut first_3d : Vec<f32> = data.iter().enumerate().skip(shape.x as usize * shape.y as usize).take(shape.x as usize).map(|(i,_)| {
+        unsafe {
+            *ptr.offset(i as isize - offsets[0]) * -1f32 +
+            *ptr.offset(i as isize - offsets[1]) * 1f32 +
+            *ptr.offset(i as isize - offsets[2]) * 1f32 +
+            *ptr.offset(i as isize - offsets[3]) * 1f32 +
+            *ptr.offset(i as isize - offsets[4]) * 1f32
+        }
+    }).collect();
+
+    println!("offsets {:?}", offsets);
+    println!("skipping: {}", shape.x as usize * shape.y as usize);
+    let mut remainder : Vec<f32> = data.iter().enumerate().skip(shape.x as usize * shape.y as usize + shape.x as usize).map(|(i,_)| {
+        unsafe {
+            *ptr.offset(i as isize - offsets[0]) * -1f32 +
+            *ptr.offset(i as isize - offsets[1]) * 1f32 +
+            *ptr.offset(i as isize - offsets[2]) * 1f32 +
+            *ptr.offset(i as isize - offsets[3]) * 1f32 +
+            *ptr.offset(i as isize - offsets[4]) * 1f32 +
+            *ptr.offset(i as isize - offsets[5]) * -1f32 +
+            *ptr.offset(i as isize - offsets[6]) * -1f32
+        }
+    }).collect();
+
+    first_1d.insert(0, 0f32);
+    first_1d.append(&mut first_2d);
+    first_1d.append(&mut first_3d);
+    first_1d.append(&mut remainder);
+    first_1d
 }
