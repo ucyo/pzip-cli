@@ -7,7 +7,11 @@ use pzip::residual::{RContext, ResidualTrait};
 use super::foc::process_bwt_and_range;
 
 pub fn best(matches: &clap::ArgMatches) {
-    let start = std::time::Instant::now();
+    println!("file, run, read_t, predict_t, map_t, residuals_t, encode_t");
+    let NUMBER_OF_RUNS = 10;
+
+    for i in 0..NUMBER_OF_RUNS {
+
     // parse cli
     // let start = std::time::Instant::now();
     let ifile = String::from(matches.value_of("input").unwrap());
@@ -15,33 +19,30 @@ pub fn best(matches: &clap::ArgMatches) {
     let size = (shape.x * shape.y * shape.z) as usize;
     let cut = 31;
     // println!("      cli: {:.5} sec", start.elapsed().as_float_secs());
+    print!("\"{}\", \"run{:02}\",", ifile, i);
 
     // read f32 file
-    // let start = std::time::Instant::now();
+    let start = std::time::Instant::now();
     let file = fs::File::open(ifile).unwrap();
     let mut bytes: Vec<u8> = Vec::with_capacity(size * 4);
     let s = BufReader::with_capacity(size * 4, file).read_to_end(&mut bytes).unwrap();
-    // if s % 4 != 0 {
-    //         panic!("Can not be read into f32");
-    //     }
-    // assert_eq!(s, size * 4);
     let mut data: Vec<f32> = vec![0f32; size];
     LittleEndian::read_f32_into(&bytes, &mut data);
-    // println!("     read: {:.5} sec", start.elapsed().as_float_secs());
+    print!("{},", start.elapsed().as_float_secs());
 
     // get new predictions
-    // let start = std::time::Instant::now();
+    let start = std::time::Instant::now();
     let predictions = get_lorenz_predictions(&data, shape);
-    // println!("preds (n): {:.5} sec", start.elapsed().as_float_secs());
+    print!("{},", start.elapsed().as_float_secs());
 
 
-    // let start = std::time::Instant::now();
+    let start = std::time::Instant::now();
     let data : Vec<u32> = data.iter().map(|&x| x.to_bits()).collect();
     let predictions : Vec<u32> = predictions.iter().map(|&x| x.to_bits()).collect();
-    // println!("  mapping: {:.5} sec", start.elapsed().as_float_secs());
+    print!("{},", start.elapsed().as_float_secs());
 
     //calculate residuals
-    // let start = std::time::Instant::now();
+    let start = std::time::Instant::now();
     let mut rctx = RContext::new(cut);
     let r = pzip::residual::ResidualCalculation::Shifted;
     let diff : Vec<u32> = data.iter().zip(predictions.iter()).map(|(&t,&p)| {
@@ -49,13 +50,13 @@ pub fn best(matches: &clap::ArgMatches) {
         r.update(t, p, &mut rctx);
         result
     }).collect();
-    // println!("residuals: {:.5} sec", start.elapsed().as_float_secs());
+    print!("{},", start.elapsed().as_float_secs());
 
-    // let start = std::time::Instant::now();
+    let start = std::time::Instant::now();
     let fc = process_bwt_and_range(&diff);
-    // println!("      enc: {:.5} sec", start.elapsed().as_float_secs());
+    println!("{}", start.elapsed().as_float_secs());
 
-    println!("{} ratio={:.2} throughput={:.2} MiB/s", fc, s as f64 / fc.nbytes() as f64, (size as f64 * 4_f64 /1024_f64/1024_f64) / start.elapsed().as_float_secs());
+    }
 }
 
 use pzip::predictors::Ignorant;
