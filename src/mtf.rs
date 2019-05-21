@@ -1,6 +1,6 @@
 use super::graycodeanalysis::read_u32;
-// use pzip_huffman::hufbites::encode_itself_to_bytes;
-// use super::foc::vec_diff;
+use pzip_huffman::hufbites::encode_itself_to_bytes;
+use super::foc::vec_diff;
 use std::collections::HashMap;
 
 use std::io::{BufWriter, BufReader, Read, Write};
@@ -85,43 +85,46 @@ pub fn mtf(matches: &clap::ArgMatches) {
     base.insert("foc_bwt".to_string(), apply_bwt(&base["foc"]));
     base.insert("lzc_bwt".to_string(), apply_bwt(&base["lzc"]));
     base.insert("lzcfoc_bwt".to_string(), apply_bwt(&base["lzcfoc"]));
-    // base.insert("foc_bwt_mtf".to_string(), apply_mtf(&apply_bwt(&base["foc"])));
-    // base.insert("lzc_bwt_mtf".to_string(), apply_mtf(&apply_bwt(&base["lzc"])));
-    // base.insert("lzcfoc_bwt_mtf".to_string(), apply_mtf(&apply_bwt(&base["lzcfoc"])));
-    // base.insert("foc_bwt_mtf_rle".to_string(), apply_rle(&apply_mtf(&apply_bwt(&base["foc"]))));
-    // base.insert("lzc_bwt_mtf_rle".to_string(), apply_rle(&apply_mtf(&apply_bwt(&base["lzc"]))));
-    // base.insert("lzcfoc_bwt_mtf_rle".to_string(), apply_rle(&apply_mtf(&apply_bwt(&base["lzcfoc"]))));
-    // base.insert("foc_mtf".to_string(), apply_mtf(&base["foc"]));
-    // base.insert("lzc_mtf".to_string(), apply_mtf(&base["lzc"]));
-    // base.insert("lzcfoc_mtf".to_string(), apply_mtf(&base["lzcfoc"]));
-    // base.insert("foc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["foc"])));
-    // base.insert("lzc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzc"])));
-    // base.insert("lzcfoc_mtf_rle".to_string(), apply_rle(&apply_mtf(&base["lzcfoc"])));
+    base.insert("foc_bwt_mtf".to_string(), apply_mtf(&base["foc_bwt"]));
+    base.insert("lzc_bwt_mtf".to_string(), apply_mtf(&base["lzc_bwt"]));
+    base.insert("lzcfoc_bwt_mtf".to_string(), apply_mtf(&base["lzcfoc_bwt"]));
+    base.insert("foc_bwt_mtf_rle".to_string(), apply_rle(&base["foc_bwt_mtf"]));
+    base.insert("lzc_bwt_mtf_rle".to_string(), apply_rle(&base["lzc_bwt_mtf"]));
+    base.insert("lzcfoc_bwt_mtf_rle".to_string(), apply_rle(&base["lzcfoc_bwt_mtf"]));
+    base.insert("foc_mtf".to_string(), apply_mtf(&base["foc"]));
+    base.insert("lzc_mtf".to_string(), apply_mtf(&base["lzc"]));
+    base.insert("lzcfoc_mtf".to_string(), apply_mtf(&base["lzcfoc"]));
+    base.insert("foc_mtf_rle".to_string(), apply_rle(&base["foc_mtf"]));
+    base.insert("lzc_mtf_rle".to_string(), apply_rle(&base["lzc_mtf"]));
+    base.insert("lzcfoc_mtf_rle".to_string(), apply_rle(&base["lzcfoc_mtf"]));
 
     // Huffman compression
-    // for k in base.iter() {
-    //     let c = encode_itself_to_bytes(&k.1).0.len();
-    //     let dc = encode_itself_to_bytes(&vec_diff(k.1)).0.len();
-    //     let mut name = k.0.clone(); name.push_str("_huff");
-    //     compressed.insert(name, c);
-    //     let mut name = k.0.clone(); name.push_str("_diff_huff");
-    //     compressed.insert(name, dc);
-    // }
+    for k in base.iter() {
+        let c = encode_itself_to_bytes(&k.1).0.len();
+        let dc = encode_itself_to_bytes(&vec_diff(k.1)).0.len();
+        let mut name = k.0.clone(); name.push_str("_huff");
+        compressed.insert(name, c);
+        let mut name = k.0.clone(); name.push_str("_diff_huff");
+        compressed.insert(name, dc);
+    }
 
     // Range Encoding
     for k in base.iter() {
         let c = apply_range_coding(&k.1).len();
         let mut name = k.0.clone(); name.push_str("_range");
         compressed.insert(name, c);
-        // let dc = apply_range_coding(&vec_diff(k.1)).len();
-        // let mut name = k.0.clone(); name.push_str("_diff_range");
-        // compressed.insert(name, dc);
+        let dc = apply_range_coding(&vec_diff(k.1)).len();
+        let mut name = k.0.clone(); name.push_str("_diff_range");
+        compressed.insert(name, dc);
     }
 
     // Output
     let mut count_vec: Vec<_> = compressed.iter().collect();
     count_vec.sort_by(|a, b| a.1.cmp(b.1));
-    println!("{}: {:?}", ifile, count_vec)
+    println!("# {}", ifile);
+    for v in count_vec.iter() {
+        println!("{}, {}", v.0, v.1);
+    }
 }
 
 pub fn get_foc(data: &[u32]) -> Vec<u8> {

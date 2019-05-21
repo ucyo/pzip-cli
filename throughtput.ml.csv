@@ -1,0 +1,12 @@
+file, run, read_t, predict_t, map_t, residuals_t, encode_t
+"../pzip/data/icon-data/splits/icon.ml.geopot.f32.little.4x90x351x901_2.raw", "run00",0.045341003,0.200881314,0.037511994,0.444509575,2.555980059
+"../pzip/data/icon-data/splits/icon.ml.omega.f32.little.4x90x351x901_2.raw", "run00",0.046266377,0.223453318,0.036674821,0.482508533,10.603098719
+"../pzip/data/icon-data/splits/icon.ml.pv.f32.little.4x90x351x901_2.raw", "run00",0.046990697,0.209626237,0.037431557,0.461005505,9.76016976
+"../pzip/data/icon-data/splits/icon.ml.qc.f32.little.4x90x351x901_2.raw", "run00",0.04920108,0.250829304,0.034914134,0.479237721,1.1346543470000001
+"../pzip/data/icon-data/splits/icon.ml.qi.f32.little.4x90x351x901_2.raw", "run00",0.048676356,0.220766595,0.036899126,0.545148156,5.748837799
+"../pzip/data/icon-data/splits/icon.ml.qv.f32.little.4x90x351x901_2.raw", "run00",0.047702465,0.238741931,0.036239973,0.547891553,9.30331739
+"../pzip/data/icon-data/splits/icon.ml.temp.f32.little.4x90x351x901_2.raw", "run00",0.04591046,0.244467029,0.039480118,0.504499001,8.355238709
+"../pzip/data/icon-data/splits/icon.ml.tempv.f32.little.4x90x351x901_2.raw", "run00",0.052416881,0.222720108,0.038483107,0.480834537,7.958852261
+"../pzip/data/icon-data/splits/icon.ml.u.f32.little.4x90x351x901_2.raw", "run00",0.054017771,0.227454957,0.036524769,0.546248247,10.942283038
+"../pzip/data/icon-data/splits/icon.ml.vor.f32.little.4x90x351x901_2.raw", "run00",0.049931842,0.225478725,0.037925526,0.464117898,11.302326022
+"../pzip/data/icon-data/splits/icon.ml.w.f32.little.4x91x351x901_2.raw", "run00",

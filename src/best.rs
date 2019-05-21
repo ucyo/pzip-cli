@@ -8,7 +8,7 @@ use super::foc::process_bwt_and_range;
 
 pub fn best(matches: &clap::ArgMatches) {
     println!("file, run, read_t, predict_t, map_t, residuals_t, encode_t");
-    let NUMBER_OF_RUNS = 10;
+    let NUMBER_OF_RUNS = 1;
 
     for i in 0..NUMBER_OF_RUNS {
 
