@@ -121,7 +121,9 @@ pub fn mtf(matches: &clap::ArgMatches) {
     // Output
     let mut count_vec: Vec<_> = compressed.iter().collect();
     count_vec.sort_by(|a, b| a.1.cmp(b.1));
-    println!("{}: {:?}", ifile, count_vec)
+    for k in count_vec.iter() {
+        println!("{}, {}", k.0, k.1)
+    }
 }
 
 pub fn get_foc(data: &[u32]) -> Vec<u8> {

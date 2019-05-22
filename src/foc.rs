@@ -90,7 +90,7 @@ pub fn foc(matches: &clap::ArgMatches) {
 // Implementation of
 // bwt_range(lzc) + bwt_range(foc) + raw(residual - first 0)
 use super::mtf::{get_lzc, apply_range_coding, get_foc as gf};
-use rust_bwt::{apply_bwt as abwt};
+use pzip_bwt::{apply_bwt as abwt};
 use std::thread;
 pub fn process_bwt_and_range(data: &[u32]) -> FileContainer {
     let mut plzc = 0i32;
@@ -129,7 +129,7 @@ pub fn process_bwt_and_range(data: &[u32]) -> FileContainer {
 }
 
 use super::mtf::{reverse_range_coding};
-use rust_bwt::reverse_bwt as rbwt;
+use pzip_bwt::reverse_bwt as rbwt;
 fn reverse_bwt_and_range(fc: FileContainer) -> Vec<u32> {
     let mut lzc = reverse_range_coding(&fc.huff_lzc);
     rbwt(&mut lzc, fc.bwt[0]);
